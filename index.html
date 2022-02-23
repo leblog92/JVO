@@ -1,4 +1,4 @@
-<!DOCTYPE HTML>
+﻿<!DOCTYPE HTML>
 <html lang="fr">
 	<head>
 		<meta charset="utf-8">
@@ -6,12 +6,12 @@
 		<link rel="icon" type="image/png" href="ico.png"/>
 		<style>
 			html,body{height:100%;margin:0;}
-			body{font-family:monospace;text-align:center;background:linear-gradient(grey,white);background-attachment:fixed;}
-			body,input[type="text"]{font-size:48px;}
+			body{font-family:monospace;text-align:center;background:url("zezach.png") left bottom no-repeat fixed, linear-gradient(grey,white) fixed;}
+			body,input[type="text"]{font-size:24px;}
 			body::-webkit-scrollbar{display: none;}
-			input[type="text"]{padding:40px;border-radius:25px;visibility:hidden;}
-			img{border-radius: 50%;}
-			td{background:#ddd;border-radius:25px;padding:24px;box-shadow: 10px 20px 20px rgba(0,0,0,0.2);}
+			input[type="text"]{padding:10px;border-radius:10px;visibility:hidden;}
+			img.console{border-radius:50%;height:50px;width:auto;}
+			td{background:#ddd;border-radius:10px;padding:10px;box-shadow: 5px 5px 5px rgba(0,0,0,0.2);}
 			img,td{vertical-align:middle;}
 			a{color:black;text-decoration:none;}
 			.center{margin-left: auto;margin-right: auto;}
@@ -23,7 +23,7 @@
 		</style>
 	</head>
 	<body>
-		<div id="logo"><br>GAME SEARCH<br><br></div>
+		<div id="logo"><br><img src="gamesearch.png"/><br><br></div>
 		<input autocapitalize="off" type="text" id="name_input"><br><br>
 		<div id="fill"></div>
 		<div id="progress"></div>
@@ -74,7 +74,7 @@
 					}else if(resultArr.length>1){
 						tab_results.innerHTML="<tr><td style='font-weight:bold;color:#000'>"+resultArr.length+" résultats</td></tr>";
 					}
-					for(var k=0;k<resultArr.length;k++){tab_results.innerHTML+="<tr><td><img src='"+resultImg[k]+"' height='100px' width='auto'/> "+resultArr[k]+" - n°"+resultNum[k];+"</td></tr>";}
+					for(var k=0;k<resultArr.length;k++){tab_results.innerHTML+="<tr><td><img class='console' src='"+resultImg[k]+"' height='100px' width='auto'/> "+resultArr[k]+" - n°"+resultNum[k];+"</td></tr>";}
 					resultArr=[];
 					resultImg=[];
 					resultNum=[];
