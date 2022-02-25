@@ -11,6 +11,8 @@
 			#logo{color:white;}
 			#progress{color:white;position:fixed;left:0;bottom:22px;height:60px;font-family:Consolas;font-size:50px;border:1px solid white;background:linear-gradient(90deg,rgba(255,255,255,0.2),rgba(255,255,255,0.8));transition:1s;text-align:center;opacity:1;}
 			.center{margin-left:auto;margin-right:auto;}
+.hint{display:none;}
+.field:hover .hint {display:block; }
 			a{color:black;text-decoration:none;}
 			body,input[type="text"]{font-size:24px;}
 			body::-webkit-scrollbar{display:none;}
@@ -102,7 +104,7 @@
 				name_input.value="";
 				tab_results.innerHTML="<tr><td>Recherche parmi "+arr1.length+" jeux</td></tr>";
 			};
-			
+
 			var count=0;
 			function preloadImage(url){
 				var img=new Image();
@@ -118,13 +120,13 @@
 					}
 				};
 			}
-			
+
 			function init(){
 				for(var j=0;j<arr6.length;j++){
 					preloadImage(arr6[j]);
 				}
 			}
-			
+
 			init();
 		</script>
 	</body>
