@@ -18,7 +18,7 @@
 			html,body{height:100%;margin:0;}
 			img,td{vertical-align:middle;}
 			img.console{border-radius:50%;height:50px;width:auto;}
-			img.cover{height:75px;width:auto;float:left;}
+			img.cover{height:100px;width:auto;float:left;}
 			input[type="text"]{padding:10px;border-radius:10px;visibility:hidden;}
 			span.hist{font-size:12px;text-align:left;}
 			span.num{background-color:#333;color:white;border-radius:50%;padding:5px;font-size:20px;}
@@ -87,7 +87,7 @@
 					for(var k=0;
 					k<resultArr.length;k++){
 					tab_results.innerHTML+="<tr><td colspan='3'><img class='console' src='"+resultImg[k]+".svg'/> "+resultArr[k]+" <img src='"+resultPEGI[k]+".svg' height='50px' width='auto'/> <span class='num'>"+resultNum[k];+"</span></td></tr>";
-					tab_results.innerHTML+="<tr><td><img class='cover' src="+resultCover[k]+"></td><td><span class='hist'>"+resultHist[k]+"</span></td><td></td></tr>";}
+					tab_results.innerHTML+="<tr><td><img class='cover' src="+resultCover[k]+"></td><td><span class='hist' style='text-align:left'>"+resultHist[k]+"</span></td><td></td></tr>";}
 						resultArr=[];
 						resultImg=[];
 						resultNum=[];
