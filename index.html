@@ -21,12 +21,12 @@
 			#fill{color:rgba(255,255,255,0.5);position:fixed;top:0;right:0;width:10%;font-size:12px;}
 			#logo{color:white;}
 			span.num{background-color:#333;color:white;border-radius:50%;padding:5px;font-size:20px;}
+			span.hist{text-align:left;}
 		</style>
 	</head>
 	<body>
 		<div id="logo"><br><img src="gamesearch.png" id="gstitle" width="420 px"/><br></div><br>
 		<input autocapitalize="off" type="text" id="name_input"><br><br>
-		<div id="fill"></div>
 		<div id="progress"></div>
 		<table class="center">
 			<tbody id="tab_results"></tbody>
@@ -36,7 +36,7 @@
 			var logo=document.getElementById("logo");
 			var name_input=document.getElementById("name_input");
 			var tab_results=document.getElementById("tab_results");
-			var fill=document.getElementById("fill");
+			var progress=document.getElementById("progress");
 			var resultArr=[];
 			var resultImg=[];
 			var resultNum=[];
@@ -82,7 +82,7 @@
 					}else if(resultArr.length>1){
 						tab_results.innerHTML="<tr><td style='font-weight:bold;color:#000'>"+resultArr.length+" résultats</td></tr>";
 					}
-					for(var k=0;k<resultArr.length;k++){tab_results.innerHTML+="<tr><td><img class='console' src='"+resultImg[k]+".svg'/> "+resultArr[k]+" <img src='"+resultPEGI[k]+".svg' height='50px' width='auto'/> <span class='num'>"+resultNum[k];+"</span> "+resultHist[k]+"</td></tr>";}
+					for(var k=0;k<resultArr.length;k++){tab_results.innerHTML+="<tr><td><img class='console' src='"+resultImg[k]+".svg'/> "+resultArr[k]+" <img src='"+resultPEGI[k]+".svg' height='50px' width='auto'/> <span class='num'>"+resultNum[k];+"</span><br><span class='hist'>"+resultHist[k]+"</span></td></tr>";}
 						resultArr=[];
 						resultImg=[];
 						resultNum=[];
@@ -95,7 +95,7 @@
 				logo.style.display="none";
 				name_input.value="";
 				tab_results.innerHTML="<tr><td>Recherche parmi "+arr1.length+" jeux</td></tr>";
-			}
+			};
 			
 			var count=0;
 			function preloadImage(url){
@@ -103,14 +103,14 @@
 				img.src=url;
 				img.onload=function(){
 					count++;
-					document.getElementById("progress").innerHTML=Math.round(count/(arr6.length)*100)+"%";
-					document.getElementById("progress").style.width=Math.round(count/(arr6.length)*100)+"%";
+					progress.innerHTML=Math.round(count/(arr6.length)*100)+"%";
+					progress.style.width=Math.round(count/(arr6.length)*100)+"%";
 					if(Math.round(count/(arr6.length)*100)==100){
-						document.getElementById("progress").style.opacity=0;
+						progress.style.opacity=0;
 						input.style.visibility="visible";
 						input.addEventListener("keyup",show);
 					}
-				}
+				};
 			}
 			
 			function init(){
