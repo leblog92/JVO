@@ -5,24 +5,24 @@
 		<title>Game Search</title>
 		<link rel="icon" type="image/png" href="ICO.png"/>
 		<style>
-			html,body{height:100%;margin:0;}
-			body{font-family:monospace;text-align:center;background:url("zezach.png") left bottom no-repeat fixed, linear-gradient(grey,white) fixed;}
+			#fill{color:rgba(255,255,255,0.5);position:fixed;top:0;right:0;width:10%;font-size:12px;}
+			#legend td{background:none;border-radius:5px;padding:10px;box-shadow: 0px 0px 0px rgba(0,0,0,0);}
+			#legend{font-family:monospace;text-align:left;font-size:24px;position:fixed;left:0px;top:0px;color:#fff;}
+			#logo{color:white;}
+			#progress{color:white;position:fixed;left:0;bottom:22px;height:60px;font-family:Consolas;font-size:50px;border:1px solid white;background:linear-gradient(90deg,rgba(255,255,255,0.2),rgba(255,255,255,0.8));transition:1s;text-align:center;opacity:1;}
+			.center{margin-left:auto;margin-right:auto;}
+			a{color:black;text-decoration:none;}
 			body,input[type="text"]{font-size:24px;}
 			body::-webkit-scrollbar{display:none;}
-			input[type="text"]{padding:10px;border-radius:10px;visibility:hidden;}
-			img.console{border-radius:50%;height:50px;width:auto;}
-			td{background:#ddd;border-radius:10px;padding:10px;box-shadow:5px 5px 5px rgba(0,0,0,0.2);}
+			body{font-family:monospace;text-align:center;background:url("zezach.png") left bottom no-repeat fixed, linear-gradient(grey,white) fixed;}
+			html,body{height:100%;margin:0;}
 			img,td{vertical-align:middle;}
-			a{color:black;text-decoration:none;}
-			.center{margin-left: auto;margin-right: auto;}
-			#legend{font-family:monospace;text-align:left;font-size:24px;position:fixed;left:0px;top:0px;color:#fff;}
-			#legend td{background:none;border-radius:5px;padding:10px;box-shadow: 0px 0px 0px rgba(0,0,0,0);}
-			#progress{color:white;position:fixed;left:0;bottom:22px;height:60px;font-family:Consolas;font-size:50px;border:1px solid white;background:linear-gradient(90deg,rgba(255,255,255,0.2),rgba(255,255,255,0.8));transition:1s;text-align:center;opacity:1;}
-			#fill{color:rgba(255,255,255,0.5);position:fixed;top:0;right:0;width:10%;font-size:12px;}
-			#logo{color:white;}
-			span.num{background-color:#333;color:white;border-radius:50%;padding:5px;font-size:20px;}
-			span.hist{font-size:16px;text-align:left;}
+			img.console{border-radius:50%;height:50px;width:auto;}
 			img.cover{height:150px;width:auto;float:left;}
+			input[type="text"]{padding:10px;border-radius:10px;visibility:hidden;}
+			span.hist{font-size:16px;text-align:left;}
+			span.num{background-color:#333;color:white;border-radius:50%;padding:5px;font-size:20px;}
+			td{background:#ddd;border-radius:10px;padding:10px;box-shadow:5px 5px 5px rgba(0,0,0,0.2);}
 		</style>
 	</head>
 	<body>
