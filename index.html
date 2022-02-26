@@ -4,14 +4,17 @@
 		<meta charset="utf-8">
 		<title>Game Search</title>
 		<link rel="icon" type="image/png" href="ICO.png"/>
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
 		<style>
 			#logo{color:white;}
-			#progress{color:white;position:fixed;left:0;bottom:22px;height:60px;font-family:Sans;font-size:50px;border:1px solid white;background:linear-gradient(90deg,rgba(255,255,255,0.2),rgba(255,255,255,0.8));transition:1s;text-align:center;opacity:1;}
+			#progress{color:white;position:fixed;left:0;bottom:22px;height:60px;font-family:Consolas;font-size:50px;border:1px solid white;background:linear-gradient(90deg,rgba(255,255,255,0.2),rgba(255,255,255,0.8));transition:1s;text-align:center;opacity:1;}
 			.center{margin-left:auto;margin-right:auto;}
 			a{color:black;text-decoration:none;}
 			body,input[type="text"]{font-size:24px;}
 			body::-webkit-scrollbar{display:none;}
-			body{font-family:monospace;background:url("zezach.png") left bottom no-repeat fixed, linear-gradient(grey,white) fixed;}
+			body{font-family:'Open Sans',sans-serif;background:url("zezach.png") left bottom no-repeat fixed, linear-gradient(#aaa,#eee) fixed;}
 			html,body{height:100%;margin:0;}
 			img,td{vertical-align:middle;}
 			img.console{border-radius:50%;height:50px;width:auto;}
@@ -20,7 +23,7 @@
 			input[type="text"]{padding:10px;border-radius:10px;visibility:hidden;}
 			span.hist{font-size:14px;text-align:left;}
 			span.num{background-color:#333;color:white;border-radius:50%;padding:5px;font-size:20px;}
-			td{background:#ddd;border-radius:10px;padding:10px;box-shadow:5px 5px 5px rgba(0,0,0,0.2);}
+			td{background:#ddd;line-height:0.6em;border-radius:10px;padding:10px;box-shadow:5px 5px 5px rgba(0,0,0,0.2);}
 		</style>
 	</head>
 	<body>
@@ -81,14 +84,14 @@
 						}
 					}
 					if(resultArr.length==0){
-						tab_results.innerHTML="<tr><td style='text-align:center;'>Aucun résultat ...<br><img src='TOAD.png' height='300px' width='auto' style='border-radius:10px;'/></td></tr>";
+						tab_results.innerHTML="<tr><td style='text-align:center;'>Aucun résultat ...<br><br><img src='TOAD.png' height='300px' width='auto' style='border-radius:10px;'/></td></tr>";
 					}else if(resultArr.length>1){
 						tab_results.innerHTML="<tr><td colspan='3' style='text-align:center;font-weight:bold;color:#000'>"+resultArr.length+" résultats</td></tr>";
 					}
 					for(var k=0;
 					k<resultArr.length;k++){
-					tab_results.innerHTML+="<tr><td colspan='3' style='text-align:center;'><img class='console' src='"+resultImg[k]+".svg'/> "+resultArr[k]+" <img src='"+resultPEGI[k]+".svg' height='50px' width='auto'/> <span class='num'>"+resultNum[k];+"</span></td></tr>";
-					tab_results.innerHTML+="<tr><td style='text-align:center;'><img class='cover' src="+resultCover[k]+"></td><td><span class='hist' style='text-align:left'>"+resultHist[k]+"</span></td><td></td></tr>";}
+					tab_results.innerHTML+="<tr><td colspan='3' style='text-align:center;font-weight:bold;'><img class='console' src='"+resultImg[k]+".svg'/> "+resultArr[k]+" <img src='"+resultPEGI[k]+".svg' height='50px' width='auto'/> <span class='num'>"+resultNum[k];+"</span></td></tr>";
+					tab_results.innerHTML+="<tr><td style='text-align:center;'><img class='cover' src="+resultCover[k]+"></td><td><span class='hist'>"+resultHist[k]+"</span></td><td></td></tr>";}
 						resultArr=[];
 						resultImg=[];
 						resultNum=[];
@@ -101,7 +104,7 @@
 			name_input.onclick=function out(){
 				logo.style.display="none";
 				name_input.value="";
-				tab_results.innerHTML="<tr><td style='text-align:center;'>Recherche parmi "+arr1.length+" jeux</td></tr>";
+				tab_results.innerHTML="<tr><td style='text-align:center;'>Recherche parmi "+arr1.length+" jeux vidéo</td></tr>";
 			};
 
 			var count=0;
