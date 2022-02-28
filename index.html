@@ -9,7 +9,7 @@
 		<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
 		<style>
 			#logo{color:white;}
-			#progress{color:white;position:fixed;left:0;bottom:24px;height:60px;font-family:Consolas;font-size:50px;border:1px solid white;background:linear-gradient(90deg,rgba(255,255,255,0.2),rgba(255,255,255,0.8));transition:1s;text-align:center;opacity:1;}
+			#progress{color:white;position:fixed;left:0;bottom:24px;height:60px;font-family:Consolas;font-size:50px;border:1px solid red;background:linear-gradient(90deg,rgba(255,0,0,0.6),rgba(255,0,0,0.8));transition:1s;text-align:center;opacity:1;}
 			#gstitle{-webkit-animation:color-animation 4s infinite;animation:color-animation 4s infinite;}
 			@-webkit-keyframes color-animation{0%{-webkit-filter:hue-rotate(0deg);}50%{-webkit-filter:hue-rotate(360deg);}100%{-webkit-filter:hue-rotate(0deg);}}
 			@keyframes color-animation{0%{filter:hue-rotate(0deg);}50%{filter:hue-rotate(360deg);}100%{filter:hue-rotate(0deg);}}
@@ -40,6 +40,7 @@
 		</table>
 		<div id="legend"></div>
 		<script>
+			var waka=new Audio('waka.mp3');
 			var logo=document.getElementById("logo");
 			var name_input=document.getElementById("name_input");
 			var tab_results=document.getElementById("tab_results");
@@ -61,6 +62,8 @@
 			var arr8=[];
 			var input=document.querySelector('#name_input');
 			function show(){
+				waka.currentTime=0;
+				waka.play();
 				tab_results.innerHTML="";
 				resultArr=[];
 				name_input.value=name_input.value.toLowerCase();
@@ -92,10 +95,10 @@
 					}else if(resultArr.length>1){
 						tab_results.innerHTML="<tr><td colspan='3' style='text-align:center;font-weight:bold;color:#000'>"+resultArr.length+" résultats</td></tr>";
 					}
-					for(var k=0;
-					k<resultArr.length;k++){
+					for(var k=0;k<resultArr.length;k++){
 					tab_results.innerHTML+="<tr id='tr"+k+"' onClick='disp_click(this.id)'><td colspan='3' style='text-align:center;font-weight:bold;'><img class='console' src='"+resultImg[k]+".svg'/> "+resultArr[k]+" <img src='"+resultPEGI[k]+".svg' height='50px' width='auto'/> <span class='num'>"+resultNum[k];+"</span></td></tr>";
 					tab_results.innerHTML+="<tr id='tr"+k+"z' style='display:none'><td style='text-align:center;'><img class='cover' src="+resultCover[k]+"></td><td><span class='hist'>"+resultHist[k]+"</span></td><td></td></tr>";}
+					tab_results.innerHTML+="<tr><td style='text-align:center;background:#000;border:2px solid #ddd;color:yellow;' colspan='3'><marquee><img src='pacman.gif' height='20px' width='auto'/></marquee></td></tr>";
 						resultArr=[];
 						resultImg=[];
 						resultNum=[];
@@ -108,7 +111,7 @@
 			name_input.onclick=function out(){
 				logo.style.display="none";
 				name_input.value="";
-				tab_results.innerHTML="<tr><td style='text-align:center;line-height:1.2em;'><marquee scrollamount='24'>🔍 Recherche parmi "+arr1.length+" titres de jeux vidéo.</marquee></td></tr>";
+				tab_results.innerHTML="<tr><td style='text-align:center;line-height:1.2em;'><marquee scrollamount='24'>🔍 Recherche parmi "+arr1.length+" titres de jeux vidéo 🎮 🎮 🎮</marquee></td></tr>";
 			};
 
 			var count=0;
