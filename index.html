@@ -22,8 +22,8 @@
 			body{font-family:'Open Sans',sans-serif;background:url("zach.png") left bottom no-repeat fixed, linear-gradient(#aaa,#eee) fixed;}
 			html,body{height:100%;margin:0;-moz-user-select:none;-webkit-user-select:none;-ms-user-select:none;user-select:none;}
 			img,td{vertical-align:middle;}
-			img.console{border-radius:50%;height:50px;width:auto;box-shadow:2.5px 2.5px 0.5px rgba(0,0,0,0.2);}
-			img.select{transform:rotate(0deg);border-radius:50%;height:100px;width:auto;box-shadow:2.5px 2.5px 2.5px rgba(0,0,0,0.2);transition:1s;}
+			img.console{border-radius:50%;height:50px;width:auto;box-shadow:2.5px 2.5px 2.5px rgba(0,0,0,0.2);}
+			img.select{transform:rotate(0deg);border-radius:50%;height:100px;width:auto;box-shadow:2.5px 2.5px 4px rgba(0,0,0,0.2);transition:1s;}
 			img.select:hover{transform:rotate(10deg);}
 			img.cover{display:block;margin-left: auto;margin-right:auto;height:auto;width:80px;transition:1s}
 			img.cover:active{height:auto;width:250px;}
@@ -43,11 +43,18 @@
 			<tbody id="tab_results">
 			<tr>
 				<td style="box-shadow:none;background:none;text-align:center">
-				<img class="select" src="Playstation.svg" onClick="allGames('PS')" height="400px"/> 
+				<img class="select" src="Playstation.svg" onClick="allGames('PS')"/> 
 				<img class="select" src="Switch.svg" onClick="allGames('Switch')"/> 
 				<img class="select" src="XBOX.svg" onClick="allGames('XBOX')"/>
 				</td>
 			</tr>
+			<!-- <tr>
+				<td style="box-shadow:none;background:none;text-align:center; line-height:2em;">
+					<a href="https://www.playstation.com/fr-fr/support/hardware/ps5/" target="_blank">🛠️ PS5 🛠️</a><br>
+					<a href="https://www.nintendo.fr/Assistance/Contact/Reparations/Nintendo-Switch-1770156.html" target="_blank">🛠️ Switch 🛠️</a><br>
+					<a href="https://support.xbox.com/fr-FR/" target="_blank">🛠️ XBOX Series X 🛠️</a>
+				</td>
+			</tr> -->
 			</tbody>
 		</table>
 		<div id="legend"></div>
