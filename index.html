@@ -137,7 +137,7 @@ function show() {
 			tab_results.innerHTML += "<tr id='tr" + k + "' onClick='disp_click(this.id)'><td colspan='3' style='text-align:center;font-weight:bold;'><img class='console' src='" + resultImg[k] + ".svg'/> " + resultArr[k] + " <img src='" + resultPEGI[k] + ".svg' height='50px' width='auto'/> <span class='num'>" + resultNum[k]; + "</span></td></tr>";
 			tab_results.innerHTML += "<tr id='tr" + k + "z' style='display:none'><td style='text-align:center;'><img class='cover' src=" + resultCover[k] + "></td><td><span class='hist'>" + resultHist[k] + " <a href='"+resultLink[k]+"' style='text-decoration: underline;' target='blank'>Plus de détails ...</a></span></td><td class='specs'>📁 <span class='fwb'>Genre :</span> " + resultGenre[k] + "<br>🎮 <span class='fwb'>Joueur(s) :</span> " + resultNBJ[k] + "<br>💾 <span class='fwb'>Taille :</span> " + resultTail[k] + "<br>🏅 <span class='fwb'>Qualités :</span> " + resultQual[k] + "</td></tr>";
 		}
-		tab_results.innerHTML += "<tr onclick='location.reload();'><td style='text-align:center;background:#000;border:2px solid #ddd;color:#fff;' colspan='3'><marquee direction='right'><img src='pacman.gif' height='20px' width='auto'/> restart <img src='ghost.gif' height='20px' width='auto'/></marquee></td></tr>";
+		tab_results.innerHTML += "<tr onclick='location.reload();'><td style='text-align:center;background:#000;border:2px solid #ddd;color:#fff;' colspan='3'><marquee direction='right'><img src='pacman.gif' height='20px' width='auto'/> restart ? <img src='ghost.gif' height='20px' width='auto'/></marquee></td></tr>";
 		resultArr = [];
 		resultImg = [];
 		resultNum = [];
@@ -211,7 +211,7 @@ function allGames(conso) {
 		tab_results.innerHTML += "<tr id='tr" + k + "' onClick='disp_click(this.id)'><td colspan='3' style='text-align:center;font-weight:bold;'><img class='console' src='" + resultImg[k] + ".svg'/> " + resultArr[k] + " <img src='" + resultPEGI[k] + ".svg' height='50px' width='auto'/> <span class='num'>" + resultNum[k]; + "</span></td></tr>";
 		tab_results.innerHTML += "<tr id='tr" + k + "z' style='display:none'><td style='text-align:center;'><img class='cover' src=" + resultCover[k] + "></td><td><span class='hist'>" + resultHist[k] + " <a href='"+resultLink[k]+"' style='text-decoration: underline;' target='blank'>Plus de détails ...</a></span></td><td class='specs'>📁 <span class='fwb'>Genre :</span> " + resultGenre[k] + "<br>🎮 <span class='fwb'>Joueur(s) :</span> " + resultNBJ[k] + "<br>💾 <span class='fwb'>Taille :</span> " + resultTail[k] + "<br>🏅 <span class='fwb'>Qualités :</span> " + resultQual[k] + "</td></tr>";
 	}
-	tab_results.innerHTML += "<tr onclick='location.reload();'><td style='text-align:center;background:#000;border:2px solid #ddd;color:#fff;' colspan='3'><marquee direction='right'><img src='pacman.gif' height='20px' width='auto'/> restart <img src='ghost.gif' height='20px' width='auto'/></marquee></td></tr>";
+	tab_results.innerHTML += "<tr onclick='location.reload();'><td style='text-align:center;background:#000;border:2px solid #ddd;color:#fff;' colspan='3'><marquee direction='right'><img src='pacman.gif' height='20px' width='auto'/> restart ? <img src='ghost.gif' height='20px' width='auto'/></marquee></td></tr>";
 	resultArr = [];
 	resultImg = [];
 	resultNum = [];
