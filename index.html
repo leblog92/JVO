@@ -74,8 +74,10 @@
 			var ninmem=document.getElementById("ninmem");
 			var xbomem=document.getElementById("xbomem");
 			
-			function cookiechg(){console.log("ps5="+ps5mem.value+";nin="+ninmem.value+";xbo="+xbomem.value+"");document.cookie="ps5="+ps5mem.value+";nin="+ninmem.value+";xbo="+xbomem.value+""};
-			ps5mem.value=document.cookie.value;
+			function cookiechg(){console.log(ps5mem.value);document.cookie=ps5mem.value};
+			
+			let x=document.cookie;
+			ps5mem.value=x;
 			
 			var waka = new Audio('waka.mp3');
 			var coin = new Audio('coin.mp3');
