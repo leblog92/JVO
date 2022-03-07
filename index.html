@@ -101,7 +101,7 @@
 
 			function cookiechg(){
 				var dt=new Date();
-				document.cookie="mod="+dt+";expires=Thu, 23 Mar 2042 12:00:00 UTC";
+				document.cookie="mod="+dt.toLocaleString()+";expires=Thu, 23 Mar 2042 12:00:00 UTC";
 				spandt.innerHTML="<br>"+getCookie("mod");
 				document.cookie="swi="+swimem.value+";expires=Thu, 23 Mar 2042 12:00:00 UTC";
 				document.cookie="swi="+swimem.value+";expires=Thu, 23 Mar 2042 12:00:00 UTC";
