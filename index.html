@@ -2,7 +2,7 @@
 <html lang="fr">
 	<head>
 		<meta charset="utf-8">
-		<title>VGS4</title>
+		<title>VGS5</title>
 		<link rel="icon" type="image/png" href="ICO.png"/>
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -75,16 +75,16 @@
 			var xbomem=document.getElementById("xbomem");
 			
 			function getCookie(cname) {
-				let name = cname + "=";
-				let decodedCookie = decodeURIComponent(document.cookie);
-				let ca = decodedCookie.split(';');
-				for(let i = 0; i <ca.length; i++) {
-				let c = ca[i];
-				while (c.charAt(0) == ' ') {
-				c = c.substring(1);
+				let name=cname+"=";
+				let decodedCookie=decodeURIComponent(document.cookie);
+				let ca=decodedCookie.split(';');
+				for(let l=0;l<ca.length; l++) {
+				let c=ca[l];
+				while (c.charAt(0)==' ') {
+				c=c.substring(1);
 			}
-				if (c.indexOf(name) == 0) {
-				return c.substring(name.length, c.length);
+				if (c.indexOf(name)==0) {
+				return c.substring(name.length,c.length);
 			}
 			}
 				return "";
