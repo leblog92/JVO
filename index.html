@@ -74,14 +74,33 @@
 			var ninmem=document.getElementById("ninmem");
 			var xbomem=document.getElementById("xbomem");
 			
+			function getCookie(cname) {
+				let name = cname + "=";
+				let decodedCookie = decodeURIComponent(document.cookie);
+				let ca = decodedCookie.split(';');
+				for(let i = 0; i <ca.length; i++) {
+				let c = ca[i];
+				while (c.charAt(0) == ' ') {
+				c = c.substring(1);
+			}
+				if (c.indexOf(name) == 0) {
+				return c.substring(name.length, c.length);
+			}
+			}
+				return "";
+			}
+			
 			console.log(document.cookie);
+			getCookie(ps5);
 			
 			function cookiechg(){
-				console.log(document.cookie);
 				document.cookie="ps5="+ps5mem.value+";expires=Thu, 18 Dec 2024 12:00:00 UTC";
 				document.cookie="swi="+ninmem.value+";expires=Thu, 18 Dec 2024 12:00:00 UTC";
 				document.cookie="xbo="+xbomem.value+";expires=Thu, 18 Dec 2024 12:00:00 UTC";
+				console.log(document.cookie);
 			}
+			
+			
 			
 			var waka = new Audio('waka.mp3');
 			var coin = new Audio('coin.mp3');
