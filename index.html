@@ -50,23 +50,19 @@
 				<img class="select" src="XBOX.svg" onclick="allGames('XBOX')"/>
 				</td>
 			</tr>
-			<!-- <tr>
-				<td style="box-shadow:none;background:none;text-align:center;line-height:2em;">
-					<a href="https://www.playstation.com/fr-fr/support/hardware/ps5/" target="_blank">🛠️ PS5 🛠️</a><br>
-					<a href="https://www.nintendo.fr/Assistance/Contact/Reparations/Nintendo-Switch-1770156.html" target="_blank">🛠️ Switch 🛠️</a><br>
-					<a href="https://support.xbox.com/fr-FR/" target="_blank">🛠️ XBOX Series X 🛠️</a>
-				</td>
-			</tr> -->
 			</tbody>
 		</table>
 		<div id="elibre">
-		<table>
+		<span style="color:white;background:#333;margin:10px;padding:5px;" onclick="show_options();">Help ?</span><br><br>
+		<table id="options" style="display:none;">
 		<tbody>
 		<tr><td colspan="2">Mémoire libre</td></tr>
 		<tr><td>PS5</td><td><input id="ps5mem" type="number" style="width:3em;" onchange="cookiechg();"/>|--- Go</td></tr>
 		<tr><td>Switch</td><td><input id="swimem" type="number" style="width:3em;" onchange="cookiechg();"/>|--- Go<br></td></tr>
 		<tr><td>XBOX</td><td><input id="xbomem" type="number" style="width:3em;" onchange="cookiechg();"/>|--- Go</td></tr>
-		</tr>
+		<tr><td colspan="2"><a href="https://www.playstation.com/fr-fr/support/hardware/ps5/" target="_blank">🛠️ Dépannage PS5️</a></td></tr>
+		<tr><td colspan="2"><a href="https://www.nintendo.fr/Assistance/Contact/Reparations/Nintendo-Switch-1770156.html" target="_blank">🛠️ Dépannage Switch</a></td></tr>
+		<tr><td colspan="2"><a href="https://support.xbox.com/fr-FR/" target="_blank">🛠️ Dépannage XBOX</a></td></tr>
 		</tbody>
 		</table>
 		</div>
@@ -207,9 +203,9 @@
 				img.src=url;
 				img.onload=function() {
 					count++;
-					progress.innerHTML=Math.round(count / (arr6.length) * 100)+"%";
-					progress.style.width=Math.round(count / (arr6.length) * 100)+"%";
-					if (Math.round(count/(arr6.length) * 100)==100) {
+					progress.innerHTML=Math.round(count/(arr6.length) * 100)+"%";
+					progress.style.width=Math.round(count/(arr6.length) * 100)+"%";
+					if (Math.round(count/(arr6.length)*100)==100) {
 						progress.style.opacity=0;
 						input.style.visibility="visible";
 						input.addEventListener("keyup",show);
@@ -226,12 +222,21 @@
 			init();
 
 			function disp_click(clicked_id) {
-				if (document.getElementById(clicked_id+"z").style.display=="table-row") {
+				if(document.getElementById(clicked_id+"z").style.display=="table-row"){
 					document.getElementById(clicked_id+"z").style.display="none";
-				} else {
+				} else{
 					document.getElementById(clicked_id+"z").style.display="table-row";
 				}
 			}
+
+function show_options(){
+var options=document.getElementById("options");
+				if(options.style.display=="table"){
+					options.style.display="none";
+				} else{
+					options.style.display="table";
+				}
+}
 
 			function allGames(conso) {
 				//coin.currentTime=0;
@@ -252,7 +257,7 @@
 					}
 				}
 				tab_results.innerHTML="<tr><td colspan='3' style='text-align:center;font-weight:bold;color:#000'>"+resultArr.length+" résultats</td></tr>";
-				for (var k=0;k < resultArr.length;k++) {
+				for (var k=0;k<resultArr.length;k++) {
 					tab_results.innerHTML +="<tr id='tr"+k+"' onClick='disp_click(this.id)'><td colspan='3' style='text-align:center;font-weight:bold;'><img class='console' src='"+resultImg[k]+".svg'/> "+resultArr[k]+" <img src='"+resultPEGI[k]+".svg' height='50px' width='auto'/> <span class='num'>"+resultNum[k];+"</span></td></tr>";
 					tab_results.innerHTML +="<tr id='tr"+k+"z' style='display:none'><td style='text-align:center;'><img class='cover' src="+resultCover[k]+"></td><td><span class='hist'>"+resultHist[k]+" <a href='"+resultLink[k]+"' style='text-decoration: underline;' target='blank'>Plus de détails ...</a></span></td><td class='specs'>📁 <span class='fwb'>Genre :</span> "+resultGenre[k]+"<br>🎮 <span class='fwb'>Joueur(s) :</span> "+resultNBJ[k]+"<br>💾 <span class='fwb'>Taille :</span> ≈"+resultTail[k]+" Go<br>🏅 <span class='fwb'>Qualités :</span> "+resultQual[k]+"</td></tr>";
 				}
