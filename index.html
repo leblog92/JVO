@@ -57,9 +57,9 @@
 		<table id="options" style="display:none;">
 		<tbody>
 		<tr><td colspan="2">Mémoire libre</td></tr>
-		<tr><td>PS5</td><td><input id="ps5mem" type="number" style="width:3em;" onchange="cookiechg();"/>|--- Go</td></tr>
-		<tr><td>Switch</td><td><input id="swimem" type="number" style="width:3em;" onchange="cookiechg();"/>|--- Go<br></td></tr>
-		<tr><td>XBOX</td><td><input id="xbomem" type="number" style="width:3em;" onchange="cookiechg();"/>|--- Go</td></tr>
+		<tr><td style="cursor: pointer;font-weight:bold;color:#fff;background:#074490;" onclick="allGames('PS')">PS5</td><td><input id="ps5mem" type="number" style="width:3em;" onchange="cookiechg();"/>|--- Go</td></tr>
+		<tr><td style="cursor: pointer;font-weight:bold;color:#fff;background:#e60012;" onclick="allGames('Switch')">Switch</td><td><input id="swimem" type="number" style="width:3em;" onchange="cookiechg();"/>|--- Go<br></td></tr>
+		<tr><td style="cursor: pointer;font-weight:bold;color:#fff;background:#0f7b0e;" onclick="allGames('XBOX')">XBOX</td><td><input id="xbomem" type="number" style="width:3em;" onchange="cookiechg();"/>|--- Go</td></tr>
 		<tr><td colspan="2"><a href="https://catalogue.mediatheque-rueilmalmaison.fr/search/7e8004b4-d1bf-4ef9-9fdd-1f342c3652a1" target="_blank">📚 Catalogue JVO</a></td></tr>
 		<tr><td colspan="2"><a href="https://www.playstation.com/fr-fr/support/hardware/ps5/" target="_blank">⚙️ Dépannage PS5️</a></td></tr>
 		<tr><td colspan="2"><a href="https://www.nintendo.fr/Assistance/Contact/Reparations/Nintendo-Switch-1770156.html" target="_blank">⚙️ Dépannage Switch</a></td></tr>
@@ -177,7 +177,7 @@
 					}
 					for (var k=0;k < resultArr.length;k++) {
 						tab_results.innerHTML +="<tr id='tr"+k+"' onClick='disp_click(this.id)'><td colspan='3' style='text-align:center;font-weight:bold;'><img class='console' src='"+resultImg[k]+".svg'/> "+resultArr[k]+" <img src='"+resultPEGI[k]+".svg' height='50px' width='auto'/> <span class='num'>"+resultNum[k];+"</span></td></tr>";
-						tab_results.innerHTML +="<tr id='tr"+k+"z' style='display:none'><td style='text-align:center;'><img class='cover' src="+resultCover[k]+"></td><td><span class='hist'>"+resultHist[k]+" <a href='"+resultLink[k]+"' style='text-decoration: underline;' target='blank'>Plus de détails ...</a></span></td><td class='specs'>📁 <span class='fwb'>Genre :</span> "+resultGenre[k]+"<br>🎮 <span class='fwb'>Joueur(s) :</span> "+resultNBJ[k]+"<br>💾 <span class='fwb'>Taille :</span> "+resultTail[k]+"<br>🏅 <span class='fwb'>Qualités :</span> "+resultQual[k]+"</td></tr>";
+						tab_results.innerHTML +="<tr id='tr"+k+"z' style='display:none'><td style='text-align:center;'><img class='cover' src="+resultCover[k]+"></td><td><span class='hist'>"+resultHist[k]+" <a href='"+resultLink[k]+"' style='text-decoration: underline;' target='blank'>Plus de détails&nbsp;...</a></span></td><td class='specs'>📁 <span class='fwb'>Genre :</span> "+resultGenre[k]+"<br>🎮 <span class='fwb'>Joueur(s) :</span> "+resultNBJ[k]+"<br>💾 <span class='fwb'>Taille :</span> "+resultTail[k]+"<br>🏅 <span class='fwb'>Qualités :</span> "+resultQual[k]+"</td></tr>";
 					}
 					tab_results.innerHTML +="<tr onclick='location.reload();'><td style='text-align:center;background:#000;border:2px solid #ddd;color:#fff;' colspan='3'><marquee direction='right'><img src='pacman.gif' height='20px' width='auto'/> restart ? <img src='ghost.gif' height='20px' width='auto'/></marquee></td></tr>";
 					resultArr=[];
@@ -261,7 +261,7 @@ var options=document.getElementById("options");
 				tab_results.innerHTML="<tr><td colspan='3' style='text-align:center;font-weight:bold;color:#000'>"+resultArr.length+" résultats</td></tr>";
 				for (var k=0;k<resultArr.length;k++) {
 					tab_results.innerHTML +="<tr id='tr"+k+"' onClick='disp_click(this.id)'><td colspan='3' style='text-align:center;font-weight:bold;'><img class='console' src='"+resultImg[k]+".svg'/> "+resultArr[k]+" <img src='"+resultPEGI[k]+".svg' height='50px' width='auto'/> <span class='num'>"+resultNum[k];+"</span></td></tr>";
-					tab_results.innerHTML +="<tr id='tr"+k+"z' style='display:none'><td style='text-align:center;'><img class='cover' src="+resultCover[k]+"></td><td><span class='hist'>"+resultHist[k]+" <a href='"+resultLink[k]+"' style='text-decoration: underline;' target='blank'>Plus de détails ...</a></span></td><td class='specs'>📁 <span class='fwb'>Genre :</span> "+resultGenre[k]+"<br>🎮 <span class='fwb'>Joueur(s) :</span> "+resultNBJ[k]+"<br>💾 <span class='fwb'>Taille :</span> ≈"+resultTail[k]+" Go<br>🏅 <span class='fwb'>Qualités :</span> "+resultQual[k]+"</td></tr>";
+					tab_results.innerHTML +="<tr id='tr"+k+"z' style='display:none'><td style='text-align:center;'><img class='cover' src="+resultCover[k]+"></td><td><span class='hist'>"+resultHist[k]+" <a href='"+resultLink[k]+"' style='text-decoration: underline;' target='blank'>Plus de détails&nbsp;...</a></span></td><td class='specs'>📁 <span class='fwb'>Genre :</span> "+resultGenre[k]+"<br>🎮 <span class='fwb'>Joueur(s) :</span> "+resultNBJ[k]+"<br>💾 <span class='fwb'>Taille :</span> ≈"+resultTail[k]+" Go<br>🏅 <span class='fwb'>Qualités :</span> "+resultQual[k]+"</td></tr>";
 				}
 				tab_results.innerHTML+="<tr onclick='location.reload();'><td style='text-align:center;background:#000;border:2px solid #ddd;color:#fff;' colspan='3'><marquee direction='right'><img src='pacman.gif' height='20px' width='auto'/> restart ? <img src='ghost.gif' height='20px' width='auto'/></marquee></td></tr>";
 				resultArr=[];
