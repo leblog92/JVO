@@ -2,7 +2,7 @@
 <html lang="fr">
 	<head>
 		<meta charset="utf-8">
-		<title>VGS2</title>
+		<title>VGS3</title>
 		<link rel="icon" type="image/png" href="ICO.png"/>
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -79,10 +79,9 @@
 			function cookiechg(){
 				console.log(document.cookie);
 				document.cookie="ps5="+ps5mem.value+";expires=Thu, 18 Dec 2024 12:00:00 UTC";
+				document.cookie="swi="+ninmem.value+";expires=Thu, 18 Dec 2024 12:00:00 UTC";
+				document.cookie="xbo="+xbomem.value+";expires=Thu, 18 Dec 2024 12:00:00 UTC";
 			}
-			
-			let x=document.cookie;
-			ps5mem.value=x;
 			
 			var waka = new Audio('waka.mp3');
 			var coin = new Audio('coin.mp3');
