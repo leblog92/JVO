@@ -2,7 +2,7 @@
 <html lang="fr">
 	<head>
 		<meta charset="utf-8">
-		<title>VGS3</title>
+		<title>VGS4</title>
 		<link rel="icon" type="image/png" href="ICO.png"/>
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -63,7 +63,7 @@
 		<table>
 		<tbody>
 		<tr><td>PS5</td><td><input id="ps5mem" type="number" style="width:80px;" onchange="cookiechg();"/>Go</td></tr>
-		<tr><td>Switch</td><td><input id="ninmem" type="number" style="width:80px;" onchange="cookiechg();"/>Go<br></td></tr>
+		<tr><td>Switch</td><td><input id="swimem" type="number" style="width:80px;" onchange="cookiechg();"/>Go<br></td></tr>
 		<tr><td>XBOX</td><td><input id="xbomem" type="number" style="width:80px;" onchange="cookiechg();"/>Go</td></tr>
 		</tr>
 		</tbody>
@@ -71,7 +71,7 @@
 		</div>
 		<script>
 			var ps5mem=document.getElementById("ps5mem");
-			var ninmem=document.getElementById("ninmem");
+			var swimem=document.getElementById("swimem");
 			var xbomem=document.getElementById("xbomem");
 			
 			function getCookie(cname) {
@@ -91,11 +91,13 @@
 			}
 			
 			console.log(document.cookie);
-			getCookie(ps5);
+			pS5mem.value=getCookie(ps5);
+			swimem.value=getCookie(swi);
+			xbomem.value=getCookie(xbo);
 			
 			function cookiechg(){
 				document.cookie="ps5="+ps5mem.value+";expires=Thu, 18 Dec 2024 12:00:00 UTC";
-				document.cookie="swi="+ninmem.value+";expires=Thu, 18 Dec 2024 12:00:00 UTC";
+				document.cookie="swi="+swimem.value+";expires=Thu, 18 Dec 2024 12:00:00 UTC";
 				document.cookie="xbo="+xbomem.value+";expires=Thu, 18 Dec 2024 12:00:00 UTC";
 				console.log(document.cookie);
 			}
