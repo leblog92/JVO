@@ -2,7 +2,7 @@
 <html lang="fr">
 	<head>
 		<meta charset="utf-8">
-		<title>VGS5</title>
+		<title>Video Game Search</title>
 		<link rel="icon" type="image/png" href="ICO.png"/>
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -25,7 +25,7 @@
 			img.console{border-radius:50%;height:50px;width:auto;box-shadow:2.5px 2.5px 2.5px rgba(0,0,0,0.2);}
 			img.select{margin-left:1em;margin-right:1em;transform:rotate(0deg);border-radius:50%;height:90px;width:auto;box-shadow:2.5px 2.5px 4px rgba(0,0,0,0.2);transition:1s;}
 			img.select:hover{transform:rotate(10deg);}
-			img.cover{display:block;margin-left: auto;margin-right:auto;height:auto;width:80px;transition:1s}
+			img.cover{display:block;margin-left: auto;margin-right:auto;height:auto;width:80px;transition:0.33s}
 			img.cover:hover{height:auto;width:250px;}
 			input[type="text"]{padding:10px;border-radius:10px;visibility:hidden;}
 			span.hist{font-size:14px;text-align:left;}
@@ -56,7 +56,7 @@
 		<span style="color:white;margin:10px;" onclick="show_options();">💡 Help ?</span><br>
 		<table id="options" style="display:none;">
 		<tbody>
-		<tr><td colspan="2">Mémoire libre</td></tr>
+		<tr><td colspan="2">Free storage space<br><span>last modified: <span id="spandt"></span></span></td></tr>
 		<tr><td style="cursor: pointer;font-weight:bold;color:#fff;background:#074490;" onclick="allGames('PS')">PS5</td><td><input id="ps5mem" type="number" style="width:3em;" min="0" max="999" onchange="cookiechg();"/> Go</td></tr>
 		<tr><td style="cursor: pointer;font-weight:bold;color:#fff;background:#e60012;" onclick="allGames('Switch')">Switch</td><td><input id="swimem" type="number" style="width:3em;" min="0" max="999" onchange="cookiechg();"/> Go<br></td></tr>
 		<tr><td style="cursor: pointer;font-weight:bold;color:#fff;background:#0f7b0e;" onclick="allGames('XBOX')">XBOX</td><td><input id="xbomem" type="number" style="width:3em;" min="0" max="999" onchange="cookiechg();"/> Go</td></tr>
@@ -69,6 +69,7 @@
 		</table>
 		</div>
 		<script>
+			var spandt=document.getElementById("spandt");
 			var ps5mem=document.getElementById("ps5mem");
 			var swimem=document.getElementById("swimem");
 			var xbomem=document.getElementById("xbomem");
@@ -90,12 +91,15 @@
 			}
 
 			console.log(document.cookie);
+			spandt.value=getCookie("mod");
 			ps5mem.value=getCookie("ps5");
 			swimem.value=getCookie("swi");
 			xbomem.value=getCookie("xbo");
 
 			function cookiechg(){
-				document.cookie="ps5="+ps5mem.value+";expires=Thu, 23 Mar 2042 12:00:00 UTC";
+				var dt=new Date();
+				document.cookie="mod="+dt+";expires=Thu, 23 Mar 2042 12:00:00 UTC";
+				document.cookie="swi="+swimem.value+";expires=Thu, 23 Mar 2042 12:00:00 UTC";
 				document.cookie="swi="+swimem.value+";expires=Thu, 23 Mar 2042 12:00:00 UTC";
 				document.cookie="xbo="+xbomem.value+";expires=Thu, 23 Mar 2042 12:00:00 UTC";
 				console.log(document.cookie);
