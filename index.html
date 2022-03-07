@@ -91,9 +91,9 @@
 			}
 			
 			console.log(document.cookie);
-			ps5mem.value=getCookie(ps5);
-			swimem.value=getCookie(swi);
-			xbomem.value=getCookie(xbo);
+			ps5mem.value=getCookie("ps5");
+			swimem.value=getCookie("swi");
+			xbomem.value=getCookie("xbo");
 			
 			function cookiechg(){
 				document.cookie="ps5="+ps5mem.value+";expires=Thu, 18 Dec 2024 12:00:00 UTC";
