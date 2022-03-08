@@ -91,6 +91,7 @@
 			}
 
 			console.log(document.cookie);
+
 			if(document.cookie==null){
 			}else{
 				spandt.innerHTML="<br>"+getCookie("mod");
@@ -103,7 +104,7 @@
 				var dt=new Date();
 				document.cookie="mod="+dt.toLocaleString()+";expires=Thu, 23 Mar 2042 12:00:00 UTC";
 				spandt.innerHTML="<br>"+getCookie("mod");
-				document.cookie="swi="+swimem.value+";expires=Thu, 23 Mar 2042 12:00:00 UTC";
+				document.cookie="ps5="+ps5mem.value+";expires=Thu, 23 Mar 2042 12:00:00 UTC";
 				document.cookie="swi="+swimem.value+";expires=Thu, 23 Mar 2042 12:00:00 UTC";
 				document.cookie="xbo="+xbomem.value+";expires=Thu, 23 Mar 2042 12:00:00 UTC";
 				console.log(document.cookie);
