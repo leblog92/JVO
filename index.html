@@ -52,7 +52,8 @@
 			</tr>
 			</tbody>
 		</table>
-		<table width="80%">
+		<br>
+		<table class="center" width="80%">
 			<tbody id="tab_sel">
 			</tbody>
 		</table>
@@ -123,6 +124,7 @@
 			var logo=document.getElementById("logo");
 			var name_input=document.getElementById("name_input");
 			var data_input;
+			var tab_sel=document.getElementById("tab_sel");
 			var tab_results=document.getElementById("tab_results");
 			var progress=document.getElementById("progress");
 			var resultArr=[];
@@ -154,11 +156,13 @@
 			//var arr13=["https://www.youtube.com/embed/Jv4BjWoB-NA","https://www.youtube.com/embed/xpA19mLgNMw","https://www.youtube.com/embed/xpA19mLgNMw","https://www.youtube.com/embed/xpA19mLgNMw","https://www.youtube.com/embed/xpA19mLgNMw","https://www.youtube.com/embed/xpA19mLgNMw","https://www.youtube.com/embed/xpA19mLgNMw","https://www.youtube.com/embed/xpA19mLgNMw","https://www.youtube.com/embed/xpA19mLgNMw","https://www.youtube.com/embed/xpA19mLgNMw","https://www.youtube.com/embed/xpA19mLgNMw","https://www.youtube.com/embed/xpA19mLgNMw","https://www.youtube.com/embed/xpA19mLgNMw","https://www.youtube.com/embed/xpA19mLgNMw","https://www.youtube.com/embed/xpA19mLgNMw","https://www.youtube.com/embed/xpA19mLgNMw","https://www.youtube.com/embed/xpA19mLgNMw","https://www.youtube.com/embed/xpA19mLgNMw","https://www.youtube.com/embed/xpA19mLgNMw","https://www.youtube.com/embed/xpA19mLgNMw","https://www.youtube.com/embed/xpA19mLgNMw","https://www.youtube.com/embed/xpA19mLgNMw","https://www.youtube.com/embed/xpA19mLgNMw","https://www.youtube.com/embed/xpA19mLgNMw","https://www.youtube.com/embed/xpA19mLgNMw","https://www.youtube.com/embed/xpA19mLgNMw","https://www.youtube.com/embed/xpA19mLgNMw","https://www.youtube.com/embed/xpA19mLgNMw","https://www.youtube.com/embed/xpA19mLgNMw","https://www.youtube.com/embed/xpA19mLgNMw","https://www.youtube.com/embed/xpA19mLgNMw","https://www.youtube.com/embed/xpA19mLgNMw","https://www.youtube.com/embed/xpA19mLgNMw","https://www.youtube.com/embed/xpA19mLgNMw","https://www.youtube.com/embed/xpA19mLgNMw","https://www.youtube.com/embed/xpA19mLgNMw","n/a","n/a","n/a","n/a","n/a","n/a","n/a","n/a","n/a","n/a","n/a","n/a","n/a","n/a","n/a","https://www.youtube.com/embed/kCGdbEeXBsE","https://www.youtube.com/embed/kCGdbEeXBsE","https://www.youtube.com/embed/kCGdbEeXBsE","https://www.youtube.com/embed/kCGdbEeXBsE","https://www.youtube.com/embed/kCGdbEeXBsE","https://www.youtube.com/embed/kCGdbEeXBsE","https://www.youtube.com/embed/kCGdbEeXBsE","https://www.youtube.com/embed/kCGdbEeXBsE","https://www.youtube.com/embed/kCGdbEeXBsE","https://www.youtube.com/embed/kCGdbEeXBsE","https://www.youtube.com/embed/kCGdbEeXBsE","https://www.youtube.com/embed/kCGdbEeXBsE","https://www.youtube.com/embed/kCGdbEeXBsE","https://www.youtube.com/embed/kCGdbEeXBsE","https://www.youtube.com/embed/kCGdbEeXBsE","https://www.youtube.com/embed/kCGdbEeXBsE","https://www.youtube.com/embed/kCGdbEeXBsE","https://www.youtube.com/embed/kCGdbEeXBsE","https://www.youtube.com/embed/kCGdbEeXBsE","https://www.youtube.com/embed/kCGdbEeXBsE","https://www.youtube.com/embed/kCGdbEeXBsE","https://www.youtube.com/embed/kCGdbEeXBsE","https://www.youtube.com/embed/kCGdbEeXBsE","https://www.youtube.com/embed/kCGdbEeXBsE","https://www.youtube.com/embed/kCGdbEeXBsE","https://www.youtube.com/embed/kCGdbEeXBsE","https://www.youtube.com/embed/kCGdbEeXBsE","https://www.youtube.com/embed/kCGdbEeXBsE","https://www.youtube.com/embed/kCGdbEeXBsE","https://www.youtube.com/embed/kCGdbEeXBsE","https://www.youtube.com/embed/kCGdbEeXBsE","https://www.youtube.com/embed/kCGdbEeXBsE","https://www.youtube.com/embed/kCGdbEeXBsE","https://www.youtube.com/embed/kCGdbEeXBsE","https://www.youtube.com/embed/kCGdbEeXBsE","https://www.youtube.com/embed/kCGdbEeXBsE","https://www.youtube.com/embed/kCGdbEeXBsE","https://www.youtube.com/embed/kCGdbEeXBsE","https://www.youtube.com/embed/kCGdbEeXBsE","https://www.youtube.com/embed/kCGdbEeXBsE","https://www.youtube.com/embed/kCGdbEeXBsE","https://www.youtube.com/embed/kCGdbEeXBsE","https://www.youtube.com/embed/kCGdbEeXBsE","https://www.youtube.com/embed/kCGdbEeXBsE","https://www.youtube.com/embed/kCGdbEeXBsE","https://www.youtube.com/embed/kCGdbEeXBsE","https://www.youtube.com/embed/kCGdbEeXBsE","https://www.youtube.com/embed/kCGdbEeXBsE","https://www.youtube.com/embed/kCGdbEeXBsE","https://www.youtube.com/embed/kCGdbEeXBsE","https://www.youtube.com/embed/kCGdbEeXBsE","https://www.youtube.com/embed/kCGdbEeXBsE","n/a","n/a","n/a","n/a","n/a","n/a","n/a","n/a","n/a","n/a","n/a","n/a","n/a","n/a","n/a","https://www.youtube.com/embed/ejYMPCgpZds","https://www.youtube.com/embed/ejYMPCgpZds","https://www.youtube.com/embed/ejYMPCgpZds","https://www.youtube.com/embed/ejYMPCgpZds","https://www.youtube.com/embed/ejYMPCgpZds","https://www.youtube.com/embed/ejYMPCgpZds","https://www.youtube.com/embed/ejYMPCgpZds","https://www.youtube.com/embed/ejYMPCgpZds","https://www.youtube.com/embed/ejYMPCgpZds","https://www.youtube.com/embed/ejYMPCgpZds","https://www.youtube.com/embed/ejYMPCgpZds","https://www.youtube.com/embed/ejYMPCgpZds","https://www.youtube.com/embed/ejYMPCgpZds","https://www.youtube.com/embed/ejYMPCgpZds","https://www.youtube.com/embed/ejYMPCgpZds","https://www.youtube.com/embed/ejYMPCgpZds","https://www.youtube.com/embed/ejYMPCgpZds","https://www.youtube.com/embed/ejYMPCgpZds","https://www.youtube.com/embed/ejYMPCgpZds","https://www.youtube.com/embed/ejYMPCgpZds","https://www.youtube.com/embed/ejYMPCgpZds","https://www.youtube.com/embed/ejYMPCgpZds","https://www.youtube.com/embed/ejYMPCgpZds","https://www.youtube.com/embed/ejYMPCgpZds","https://www.youtube.com/embed/ejYMPCgpZds","https://www.youtube.com/embed/ejYMPCgpZds","https://www.youtube.com/embed/ejYMPCgpZds","https://www.youtube.com/embed/ejYMPCgpZds","https://www.youtube.com/embed/ejYMPCgpZds","https://www.youtube.com/embed/ejYMPCgpZds","https://www.youtube.com/embed/ejYMPCgpZds","https://www.youtube.com/embed/ejYMPCgpZds","https://www.youtube.com/embed/ejYMPCgpZds","https://www.youtube.com/embed/ejYMPCgpZds","n/a","n/a","n/a","n/a","n/a","n/a","n/a","n/a","n/a"];
 			var arr14=["0","0","0","0","0","1","0","1","0","0","0","1","1","0","1","0","0","0","1","0","0","0","1","1","0","0","0","0","0","0","0","0","0","1","1","0","1","0","0","0","0","0","0","1","0","1","1","0","1","0","1","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","1","1","0","0","0","0","0","0","0","0","0","0","0","1","0","1","1","0","1","0","0","0","0","0","0","0","0","0","0","0","0","1","0","0","0","1","0","1","1","1","1","0"];
 			//Import end
+
 			var input=document.querySelector('#name_input');
 
 			function show() {
 				//waka.currentTime=0;
 				//waka.play();
+				tab_sel.innerHTML="";
 				tab_results.innerHTML="";
 				resultArr=[];
 				name_input.value=name_input.value.toLowerCase();
@@ -219,6 +223,7 @@
 			name_input.onclick=function out() {
 				logo.style.display="none";
 				name_input.value="";
+				tab_sel.innerHTML="";
 				tab_results.innerHTML="<tr><td style='text-align:center;'><marquee scrollamount='24'>🔍 Recherche parmi "+arr1.length+" titres de jeux vidéo <img height='30px' height='auto' src='pikachu.gif'/></marquee></td></tr>";
 			};
 			var count=0;
@@ -266,6 +271,7 @@
 			function allGames(conso) {
 				//coin.currentTime=0;
 				//coin.play();
+				tab_sel.innerHTML="";
 				for (var i=0;i<arr3.length;i++) {
 					if (arr3[i].indexOf(conso) !=-1) {
 						resultArr.push(arr2[i]);
@@ -319,7 +325,7 @@
 						resultLink.push(arr12[i]);
 					}
 				}
-				document.getElementById("tab_sel").innerHTML="<tr><td colspan='3' style='text-align:center;font-weight:bold;color:#000'>Sélection disponible dans la salle Jeux Vidéo</td></tr><tr><td colspan='3' style='text-align:center;font-weight:bold;color:#000'>"+resultArr.length+" résultats</td></tr>";
+				document.getElementById("tab_sel").innerHTML="<tr><td colspan='3' style='text-align:center;font-weight:bold;color:#fff;background:#000;'>Sélection disponible dans la salle Jeux Vidéo<br>"+resultArr.length+" résultats + l'ensemble des jeux Switch</td></tr>";
 				for (var k=0;k<resultArr.length;k++) {
 					tab_results.innerHTML +="<tr id='tr"+k+"' onClick='disp_click(this.id)'><td colspan='3' style='text-align:center;font-weight:bold;'><img class='console' src='"+resultImg[k]+".svg'/> "+resultArr[k]+" <img src='"+resultPEGI[k]+".svg' height='50px' width='auto'/> <span class='num'>"+resultNum[k];+"</span></td></tr>";
 					//tab_results.innerHTML +="<tr id='tr"+k+"z' style='display:none'><td style='text-align:center;'><img class='cover' src="+resultCover[k]+"></td><td><span class='hist'>"+resultHist[k]+" <a href='"+resultLink[k]+"' style='text-decoration: underline;' target='blank'>Plus de détails&nbsp;...</a><br><br><iframe width='560' height='315' src='"+resultYou[k]+"' title='YouTube video player' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe></span></td><td class='specs'>📁 <span class='fwb'>Genre :</span> "+resultGenre[k]+"<br>🎮 <span class='fwb'>Joueur(s) :</span> "+resultNBJ[k]+"<br>💾 <span class='fwb'>Taille :</span> ≈"+resultTail[k]+" Go<br>🏅 <span class='fwb'>Qualités :</span> "+resultQual[k]+"</td></tr>";
