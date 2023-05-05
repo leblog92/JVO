@@ -42,7 +42,7 @@
 		</div>
 		<div id="progress"></div>
 		<table class="center" width="80%">
-			<tbody id="tab_results">
+			<tbody id="tab_results2">
 			<tr>
 				<td style="box-shadow:none;background:none;text-align:center">
 				<img class="select" src="Playstation.svg" onclick="allGames('PS')"/>
@@ -50,6 +50,14 @@
 				<img class="select" src="XBOX.svg" onclick="allGames('XBOX')"/>
 				</td>
 			</tr>
+			</tbody>
+		</table>
+		<table width="80%">
+			<tbody id="tab_sel">
+			</tbody>
+		</table>
+		<table class="center" width="80%">
+			<tbody id="tab_results">
 			</tbody>
 		</table>
 		<div id="elibre" style="background:rgba(0,0,0,0.5);padding:5px;border-radius:5px;">
@@ -67,7 +75,6 @@
 		<tr><td colspan="2"><a href="https://pegi.info/fr" target="_blank">🔞 PEGI info</a></td></tr>
 		</tbody>
 		</table>
-		<table id="sel" style="display:none;">
 		</div>
 		<script>
 			var spandt=document.getElementById("spandt");
@@ -247,8 +254,8 @@
 				}
 			}
 
-function show_options(){
-var options=document.getElementById("options");
+			function show_options(){
+				var options=document.getElementById("options");
 				if(options.style.display=="table"){
 					options.style.display="none";
 				} else{
@@ -312,7 +319,7 @@ var options=document.getElementById("options");
 						resultLink.push(arr12[i]);
 					}
 				}
-				tab_results.innerHTML="<tr><td colspan='3' style='text-align:center;font-weight:bold;color:#000'>"+resultArr.length+" résultats</td></tr>";
+				document.getElementById("tab_sel").innerHTML="<tr><td colspan='3' style='text-align:center;font-weight:bold;color:#000'>Sélection disponible dans la salle Jeux Vidéo</td></tr><tr><td colspan='3' style='text-align:center;font-weight:bold;color:#000'>"+resultArr.length+" résultats</td></tr>";
 				for (var k=0;k<resultArr.length;k++) {
 					tab_results.innerHTML +="<tr id='tr"+k+"' onClick='disp_click(this.id)'><td colspan='3' style='text-align:center;font-weight:bold;'><img class='console' src='"+resultImg[k]+".svg'/> "+resultArr[k]+" <img src='"+resultPEGI[k]+".svg' height='50px' width='auto'/> <span class='num'>"+resultNum[k];+"</span></td></tr>";
 					//tab_results.innerHTML +="<tr id='tr"+k+"z' style='display:none'><td style='text-align:center;'><img class='cover' src="+resultCover[k]+"></td><td><span class='hist'>"+resultHist[k]+" <a href='"+resultLink[k]+"' style='text-decoration: underline;' target='blank'>Plus de détails&nbsp;...</a><br><br><iframe width='560' height='315' src='"+resultYou[k]+"' title='YouTube video player' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe></span></td><td class='specs'>📁 <span class='fwb'>Genre :</span> "+resultGenre[k]+"<br>🎮 <span class='fwb'>Joueur(s) :</span> "+resultNBJ[k]+"<br>💾 <span class='fwb'>Taille :</span> ≈"+resultTail[k]+" Go<br>🏅 <span class='fwb'>Qualités :</span> "+resultQual[k]+"</td></tr>";
@@ -332,6 +339,7 @@ var options=document.getElementById("options");
 				resultLink=[];
 				//resultYou=[];
 			}
+			selection();
 			
 		</script>
 	</body>
