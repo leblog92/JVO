@@ -61,24 +61,24 @@
 			<tbody id="tab_results">
 			</tbody>
 		</table>
-		<div id="elibre" style="background:rgba(0,0,0,0.5);padding:5px;border-radius:5px;">
-		<span style="color:white;margin:10px;" onclick="show_options();">💡 Help ?</span><br>
-		<table id="options" style="display:none;">
-		<tbody>
-		<tr><td colspan="2">Free storage space<span><span id="spandt"></span></span></td></tr>
-		<tr><td style="cursor: pointer;font-weight:bold;color:#fff;background:#074490;" onclick="allGames('PS')">PS5</td><td><input id="ps5mem" type="number" style="width:3em;" min="0" max="999" onchange="cookiechg();"/> Go</td></tr>
-		<tr><td style="cursor: pointer;font-weight:bold;color:#fff;background:#e60012;" onclick="allGames('Switch')">Switch</td><td><input id="swimem" type="number" style="width:3em;" min="0" max="999" onchange="cookiechg();"/> Go<br></td></tr>
-		<tr><td style="cursor: pointer;font-weight:bold;color:#fff;background:#0f7b0e;" onclick="allGames('XBOX')">XBOX</td><td><input id="xbomem" type="number" style="width:3em;" min="0" max="999" onchange="cookiechg();"/> Go</td></tr>
-		<tr><td colspan="2"><a href="https://catalogue.mediatheque-rueilmalmaison.fr/permalink/P-70029927-c706-4983-903b-9d8e6b7e81ef" target="_blank">📚 Catalogue JVO</a></td></tr>
-		<tr><td colspan="2"><a href="https://www.playstation.com/fr-fr/support/hardware/ps5/" target="_blank">⚙️ Aide PS5️</a></td></tr>
-		<tr><td colspan="2"><a href="https://www.nintendo.fr/Assistance/Contact/Reparations/Nintendo-Switch-1770156.html" target="_blank">⚙️ Aide Switch</a></td></tr>
-		<tr><td colspan="2"><a href="https://support.xbox.com/fr-FR/" target="_blank">⚙️ Aide XBOX</a></td></tr>
-		<tr><td colspan="2"><a href="https://pegi.info/fr" target="_blank">🔞 PEGI info</a></td></tr>
-		</tbody>
-		</table>
-		</div>
+		<!-- <div id="elibre" style="background:rgba(0,0,0,0.5);padding:5px;border-radius:5px;">
+			<span style="color:white;margin:10px;" onclick="show_options();">💡 Help ?</span><br>
+			<table id="options" style="display:none;">
+			<tbody>
+			<tr><td colspan="2">Free storage space<span><span id="spandt"></span></span></td></tr>
+			<tr><td style="cursor: pointer;font-weight:bold;color:#fff;background:#074490;" onclick="allGames('PS')">PS5</td><td><input id="ps5mem" type="number" style="width:3em;" min="0" max="999" onchange="cookiechg();"/> Go</td></tr>
+			<tr><td style="cursor: pointer;font-weight:bold;color:#fff;background:#e60012;" onclick="allGames('Switch')">Switch</td><td><input id="swimem" type="number" style="width:3em;" min="0" max="999" onchange="cookiechg();"/> Go<br></td></tr>
+			<tr><td style="cursor: pointer;font-weight:bold;color:#fff;background:#0f7b0e;" onclick="allGames('XBOX')">XBOX</td><td><input id="xbomem" type="number" style="width:3em;" min="0" max="999" onchange="cookiechg();"/> Go</td></tr>
+			<tr><td colspan="2"><a href="https://catalogue.mediatheque-rueilmalmaison.fr/permalink/P-70029927-c706-4983-903b-9d8e6b7e81ef" target="_blank">📚 Catalogue JVO</a></td></tr>
+			<tr><td colspan="2"><a href="https://www.playstation.com/fr-fr/support/hardware/ps5/" target="_blank">⚙️ Aide PS5️</a></td></tr>
+			<tr><td colspan="2"><a href="https://www.nintendo.fr/Assistance/Contact/Reparations/Nintendo-Switch-1770156.html" target="_blank">⚙️ Aide Switch</a></td></tr>
+			<tr><td colspan="2"><a href="https://support.xbox.com/fr-FR/" target="_blank">⚙️ Aide XBOX</a></td></tr>
+			<tr><td colspan="2"><a href="https://pegi.info/fr" target="_blank">🔞 PEGI info</a></td></tr>
+			</tbody>
+			</table>
+		</div> -->
 		<script>
-			var spandt=document.getElementById("spandt");
+			/*var spandt=document.getElementById("spandt");
 			var ps5mem=document.getElementById("ps5mem");
 			var swimem=document.getElementById("swimem");
 			var xbomem=document.getElementById("xbomem");
@@ -117,7 +117,7 @@
 				document.cookie="swi="+swimem.value+";expires=Thu, 23 Mar 2042 12:00:00 UTC";
 				document.cookie="xbo="+xbomem.value+";expires=Thu, 23 Mar 2042 12:00:00 UTC";
 				console.log(document.cookie);
-			}
+			}*/
 
 			var waka=new Audio('waka.mp3');
 			var coin=new Audio('coin.mp3');
