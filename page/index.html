@@ -10,10 +10,11 @@
 				margin:0;
 			}
 			body{
-				font-family:Consolas;
+				font-family:Arial;
 				font-size:10pt;
 			}
 			h3{
+				font-family:Arial;
 				border-bottom:1px solid black;
 			}
 			.page{
@@ -64,7 +65,7 @@
 			for(var i=0;i<=(arr6.length-1);i=i+4){
 				document.body.innerHTML+='<div class="page pagebreak" id="page'+i+'">';
 				for(var j=0;j<=3;j++){
-					document.getElementById("page"+i).innerHTML+='<div class="article"><img class="cover" src="../'+arr6[i+j]+'"/><span class="content"><h3>'+arr4[i+j]+'-'+arr2[i+j]+'</h3>'+arr7[i+j]+'<br><br>📁 genre : '+arr8[i+j]+'<br>🎮 joueur(s) : '+arr9[i+j]+'<br>🏅 qualités : '+arr10[i+j]+'<br>📀 support : '+arr15[i+j]+'</span></div>';
+					document.getElementById("page"+i).innerHTML+='<div class="article"><img class="cover" src="../'+arr6[i+j]+'"/><span class="content"><h3>'+arr4[i+j]+' - '+arr2[i+j]+'</h3>'+arr7[i+j]+'<br><br>📁 genre : '+arr8[i+j]+'<br>🎮 joueur(s) : '+arr9[i+j]+'<br>🏅 qualités : '+arr10[i+j]+'<br>📀 support : '+arr15[i+j]+'</span></div>';
 				}
 			}
 		</script>
