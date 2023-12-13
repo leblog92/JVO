@@ -33,6 +33,12 @@
 				border-right:0.01mm solid #ddd;
 				border-bottom:0.01mm solid #ddd;
 			}
+			.firstpage{
+				background:#fff;
+				overflow:hidden;
+				width:210mm;
+				padding:14mm;
+			}
 			.article{
 				width:100%;
 				height:60mm;
@@ -129,6 +135,7 @@
 				}
 				document.body.innerHTML="";
 				document.body.innerHTML="<style>.cover{height:48mm;padding:0mm;}</style>";
+				document.body.innerHTML+='<img src="../front_cover.png"/>';
 				for(var i=0;i<arr3.length-1;i++){
 					document.body.innerHTML+='<img class="cover" src="../'+arr6[i]+'"/>';
 				}
@@ -159,6 +166,7 @@
 			function every(){
 				var pnb=1;
 				document.body.innerHTML="";
+				document.body.innerHTML+='<img class="firstpage pagebreak" src="../front_cover.png"/>';
 				for(var i=0;i<arr2.length;i=i+4){
 					document.body.innerHTML+='<div class="page pagebreak" id="div'+i+'"></div>';
 					for(var j=0;j<=3;j++){
