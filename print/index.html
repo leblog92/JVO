@@ -12,7 +12,7 @@
 			body{
 				background:#888;
 				font-family:Arial;
-				font-size:10pt;
+				font-size:12pt;
 			}
 			h3{
 				font-family:Arial;
@@ -23,13 +23,17 @@
 				margin:14mm;
 				padding:7mm;
 			}
+			.Switch{color:;}
+			.PS4{color:#e60012;}
+			.PS5{color:#063d8a;}
+			.XBOX{color:#0f7b0e;}
 			.page{
 				background:#fff;
 				overflow:hidden;
 				width:210mm;
-				padding-left:14mm;
-				padding-right:14mm;
-				padding-top:14mm;
+				padding-left:10mm;
+				padding-right:10mm;
+				padding-top:10mm;
 				border-right:0.01mm solid #ddd;
 				border-bottom:0.01mm solid #ddd;
 			}
@@ -49,7 +53,7 @@
 			.cover{
 				float:left;
 				max-width:47mm;
-				height:60mm;
+				height:55mm;
 				padding-right:5mm;
 			}
 			.content{
@@ -170,7 +174,7 @@
 				for(var i=0;i<arr2.length;i=i+4){
 					document.body.innerHTML+='<div class="page pagebreak" id="div'+i+'"></div>';
 					for(var j=0;j<=3;j++){
-						if(i+j<arr2.length){document.getElementById("div"+i).innerHTML+='<div class="article"><img class="cover" src="../'+arr6[i+j]+'"/><span class="content"><h3>'+arr4[i+j]+' - '+arr2[i+j]+'</h3>'+arr7[i+j]+'<br><br>📁 genre : '+arr8[i+j]+'<br>🎮 joueur(s) : '+arr9[i+j]+'<br>🏅 qualités : '+arr10[i+j]+'<br>📀 support : '+arr15[i+j]+'</span></div>';}
+						if(i+j<arr2.length){document.getElementById("div"+i).innerHTML+='<div class="article"><img class="cover" src="../'+arr6[i+j]+'"/><span class="content"><h3>'+arr4[i+j]+' - '+arr2[i+j]+' - <span class="'+arr3[i]+'">'+arr3[i]+'</span></h3>'+arr7[i+j]+'<br>📁 genre : '+arr8[i+j]+'<br>🎮 joueur(s) : '+arr9[i+j]+'<br>🏅 qualités : '+arr10[i+j]+'<!--<br>📀 support : '+arr15[i+j]+'--></span></div>';}
 					}
 					document.getElementById("div"+i).innerHTML+='<div class="numb">'+pnb+'</div>';
 					pnb++;
