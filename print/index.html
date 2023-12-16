@@ -12,7 +12,7 @@
 			body{
 				background:#888;
 				font-family:Arial;
-				font-size:12pt;
+				font-size:11.5pt;
 			}
 			h3{
 				font-family:Arial;
@@ -82,7 +82,7 @@
 	</head>
 	<body>
 		<button onclick="every()">Everything Booklet</button><button onclick="selection()">Selection Booklet</button><br>
-		<button onclick="print_nin()">Nintendo Covers Poster</button><button onclick="print_ps()">PS Covers Poster</button><button onclick="print_xbox()">XBOX Covers Poster</button>
+		<button onclick="print_nin()">Nintendo Poster</button><button onclick="print_ps()">PS Poster</button><button onclick="print_xbox()">XBOX Poster</button>
 		
 		<script src="../variables.js"></script>
 		<script>
@@ -119,9 +119,10 @@
 						arr15.splice(i,1);
 					}
 				}
-				document.body.innerHTML="<style>.cover{height:26.25mm;padding:0;</style>";
-				for(var i=0;i<arr3.length-1;i++){
-					document.body.innerHTML+='<img class="cover" src="../'+arr6[i]+'"/>';
+				document.body.innerHTML="";
+				document.body.innerHTML='<style>.cover{max-width:19mm;height:auto;padding:0mm;}</style><div id="contenu"></div>';
+				for(var i=0;i<arr3.length;i++){
+					document.getElementById("contenu").innerHTML+='<img class="cover" src="../'+arr6[i]+'"/>';
 				}
 			}
 			
@@ -141,9 +142,9 @@
 					}
 				}
 				document.body.innerHTML="";
-				document.body.innerHTML="<style>.cover{height:48mm;padding:0mm;}</style>";
-				for(var i=0;i<arr3.length-1;i++){
-					document.body.innerHTML+='<img class="cover" src="../'+arr6[i]+'"/>';
+				document.body.innerHTML='<style>.cover{height:48mm;padding:0mm;}</style><div id="contenu"></div>';
+				for(var i=0;i<arr3.length;i++){
+					document.getElementById("contenu").innerHTML+='<img class="cover" src="../'+arr6[i]+'"/>';
 				}
 			}
 			
@@ -163,20 +164,20 @@
 					}
 				}
 				document.body.innerHTML="";
-				document.body.innerHTML="<style>.cover{height:48mm;padding:0mm;}</style>";
-				for(var i=0;i<arr3.length-1;i++){
-					document.body.innerHTML+='<img class="cover" src="../'+arr6[i]+'"/>';
+				document.body.innerHTML='<style>.cover{max-width:42mm;height:auto;padding:0mm;}</style><div id="contenu"></div>';
+				for(var i=0;i<arr3.length;i++){
+					document.getElementById("contenu").innerHTML+='<img class="cover" src="../'+arr6[i]+'"/>';
 				}
 			}
 
 			function every(){
 				var pnb=1;
 				document.body.innerHTML="";
-				document.body.innerHTML+='<div class="page pagebreak" id="div'+i+'">CATALOGUE JEUX-VIDÉO</div>';
+				document.body.innerHTML+='<div class="page pagebreak" id="main">CATALOGUE DE JEUX-VIDÉO</div>';
 				for(var i=0;i<arr2.length;i=i+4){
 					document.body.innerHTML+='<div class="page pagebreak" id="div'+i+'"></div>';
 					for(var j=0;j<=3;j++){
-						if(i+j<arr2.length){document.getElementById("div"+i).innerHTML+='<div class="article"><img class="cover" src="../'+arr6[i+j]+'"/><span class="content"><h3>'+arr4[i+j]+' - '+arr2[i+j]+' - <span class="'+arr3[i]+'">'+arr3[i]+'</span></h3>'+arr7[i+j]+'<br>📁 genre : '+arr8[i+j]+'<br>🎮 joueur(s) : '+arr9[i+j]+'<br>🏅 qualités : '+arr10[i+j]+'<!--<br>📀 support : '+arr15[i+j]+'--></span></div>';}
+						if(i+j<arr2.length){document.getElementById("div"+i).innerHTML+='<div class="article"><img class="cover" src="../'+arr6[i+j]+'"/><span class="content"><h3>'+arr4[i+j]+' - '+arr2[i+j]+' - <span class="'+arr3[i]+'">'+arr3[i]+'</span></h3>'+arr7[i+j]+'<br><br>📁 genre : '+arr8[i+j]+'<br>🎮 joueur(s) : '+arr9[i+j]+'<br>🏅 qualités : '+arr10[i+j]+'<!--<br>📀 support : '+arr15[i+j]+'--></span></div>';}
 					}
 					document.getElementById("div"+i).innerHTML+='<div class="numb">'+pnb+'</div>';
 					pnb++;
