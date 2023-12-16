@@ -119,7 +119,7 @@
 						arr15.splice(i,1);
 					}
 				}
-				document.body.innerHTML="";
+				document.body.innerHTML="<style>.cover{height:28mm;padding:0;</style>";
 				for(var i=0;i<arr3.length-1;i++){
 					document.body.innerHTML+='<img class="cover" src="../'+arr6[i]+'"/>';
 				}
@@ -171,6 +171,7 @@
 
 			function every(){
 				var pnb=1;
+				document.body.innerHTML="";
 				document.body.innerHTML+='<div class="page pagebreak" id="div'+i+'">CATALOGUE JEUX-VIDÉO</div>';
 				for(var i=0;i<arr2.length;i=i+4){
 					document.body.innerHTML+='<div class="page pagebreak" id="div'+i+'"></div>';
