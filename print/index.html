@@ -80,24 +80,7 @@
 			}
 		</style>
 		
-		<style>
-		.bellnumbers{
-			position: absolute;
-			font-size:12px;
-			background-color:red;
-			width:14px;
-			height:14px;
-			color:#fff;
-			top: -4px;
-			right: -4px;
-		}
-		.bell{
-			display: inline-block;
-			position: relative;
-			width:64px;
-		}
-		
-		</style>
+
 	</head>
 	<body>
 		<button onclick="every()">Everything Booklet</button>
@@ -222,9 +205,9 @@
 					}
 				}
 				document.body.innerHTML="";
-				document.body.innerHTML='<style>.cover{max-width:19mm;height:auto;padding:0mm;}</style><div id="contenu"></div>';
+				document.body.innerHTML='<style>*{box-sizing:border-box;}.cover{max-width:19mm;height:31mm;padding:0mm;position:relative;text-align:center;font-size:6pt;margin:2pt;color:#000;}.text-block{background:white;border-radius:50%;position:absolute;bottom:2mm;right:2mm;}.bell{max-width:19mm;height:31mm;}</style><div id="contenu"></div>';
 				for(var i=0;i<arr3.length;i++){
-					document.getElementById("contenu").innerHTML+='<img class="bell" src="../'+arr6[i]+'"/><div class="bellnumbers">'+arr4[i]+'</div>';
+					document.getElementById("contenu").innerHTML+='<div class="cover"><img class="bell" src="../'+arr6[i]+'"/><div class="text-block">'+arr4[i]+'</div></div>';
 				}
 			}
 			
