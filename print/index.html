@@ -79,10 +79,32 @@
 				}
 			}
 		</style>
+		
+		<style>
+		.bellnumbers{
+			position: absolute;
+			font-size:12px;
+			background-color:red;
+			width:14px;
+			height:14px;
+			color:#fff;
+			top: -4px;
+			right: -4px;
+		}
+		.bell{
+			display: inline-block;
+			position: relative;
+			width:64px;
+		}
+		
+		</style>
 	</head>
 	<body>
-		<button onclick="every()">Everything Booklet</button><button onclick="selection()">Selection Booklet</button><br>
-		<button onclick="print_nin()">Nintendo Poster</button><button onclick="print_ps()">PS Poster</button><button onclick="print_xbox()">XBOX Poster</button>
+		<button onclick="every()">Everything Booklet</button>
+		<button onclick="selection()">Selection Booklet</button><br>
+		<button onclick="print_nin()">Nintendo Poster</button>
+		<button onclick="print_ps()">PS Poster</button><button onclick="print_xbox()">XBOX Poster</button><br>
+		<button onclick="print_test()">Test</button>
 		
 		<script src="../variables.js"></script>
 		<script>
@@ -181,6 +203,28 @@
 					}
 					document.getElementById("div"+i).innerHTML+='<div class="numb">'+pnb+'</div>';
 					pnb++;
+				}
+			}
+
+			function print_test(){
+				for(var i=arr3.length;i>=0;i--){
+					if(arr3[i]!="Switch"){
+						arr2.splice(i,1);
+						arr3.splice(i,1);
+						arr4.splice(i,1);
+						arr6.splice(i,1);
+						arr7.splice(i,1);
+						arr8.splice(i,1);
+						arr9.splice(i,1);
+						arr10.splice(i,1);
+						arr14.splice(i,1);
+						arr15.splice(i,1);
+					}
+				}
+				document.body.innerHTML="";
+				document.body.innerHTML='<style>.cover{max-width:19mm;height:auto;padding:0mm;}</style><div id="contenu"></div>';
+				for(var i=0;i<arr3.length;i++){
+					document.getElementById("contenu").innerHTML+='<img class="bell" src="../'+arr6[i]+'"/><div class="bellnumbers">'+arr4[i]+'</div>';
 				}
 			}
 			
