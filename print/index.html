@@ -24,12 +24,8 @@
 				padding:7mm;
 			}
 			.Switch{color:#e60012;}
-			.PS4{
-				color:#063d8a;
-			}
-			.PS5{
-				color:#063d8a;
-				}
+			.PS4{color:#063d8a;}
+			.PS5{color:#063d8a;}
 			.XBOX{color:#0f7b0e;}
 			.page{
 				background:#fff;
@@ -85,10 +81,8 @@
 	<body>
 		<button onclick="every()">Everything Booklet</button>
 		<button onclick="selection()">Selection Booklet</button><br>
-		<button onclick="print_nin()">Nintendo Poster</button>
-		<button onclick="print_ps()">PS Poster</button><button onclick="print_xbox()">XBOX Poster</button><br>
-		<button onclick="print_test()">Test Switch</button>
-		<button onclick="print_test_ps()">Test PS</button>
+		<!-- <button onclick="print_nin()">Nintendo Poster</button><button onclick="print_ps()">PS Poster</button><button onclick="print_xbox()">XBOX Poster</button><br> -->
+		<button onclick="print_test()">Switch</button><button onclick="print_test_ps()">Playstation</button><button onclick="print_test_xbox()">XBOX</button>
 		
 		<script src="../variables.js"></script>
 		<script>
@@ -141,14 +135,14 @@
 						arr6.splice(i,1);
 						arr7.splice(i,1);
 						arr8.splice(i,1);
-						arr9.splice(i,1);s
+						arr9.splice(i,1);
 						arr10.splice(i,1);
 						arr14.splice(i,1);
 						arr15.splice(i,1);
 					}
 				}
 				document.body.innerHTML="";
-				document.body.innerHTML='<style>.cover{height:48mm;padding:0mm;}</style><h1>JEUX XBOX</h1><div id="contenu"></div>';
+				document.body.innerHTML='<style>.cover{height:48mm;padding:0mm;}</style><h2>JEUX XBOX</h2><div id="contenu"></div>';
 				for(var i=0;i<arr3.length;i++){
 					document.getElementById("contenu").innerHTML+='<img class="cover" src="../'+arr6[i]+'"/>';
 				}
@@ -156,7 +150,7 @@
 			
 			function print_ps(){
 				for(var i=arr3.length;i>=0;i--){
-					if(arr3[i]!=("PS4"||"PS5")||arr14[i]==0){
+					if(arr3[i]!="PS"||arr14[i]==0){
 						arr2.splice(i,1);
 						arr3.splice(i,1);
 						arr4.splice(i,1);
@@ -214,8 +208,10 @@
 			
 			
 			function print_test_ps(){
+				var cwidth=33;
+				var cheight=cwidth/.8;
 				for(var i=arr3.length;i>=0;i--){
-					if(arr3[i]!=("PS4"||"PS5")||arr14[i]==0){
+					if(arr16[i]!="PS"||arr14[i]==0){
 						arr2.splice(i,1);
 						arr3.splice(i,1);
 						arr4.splice(i,1);
@@ -229,12 +225,35 @@
 					}
 				}
 				document.body.innerHTML="";
-				document.body.innerHTML='<style>*{box-sizing:border-box;}.cover{max-width:40mm;height:50mm;padding:0mm;position:relative;margin:0;text-align:center;color:#000;}.text-block{background:white;border-radius:50%;position:absolute;bottom:1mm;right:1mm;font-weight:bold;font-size:12pt;padding:2pt;}.bell{max-width:40mm;height:50mm;}</style><div id="contenu"></div>';
+				document.body.innerHTML='<style>*{box-sizing:border-box;}.bell{max-width:'+cwidth+'mm;height:'+cheight+'mm;}.cover{max-width:'+cwidth+'mm;height:'+cheight+'mm;padding:0mm;position:relative;margin:0;text-align:center;color:#000;}.text-block{background:white;border-radius:50%;position:absolute;bottom:1mm;right:1mm;font-weight:bold;font-size:12pt;padding:2pt;}</style><h2 class="PS4">Jeux Playstation</h2><div id="contenu"></div>';
 				for(var i=0;i<arr3.length;i++){
 					document.getElementById("contenu").innerHTML+='<div class="cover"><img class="bell" src="../'+arr6[i]+'"/><div class="text-block">'+arr4[i]+'</div></div>';
 				}
 			}
 			
+			function print_test_xbox(){
+				var cwidth=33;
+				var cheight=cwidth/.8;
+				for(var i=arr3.length;i>=0;i--){
+					if(arr3[i]!="XBOX"||arr14[i]==0){
+						arr2.splice(i,1);
+						arr3.splice(i,1);
+						arr4.splice(i,1);
+						arr6.splice(i,1);
+						arr7.splice(i,1);
+						arr8.splice(i,1);
+						arr9.splice(i,1);
+						arr10.splice(i,1);
+						arr14.splice(i,1);
+						arr15.splice(i,1);
+					}
+				}
+				document.body.innerHTML="";
+				document.body.innerHTML='<style>*{box-sizing:border-box;}.bell{max-width:'+cwidth+'mm;height:'+cheight+'mm;}.cover{max-width:'+cwidth+'mm;height:'+cheight+'mm;padding:0mm;position:relative;margin:0;text-align:center;color:#000;}.text-block{background:white;border-radius:50%;position:absolute;bottom:1mm;right:1mm;font-weight:bold;font-size:12pt;padding:2pt;}</style><h2 class="XBOX">Jeux XBOX</h2><div id="contenu"></div>';
+				for(var i=0;i<arr3.length;i++){
+					document.getElementById("contenu").innerHTML+='<div class="cover"><img class="bell" src="../'+arr6[i]+'"/><div class="text-block">'+arr4[i]+'</div></div>';
+				}
+			}
 			
 			
 		</script>
