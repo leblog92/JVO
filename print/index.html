@@ -82,7 +82,7 @@
 		<button onclick="every()">Everything Booklet</button>
 		<button onclick="selection()">Selection Booklet</button><br>
 		<!-- <button onclick="print_nin()">Nintendo Poster</button><button onclick="print_ps()">PS Poster</button><button onclick="print_xbox()">XBOX Poster</button><br> -->
-		<button onclick="print_test()">Switch</button><button onclick="print_test_ps()">Playstation</button><button onclick="print_test_xbox()">XBOX</button>
+		<button onclick="print_test_nin()">Switch</button><button onclick="print_test_ps()">Playstation</button><button onclick="print_test_xbox()">XBOX</button>
 		
 		<script src="../variables.js"></script>
 		<script>
@@ -184,7 +184,10 @@
 				}
 			}
 
-			function print_test(){
+			function print_test_nin(){
+				var cwidth=17;
+				var cheight=cwidth/.6;
+				var cpadding=11;
 				for(var i=arr3.length;i>=0;i--){
 					if(arr3[i]!="Switch"){
 						arr2.splice(i,1);
@@ -200,7 +203,8 @@
 					}
 				}
 				document.body.innerHTML="";
-				document.body.innerHTML='<style>*{box-sizing:border-box;}.cover{max-width:19mm;height:31mm;padding:0mm;position:relative;margin:0;text-align:center;color:#000;}.text-block{background:white;border-radius:50%;position:absolute;bottom:1mm;right:1mm;font-weight:bold;font-size:6pt;padding:2pt;}.bell{max-width:19mm;height:31mm;}</style><div id="contenu"></div>';
+				
+				document.body.innerHTML='<style>*{box-sizing:border-box;}.bell{max-width:'+cwidth+'mm;height:'+cheight+'mm;}.cover{max-width:'+cwidth+'mm;height:'+cheight+'mm;padding:0mm;position:relative;margin:0;text-align:center;color:#000;}.firstpage{padding:'+cpadding+'mm}.text-block{background:white;border-radius:50%;position:absolute;bottom:1mm;right:1mm;font-weight:bold;font-size:6pt;padding:2pt;}</style><div id="contenu" class ="firstpage"><h2 class="Switch">Jeux Nintendo Switch</h2></div>';
 				for(var i=0;i<arr3.length;i++){
 					document.getElementById("contenu").innerHTML+='<div class="cover"><img class="bell" src="../'+arr6[i]+'"/><div class="text-block">'+arr4[i]+'</div></div>';
 				}
@@ -208,7 +212,7 @@
 			
 			
 			function print_test_ps(){
-				var cwidth=33;
+				var cwidth=29;
 				var cheight=cwidth/.8;
 				for(var i=arr3.length;i>=0;i--){
 					if(arr16[i]!="PS"||arr14[i]==0){
@@ -225,14 +229,14 @@
 					}
 				}
 				document.body.innerHTML="";
-				document.body.innerHTML='<style>*{box-sizing:border-box;}.bell{max-width:'+cwidth+'mm;height:'+cheight+'mm;}.cover{max-width:'+cwidth+'mm;height:'+cheight+'mm;padding:0mm;position:relative;margin:0;text-align:center;color:#000;}.text-block{background:white;border-radius:50%;position:absolute;bottom:1mm;right:1mm;font-weight:bold;font-size:12pt;padding:2pt;}</style><h2 class="PS4">Jeux Playstation</h2><div id="contenu"></div>';
+				document.body.innerHTML='<style>*{box-sizing:border-box;}.bell{max-width:'+cwidth+'mm;height:'+cheight+'mm;}.cover{max-width:'+cwidth+'mm;height:'+cheight+'mm;padding:0mm;position:relative;margin:0;text-align:center;color:#000;}.text-block{background:white;border-radius:50%;position:absolute;bottom:1mm;right:1mm;font-weight:bold;font-size:12pt;padding:2pt;}</style><div id="contenu" class="firstpage"><h2 class="PS5">Jeux Sony Playstation</h2></div>';
 				for(var i=0;i<arr3.length;i++){
 					document.getElementById("contenu").innerHTML+='<div class="cover"><img class="bell" src="../'+arr6[i]+'"/><div class="text-block">'+arr4[i]+'</div></div>';
 				}
 			}
 			
 			function print_test_xbox(){
-				var cwidth=33;
+				var cwidth=35;
 				var cheight=cwidth/.8;
 				for(var i=arr3.length;i>=0;i--){
 					if(arr3[i]!="XBOX"||arr14[i]==0){
@@ -249,7 +253,7 @@
 					}
 				}
 				document.body.innerHTML="";
-				document.body.innerHTML='<style>*{box-sizing:border-box;}.bell{max-width:'+cwidth+'mm;height:'+cheight+'mm;}.cover{max-width:'+cwidth+'mm;height:'+cheight+'mm;padding:0mm;position:relative;margin:0;text-align:center;color:#000;}.text-block{background:white;border-radius:50%;position:absolute;bottom:1mm;right:1mm;font-weight:bold;font-size:12pt;padding:2pt;}</style><h2 class="XBOX">Jeux XBOX</h2><div id="contenu"></div>';
+				document.body.innerHTML='<style>*{box-sizing:border-box;}.bell{max-width:'+cwidth+'mm;height:'+cheight+'mm;}.cover{max-width:'+cwidth+'mm;height:'+cheight+'mm;padding:0mm;position:relative;margin:0;text-align:center;color:#000;}.text-block{background:white;border-radius:50%;position:absolute;bottom:1mm;right:1mm;font-weight:bold;font-size:12pt;padding:2pt;}</style><div id="contenu" class="firstpage"><h2 class="XBOX">Jeux XBOX</h2></div>';
 				for(var i=0;i<arr3.length;i++){
 					document.getElementById("contenu").innerHTML+='<div class="cover"><img class="bell" src="../'+arr6[i]+'"/><div class="text-block">'+arr4[i]+'</div></div>';
 				}
