@@ -19,9 +19,13 @@
 				border-bottom:1px solid black;
 			}
 			button{
-				width:50mm;
-				margin:14mm;
-				padding:7mm;
+				width:66mm;
+				margin:6mm;
+				padding:4mm;
+				border-radius:2mm;
+			}
+			#intro{
+			padding:8mm;
 			}
 			.Switch{color:#e60012;}
 			.PS4{color:#063d8a;}
@@ -70,23 +74,27 @@
 				body{
 					background:none;
 				}
-				.page{
-					border:none;
-				}
+				.page,.firstpage{border:none;clip-path:inset(0 0 0 0);}
 			}
 		</style>
 		
 
 	</head>
 	<body>
-		<button onclick="every()">Everything Booklet</button>
-		<button onclick="selection()">Selection Booklet</button><br>
+	<div id="intro"><h3>SUPPORT COM JVO β</h3>
+	La base contient <span id="tot"></span> jeux.<br>
+	Choisissez ce que vous souhaitez imprimer.<br>
+	Actualisez la page (F5) pour choisir à nouveau.</div>
+		<button onclick="every()">Livret de tous les jeux</button>
+		<button onclick="selection()">Livret des jeux installés</button><br>
 		<!-- <button onclick="print_nin()">Nintendo Poster</button><button onclick="print_ps()">PS Poster</button><button onclick="print_xbox()">XBOX Poster</button><br> -->
-		<button onclick="print_test_ps()">Selection Playstation</button><button onclick="print_test_xbox()">Selection XBOX</button><br>
-		<button onclick="print_all_xbox()">All XBOX</button><button onclick="print_all_ps()">All Playstation</button><button onclick="print_test_nin()">Switch</button>
+		<button onclick="print_test_ps()">Affiche des jeux installés PS</button><button onclick="print_test_xbox()">Affiche des jeux installés XBOX</button><br>
+		<button onclick="print_all_xbox()">Affiche de tous les jeux XBOX</button><button onclick="print_all_ps()">Affiche de tous les jeux Playstation</button><button onclick="print_test_nin()">Affiche de tous les jeux Switch</button>
 		
 		<script src="../variables.js"></script>
 		<script>
+			var tot=document.getElementById("tot");
+			tot.innerHTML=arr16.length;
 			function selection(){
 				for(var i=arr14.length;i>=0;i--){
 					if(arr14[i]==0){
