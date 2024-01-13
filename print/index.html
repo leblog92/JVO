@@ -2,7 +2,7 @@
 <html lang="fr">
 	<head>
 		<meta charset="utf-8">
-		<title>Video Game Booklet</title>
+		<title>Video Game Print Service</title>
 		<link rel="icon" type="image/png" href="../ICO.png"/>
 		<style>
 			html,body{
@@ -115,6 +115,7 @@
 				every();
 			}
 
+			/*
 			function print_nin(){
 				for(var i=arr3.length;i>=0;i--){
 					if(arr3[i]!="Switch"){
@@ -180,15 +181,17 @@
 					document.getElementById("contenu").innerHTML+='<img class="cover" src="../'+arr6[i]+'"/>';
 				}
 			}
+			*/
 
 			function every(){
 				var pnb=1;
+				document.title="Tous les jeux vidéo";
 				document.body.innerHTML="";
 				document.body.innerHTML+='<div class="page pagebreak" id="main">CATALOGUE DE JEUX-VIDÉO</div>';
 				for(var i=0;i<arr2.length;i=i+4){
 					document.body.innerHTML+='<div class="page pagebreak" id="div'+i+'"></div>';
-					for(var j=0;j<=3;j++){
-						if(i+j<arr2.length){document.getElementById("div"+i).innerHTML+='<div class="article"><img class="cover" src="../'+arr6[i+j]+'"/><span class="content"><h3>'+arr4[i+j]+' - '+arr2[i+j]+' - <span class="'+arr3[i+j]+'">'+arr3[i+j]+'</span></h3>'+arr7[i+j]+'<br><br>📁 genre : '+arr8[i+j]+'<br>🎮 joueur(s) : '+arr9[i+j]+'<br>🏅 qualités : '+arr10[i+j]+'<!--<br>📀 support : '+arr15[i+j]+'--></span></div>';}
+					for(var j=0;j<=3;j++){if(i+j<arr2.length){
+						document.getElementById("div"+i).innerHTML+='<div class="article"><img class="cover" src="../'+arr6[i+j]+'"/><span class="content"><h3>'+arr4[i+j]+' - '+arr2[i+j]+' - <span class="'+arr3[i+j]+'">'+arr3[i+j]+'</span></h3>'+arr7[i+j]+'<br><br>📁 genre : '+arr8[i+j]+'<br>🎮 joueur(s) : '+arr9[i+j]+'<br>🏅 qualités : '+arr10[i+j]+'</span></div>';}
 					}
 					document.getElementById("div"+i).innerHTML+='<div class="numb">'+pnb+'</div>';
 					pnb++;
@@ -213,8 +216,8 @@
 						arr15.splice(i,1);
 					}
 				}
+				document.title="Tous les jeux Switch";
 				document.body.innerHTML="";
-				
 				document.body.innerHTML='<style>*{box-sizing:border-box;}.bell{max-width:'+cwidth+'mm;height:'+cheight+'mm;}.cover{max-width:'+cwidth+'mm;height:'+cheight+'mm;padding:0mm;position:relative;margin:0;text-align:center;color:#000;}.firstpage{padding:'+cpadding+'mm}.text-block{background:white;border-radius:50%;position:absolute;bottom:1mm;right:1mm;font-weight:bold;font-size:6pt;padding:2pt;}</style><div id="contenu" class ="firstpage"><h2 class="Switch">Jeux pour Nintendo Switch</h2></div>';
 				for(var i=0;i<arr3.length;i++){
 					document.getElementById("contenu").innerHTML+='<div class="cover"><img class="bell" src="../'+arr6[i]+'"/><div class="text-block">'+arr4[i]+'</div></div>';
@@ -239,6 +242,7 @@
 						arr15.splice(i,1);
 					}
 				}
+				document.title="Les jeux Playstation installés";
 				document.body.innerHTML="";
 				document.body.innerHTML='<style>*{box-sizing:border-box;}.bell{max-width:'+cwidth+'mm;height:'+cheight+'mm;}.cover{max-width:'+cwidth+'mm;height:'+cheight+'mm;padding:0mm;position:relative;margin:0;text-align:center;color:#000;}.text-block{background:white;border-radius:50%;position:absolute;bottom:1mm;right:1mm;font-weight:bold;font-size:12pt;padding:2pt;}</style><div id="contenu" class="firstpage"><h2 class="PS5">Jeux pour Sony Playstation</h2></div>';
 				for(var i=0;i<arr3.length;i++){
@@ -263,6 +267,7 @@
 						arr15.splice(i,1);
 					}
 				}
+				document.title="Les jeux Playstation installés";
 				document.body.innerHTML="";
 				document.body.innerHTML='<style>*{box-sizing:border-box;}.bell{max-width:'+cwidth+'mm;height:'+cheight+'mm;}.cover{max-width:'+cwidth+'mm;height:'+cheight+'mm;padding:0mm;position:relative;margin:0;text-align:center;color:#000;}.text-block{background:white;border-radius:50%;position:absolute;bottom:1mm;right:1mm;font-weight:bold;font-size:12pt;padding:2pt;}</style><div id="contenu" class="firstpage"><h2 class="XBOX">Jeux pour XBOX</h2></div>';
 				for(var i=0;i<arr3.length;i++){
@@ -287,6 +292,7 @@
 						arr15.splice(i,1);
 					}
 				}
+				document.title="Tous les jeux XBOX";
 				document.body.innerHTML="";
 				document.body.innerHTML='<style>*{box-sizing:border-box;}.bell{max-width:'+cwidth+'mm;height:'+cheight+'mm;}.cover{max-width:'+cwidth+'mm;height:'+cheight+'mm;padding:0mm;position:relative;margin:0;text-align:center;color:#000;}.text-block{background:white;border-radius:50%;position:absolute;bottom:1mm;right:1mm;font-weight:bold;font-size:12pt;padding:2pt;}</style><div id="contenu" class="firstpage"><h2 class="XBOX">Jeux pour XBOX</h2></div>';
 				for(var i=0;i<arr3.length;i++){
@@ -311,6 +317,7 @@
 						arr15.splice(i,1);
 					}
 				}
+				document.title="Tous les jeux Playstation";
 				document.body.innerHTML="";
 				document.body.innerHTML='<style>*{box-sizing:border-box;}.bell{max-width:'+cwidth+'mm;height:'+cheight+'mm;}.cover{max-width:'+cwidth+'mm;height:'+cheight+'mm;padding:0mm;position:relative;margin:0;text-align:center;color:#000;}.text-block{background:white;border-radius:50%;position:absolute;bottom:1mm;right:1mm;font-weight:bold;font-size:12pt;padding:2pt;}</style><div id="contenu" class="firstpage"><h2 class="PS5">Jeux pour Sony Playstation</h2></div>';
 				for(var i=0;i<arr3.length;i++){
