@@ -82,20 +82,29 @@
 
 	</head>
 	<body>
-	<div id="intro"><h3 style="color:#fff">SUPPORT COM JVO β</h3>
-	La base contient <span id="tot"></span> jeux.<br>
-	Choisissez ce que vous souhaitez imprimer.<br>
-	Actualisez la page (F5) pour choisir à nouveau.</div>
+		<div id="intro">
+			<h3 style="color:#fff">SUPPORT COM JVO β</h3>La base contient <span id="tot"></span> jeux.<br>
+			Choisissez ce que vous souhaitez imprimer.<br>
+			Actualisez la page (F5) pour choisir à nouveau.
+		</div>
+		<!-- <button onclick="print_nin()">Nintendo Poster</button><button onclick="print_ps()">PS Poster</button><button onclick="print_xbox()">XBOX Poster</button><br> -->
 		<button onclick="every()">Livret de tous les jeux</button>
 		<button onclick="selection()">Livret des jeux installés</button><br>
-		<!-- <button onclick="print_nin()">Nintendo Poster</button><button onclick="print_ps()">PS Poster</button><button onclick="print_xbox()">XBOX Poster</button><br> -->
-		<button onclick="print_test_ps()">Affiche des jeux installés PS</button><button onclick="print_test_xbox()">Affiche des jeux installés XBOX</button><br>
-		<button onclick="print_all_xbox()">Affiche de tous les jeux XBOX</button><button onclick="print_all_ps()">Affiche de tous les jeux Playstation</button><button onclick="print_test_nin()">Affiche de tous les jeux Switch</button>
+
+		<button onclick="print_test_ps()">Affiche des jeux installés PS</button>
+		<button onclick="print_test_xbox()">Affiche des jeux installés XBOX</button><br>
+
+		<button onclick="print_all_xbox()">Affiche de tous les jeux XBOX</button>
+		<button onclick="print_all_ps()">Affiche de tous les jeux Playstation</button>
+		<button onclick="print_test_nin()">Affiche de tous les jeux Switch</button>
 		
+		<button onclick="print_nin_cards()">Fantômes des jeux XBOX</button>
+
 		<script src="../variables.js"></script>
 		<script>
 			var tot=document.getElementById("tot");
 			tot.innerHTML=arr16.length;
+
 			function selection(){
 				for(var i=arr14.length;i>=0;i--){
 					if(arr14[i]==0){
@@ -115,8 +124,7 @@
 				every();
 			}
 
-			/*
-			function print_nin(){
+			/*function print_nin(){
 				for(var i=arr3.length;i>=0;i--){
 					if(arr3[i]!="Switch"){
 						arr2.splice(i,1);
@@ -224,7 +232,6 @@
 				}
 			}
 			
-			
 			function print_test_ps(){
 				var cwidth=29;
 				var cheight=cwidth/.8;
@@ -320,6 +327,32 @@
 				document.title="Tous les jeux Playstation";
 				document.body.innerHTML="";
 				document.body.innerHTML='<style>*{box-sizing:border-box;}.bell{max-width:'+cwidth+'mm;height:'+cheight+'mm;}.cover{max-width:'+cwidth+'mm;height:'+cheight+'mm;padding:0mm;position:relative;margin:0;text-align:center;color:#000;}.text-block{background:white;border-radius:50%;position:absolute;bottom:1mm;right:1mm;font-weight:bold;font-size:12pt;padding:2pt;}</style><div id="contenu" class="firstpage"><h2 class="PS5">Jeux pour Sony Playstation</h2></div>';
+				for(var i=0;i<arr3.length;i++){
+					document.getElementById("contenu").innerHTML+='<div class="cover"><img class="bell" src="../'+arr6[i]+'"/><div class="text-block">'+arr4[i]+'</div></div>';
+				}
+			}
+
+			function print_nin_cards(){
+				var cwidth=63;
+				var cheight=88;
+				var cpadding=11;
+				for(var i=arr3.length;i>=0;i--){
+					if(arr3[i]!="XBOX"){
+						arr2.splice(i,1);
+						arr3.splice(i,1);
+						arr4.splice(i,1);
+						arr6.splice(i,1);
+						arr7.splice(i,1);
+						arr8.splice(i,1);
+						arr9.splice(i,1);
+						arr10.splice(i,1);
+						arr14.splice(i,1);
+						arr15.splice(i,1);
+					}
+				}
+				document.title="Fiche fantômes format cartes à jouer";
+				document.body.innerHTML="";
+				document.body.innerHTML='<style>*{box-sizing:border-box;}.bell{max-width:'+cwidth+'mm;height:'+cheight+'mm;}.cover{max-width:'+cwidth+'mm;height:'+cheight+'mm;padding:0mm;position:relative;margin:0;text-align:center;color:#000;}.firstpage{padding:'+cpadding+'mm}.text-block{background:white;border-radius:50%;position:absolute;bottom:1mm;right:1mm;font-weight:bold;font-size:6pt;padding:2pt;}</style><div id="contenu" class ="firstpage"><h2 class="Switch">Jeux pour Nintendo Switch</h2></div>';
 				for(var i=0;i<arr3.length;i++){
 					document.getElementById("contenu").innerHTML+='<div class="cover"><img class="bell" src="../'+arr6[i]+'"/><div class="text-block">'+arr4[i]+'</div></div>';
 				}
