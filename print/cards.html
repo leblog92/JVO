@@ -87,9 +87,9 @@
 			function print_nin_cards(){
 				var cwidth=59;
 				var cheight=86;
-				var cpadding=16.5;
+				var cpadding=10.5;
 				for(var i=arr3.length;i>=0;i--){
-					if(arr3[i]!="XBOX"){
+					if(arr3[i]!="Switch"){
 						arr2.splice(i,1);
 						arr3.splice(i,1);
 						arr4.splice(i,1);
@@ -104,7 +104,7 @@
 				}
 				document.title="Fiches fantômes des jeux Switch";
 				document.body.innerHTML="";
-				document.body.innerHTML='<style>*{box-sizing:border-box;}.bell{width:'+cwidth/2+'mm;height:'+cheight/2+'mm;}.cover{background:#e60012;border-radius:2mm;border:0.1mm solid #000;width:'+cwidth+'mm;height:'+cheight+'mm;padding:0mm;position:relative;margin:0;text-align:center;color:#000;}.firstpage{padding:'+cpadding+'mm}.text-block{background:white;border-radius:50%;position:absolute;bottom:1mm;right:1mm;font-weight:bold;font-size:6pt;padding:2pt;}</style><div id="contenu" class ="firstpage"></div>';
+				document.body.innerHTML='<style>*{box-sizing:border-box;}.bell{width:'+cwidth/2+'mm;height:'+cheight/2+'mm;}.cover{background:#e60012;border-radius:2mm;width:'+cwidth+'mm;height:'+cheight+'mm;padding:0mm;position:relative;margin:0;text-align:center;color:#000;}.firstpage{padding:'+cpadding+'mm}.bell{border-radius:1mm;}.text-block{background:white;border-radius:50%;position:absolute;bottom:1mm;right:1mm;font-weight:bold;font-size:6pt;padding:2pt;}</style><div id="contenu" class ="firstpage"></div>';
 				for(var i=0;i<arr3.length;i++){
 					document.getElementById("contenu").innerHTML+='<div class="cover"><img class="bell" src="../'+arr6[i]+'"/><div class="text-block">'+arr4[i]+'</div></div>';
 				}
