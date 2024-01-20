@@ -1,0 +1,116 @@
+<!DOCTYPE HTML>
+<html lang="fr">
+	<head>
+		<meta charset="utf-8">
+		<title>Video Game Print Service</title>
+		<link rel="icon" type="image/png" href="../ICO.png"/>
+		<style>
+			html,body{
+				height:100%;
+				margin:0;
+			}
+			body{
+				background:#888;
+				font-family:Arial;
+				font-size:11.5pt;
+			}
+			h3{
+				font-family:Arial;
+				border-bottom:1px solid black;
+			}
+			button{
+				width:66mm;
+				margin:6mm;
+				padding:4mm;
+				border-radius:2mm;
+			}
+			#intro{
+				padding:8mm;
+				font-family:Consolas;
+			}
+			.Switch{color:#e60012;}
+			.PS4{color:#063d8a;}
+			.PS5{color:#063d8a;}
+			.XBOX{color:#0f7b0e;}
+			.page{
+				background:#fff;
+				overflow:hidden;
+				width:210mm;
+				padding-left:10mm;
+				padding-right:10mm;
+				padding-top:10mm;
+				border-right:0.01mm solid #ddd;
+				border-bottom:0.01mm solid #ddd;
+			}
+			.firstpage{
+				background:#fff;
+				overflow:hidden;
+				width:210mm;
+				padding:14mm;
+			}
+			.cover{
+				float:left;
+				max-width:47mm;
+				height:55mm;
+				padding-right:5mm;
+			}
+			.content{
+				width:100%;
+				height:60mm;
+			}
+			@media print{
+				.pagebreak{
+					page-break-before:always;
+				}
+				body{
+					background:none;
+				}
+				.page,.firstpage{border:none;clip-path:inset(0 0 0 0);}
+			}
+		</style>
+		
+
+	</head>
+	<body>
+	<div id="intro"><h3 style="color:#fff">Fiches fantômes format cartes à jouer β</h3>
+	La base contient <span id="tot">x</span> jeux.<br>
+	Choisissez ce que vous souhaitez imprimer.<br>
+	Actualisez la page (F5) pour choisir à nouveau.</div>
+
+		<button onclick="print_nin_cards()">Fiches fantômes de tous les jeux Switch</button>
+		
+		<script src="../variables.js"></script>
+		<script>
+			var tot=document.getElementById("tot");
+			tot.innerHTML=arr16.length;
+
+			function print_nin_cards(){
+				var cwidth=59;
+				var cheight=86;
+				var cpadding=16.5;
+				for(var i=arr3.length;i>=0;i--){
+					if(arr3[i]!="XBOX"){
+						arr2.splice(i,1);
+						arr3.splice(i,1);
+						arr4.splice(i,1);
+						arr6.splice(i,1);
+						arr7.splice(i,1);
+						arr8.splice(i,1);
+						arr9.splice(i,1);
+						arr10.splice(i,1);
+						arr14.splice(i,1);
+						arr15.splice(i,1);
+					}
+				}
+				document.title="Fiches fantômes des jeux Switch";
+				document.body.innerHTML="";
+				document.body.innerHTML='<style>*{box-sizing:border-box;}.bell{width:'+cwidth/2+'mm;height:'+cheight/2+'mm;}.cover{background:#e60012;border-radius:2mm;border:0.1mm solid #000;width:'+cwidth+'mm;height:'+cheight+'mm;padding:0mm;position:relative;margin:0;text-align:center;color:#000;}.firstpage{padding:'+cpadding+'mm}.text-block{background:white;border-radius:50%;position:absolute;bottom:1mm;right:1mm;font-weight:bold;font-size:6pt;padding:2pt;}</style><div id="contenu" class ="firstpage"></div>';
+				for(var i=0;i<arr3.length;i++){
+					document.getElementById("contenu").innerHTML+='<div class="cover"><img class="bell" src="../'+arr6[i]+'"/><div class="text-block">'+arr4[i]+'</div></div>';
+				}
+			}
+			
+			print_nin_cards()
+		</script>
+	</body>
+</html>
