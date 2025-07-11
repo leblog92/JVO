@@ -1,0 +1,335 @@
+<!DOCTYPE HTML>
+<html lang="fr">
+	<head>
+		<meta charset="utf-8">
+		<title>Video Game Print Service</title>
+		<link rel="icon" type="image/png" href="../ICO.png"/>
+		<style>
+			html,body{
+				height:100%;
+				margin:0;
+			}
+			body{
+				background:#888;
+				font-family:Arial;
+				font-size:11.5pt;
+			}
+			h3{
+				font-family:Arial;
+				border-bottom:1px solid black;
+			}
+			button{
+				width:66mm;
+				margin:6mm;
+				padding:4mm;
+				border-radius:2mm;
+			}
+			#intro{
+			padding:8mm;
+			font-family:Consolas;
+			}
+			.Switch{color:#e60012;}
+			.PS4{color:#063d8a;}
+			.PS5{color:#063d8a;}
+			.XBOX{color:#0f7b0e;}
+			.page{
+				background:#fff;
+				overflow:hidden;
+				width:210mm;
+				padding-left:10mm;
+				padding-right:10mm;
+				padding-top:10mm;
+				border-right:0.01mm solid #ddd;
+				border-bottom:0.01mm solid #ddd;
+			}
+			.firstpage{
+				background:#fff;
+				overflow:hidden;
+				width:210mm;
+				padding:14mm;
+			}
+			.article{
+				width:100%;
+				height:60mm;
+				margin-bottom:14mm;
+				text-align:justify;
+				text-justify:inter-word;overflow-y:hidden;
+			}
+			.cover{
+				float:left;
+				max-width:47mm;
+				height:55mm;
+				padding-right:5mm;
+			}
+			.content{
+				width:100%;
+				height:60mm;
+			}
+			.numb{
+				text-align:center;
+			}
+			@media print{
+				.pagebreak{
+					page-break-before:always;
+				}
+				body{
+					background:none;
+				}
+				.page,.firstpage{border:none;clip-path:inset(0 0 0 0);}
+			}
+		</style>
+		
+
+	</head>
+	<body>
+		<div id="intro">
+			<h3 style="color:#fff">SUPPORT COM JVO β</h3>La base contient <span id="tot"></span> jeux.<br>
+			Choisissez ce que vous souhaitez imprimer.<br>
+			Actualisez la page (F5) pour choisir à nouveau.
+		</div>
+		<!-- <button onclick="print_nin()">Nintendo Poster</button><button onclick="print_ps()">PS Poster</button><button onclick="print_xbox()">XBOX Poster</button><br> -->
+		<button onclick="every()">Livret de tous les jeux</button>
+		<button onclick="selection()">Livret des jeux installés</button><br>
+
+		<button onclick="print_test_ps()">Affiche des jeux installés PS</button>
+		<button onclick="print_test_xbox()">Affiche des jeux installés XBOX</button><br>
+
+		<button onclick="print_all_xbox()">Affiche de tous les jeux XBOX</button>
+		<button onclick="print_all_ps()">Affiche de tous les jeux Playstation</button>
+		<button onclick="print_test_nin()">Affiche de tous les jeux Switch</button>
+		
+		<script src="../variables.js"></script>
+		<script>
+			var tot=document.getElementById("tot");
+			tot.innerHTML=arr16.length;
+
+			function selection(){
+				for(var i=arr14.length;i>=0;i--){
+					if(arr14[i]==0){
+						arr2.splice(i,1);
+						arr3.splice(i,1);
+						arr4.splice(i,1);
+						arr6.splice(i,1);
+						arr7.splice(i,1);
+						arr8.splice(i,1);
+						arr9.splice(i,1);
+						arr10.splice(i,1);
+						arr14.splice(i,1);
+						arr15.splice(i,1);
+						arr16.splice(i,1);
+					}
+				}
+				every();
+			}
+
+			/*function print_nin(){
+				for(var i=arr3.length;i>=0;i--){
+					if(arr3[i]!="Switch"){
+						arr2.splice(i,1);
+						arr3.splice(i,1);
+						arr4.splice(i,1);
+						arr6.splice(i,1);
+						arr7.splice(i,1);
+						arr8.splice(i,1);
+						arr9.splice(i,1);
+						arr10.splice(i,1);
+						arr14.splice(i,1);
+						arr15.splice(i,1);
+					}
+				}
+				document.body.innerHTML="";
+				document.body.innerHTML='<style>.cover{max-width:19mm;height:auto;padding:0mm;}</style><div id="contenu"></div>';
+				for(var i=0;i<arr3.length;i++){
+					document.getElementById("contenu").innerHTML+='<img class="cover" src="../'+arr6[i]+'"/>';
+				}
+			}
+			
+			function print_xbox(){
+				for(var i=arr3.length;i>=0;i--){
+					if(arr3[i]!="XBOX"||arr14[i]==0){
+						arr2.splice(i,1);
+						arr3.splice(i,1);
+						arr4.splice(i,1);
+						arr6.splice(i,1);
+						arr7.splice(i,1);
+						arr8.splice(i,1);
+						arr9.splice(i,1);
+						arr10.splice(i,1);
+						arr14.splice(i,1);
+						arr15.splice(i,1);
+					}
+				}
+				document.body.innerHTML="";
+				document.body.innerHTML='<style>.cover{height:48mm;padding:0mm;}</style><h2>JEUX XBOX</h2><div id="contenu"></div>';
+				for(var i=0;i<arr3.length;i++){
+					document.getElementById("contenu").innerHTML+='<img class="cover" src="../'+arr6[i]+'"/>';
+				}
+			}
+			
+			function print_ps(){
+				for(var i=arr3.length;i>=0;i--){
+					if(arr3[i]!="PS"||arr14[i]==0){
+						arr2.splice(i,1);
+						arr3.splice(i,1);
+						arr4.splice(i,1);
+						arr6.splice(i,1);
+						arr7.splice(i,1);
+						arr8.splice(i,1);
+						arr9.splice(i,1);
+						arr10.splice(i,1);
+						arr14.splice(i,1);
+						arr15.splice(i,1);
+					}
+				}
+				document.body.innerHTML="";
+				document.body.innerHTML='<style>.cover{max-width:42mm;height:auto;padding:0mm;}</style><div id="contenu"></div>';
+				for(var i=0;i<arr3.length;i++){
+					document.getElementById("contenu").innerHTML+='<img class="cover" src="../'+arr6[i]+'"/>';
+				}
+			}
+			*/
+
+			function every(){
+				var pnb=1;
+				document.title="Tous les jeux vidéo";
+				document.body.innerHTML="";
+				//document.body.innerHTML+='<div class="page pagebreak" id="main">CATALOGUE DE JEUX-VIDÉO</div>';
+				document.body.innerHTML+='<div class="page pagebreak" id="main"><img src="cover.png" width="792px"/></div>';
+				for(var i=0;i<arr2.length;i=i+4){
+					document.body.innerHTML+='<div class="page pagebreak" id="div'+i+'"></div>';
+					for(var j=0;j<=3;j++){if(i+j<arr2.length){
+						document.getElementById("div"+i).innerHTML+='<div class="article"><img class="cover" src="../'+arr6[i+j]+'"/><span class="content"><h3>'+arr4[i+j]+' - '+arr2[i+j]+' - <span class="'+arr3[i+j]+'">'+arr3[i+j]+'</span></h3>'+arr7[i+j]+'<br><br>📁 genre : '+arr8[i+j]+'<br>🎮 joueur(s) : '+arr9[i+j]+'<br>🏅 qualités : '+arr10[i+j]+'</span></div>';}
+					}
+					document.getElementById("div"+i).innerHTML+='<div class="numb">'+pnb+'</div>';
+					pnb++;
+				}
+			}
+
+			function print_test_nin(){
+				var cwidth=17;
+				var cheight=cwidth/.6;
+				var cpadding=11;
+				for(var i=arr3.length;i>=0;i--){
+					if(arr3[i]!="Switch"){
+						arr2.splice(i,1);
+						arr3.splice(i,1);
+						arr4.splice(i,1);
+						arr6.splice(i,1);
+						arr7.splice(i,1);
+						arr8.splice(i,1);
+						arr9.splice(i,1);
+						arr10.splice(i,1);
+						arr14.splice(i,1);
+						arr15.splice(i,1);
+					}
+				}
+				document.title="Tous les jeux Switch";
+				document.body.innerHTML="";
+				document.body.innerHTML='<style>*{box-sizing:border-box;}.bell{max-width:'+cwidth+'mm;height:'+cheight+'mm;}.cover{max-width:'+cwidth+'mm;height:'+cheight+'mm;padding:0mm;position:relative;margin:0;text-align:center;color:#000;}.firstpage{padding:'+cpadding+'mm}.text-block{background:white;border-radius:50%;position:absolute;bottom:1mm;right:1mm;font-weight:bold;font-size:6pt;padding:2pt;}</style><div id="contenu" class ="firstpage"><h2 class="Switch">Jeux pour Nintendo Switch</h2></div>';
+				for(var i=0;i<arr3.length;i++){
+					document.getElementById("contenu").innerHTML+='<div class="cover"><img class="bell" src="../'+arr6[i]+'"/><div class="text-block">'+arr4[i]+'</div></div>';
+				}
+			}
+			
+			function print_test_ps(){
+				var cwidth=29;
+				var cheight=cwidth/.8;
+				for(var i=arr3.length;i>=0;i--){
+					if(arr16[i]!="PS"||arr14[i]==0){
+						arr2.splice(i,1);
+						arr3.splice(i,1);
+						arr4.splice(i,1);
+						arr6.splice(i,1);
+						arr7.splice(i,1);
+						arr8.splice(i,1);
+						arr9.splice(i,1);
+						arr10.splice(i,1);
+						arr14.splice(i,1);
+						arr15.splice(i,1);
+					}
+				}
+				document.title="Les jeux Playstation installés";
+				document.body.innerHTML="";
+				document.body.innerHTML='<style>*{box-sizing:border-box;}.bell{max-width:'+cwidth+'mm;height:'+cheight+'mm;}.cover{max-width:'+cwidth+'mm;height:'+cheight+'mm;padding:0mm;position:relative;margin:0;text-align:center;color:#000;}.text-block{background:white;border-radius:50%;position:absolute;bottom:1mm;right:1mm;font-weight:bold;font-size:12pt;padding:2pt;}</style><div id="contenu" class="firstpage"><h2 class="PS5">Jeux pour Sony Playstation</h2></div>';
+				for(var i=0;i<arr3.length;i++){
+					document.getElementById("contenu").innerHTML+='<div class="cover"><img class="bell" src="../'+arr6[i]+'"/><div class="text-block">'+arr4[i]+'</div></div>';
+				}
+			}
+			
+			function print_test_xbox(){
+				var cwidth=35;
+				var cheight=cwidth/.8;
+				for(var i=arr3.length;i>=0;i--){
+					if(arr3[i]!="XBOX"||arr14[i]==0){
+						arr2.splice(i,1);
+						arr3.splice(i,1);
+						arr4.splice(i,1);
+						arr6.splice(i,1);
+						arr7.splice(i,1);
+						arr8.splice(i,1);
+						arr9.splice(i,1);
+						arr10.splice(i,1);
+						arr14.splice(i,1);
+						arr15.splice(i,1);
+					}
+				}
+				document.title="Les jeux Playstation installés";
+				document.body.innerHTML="";
+				document.body.innerHTML='<style>*{box-sizing:border-box;}.bell{max-width:'+cwidth+'mm;height:'+cheight+'mm;}.cover{max-width:'+cwidth+'mm;height:'+cheight+'mm;padding:0mm;position:relative;margin:0;text-align:center;color:#000;}.text-block{background:white;border-radius:50%;position:absolute;bottom:1mm;right:1mm;font-weight:bold;font-size:12pt;padding:2pt;}</style><div id="contenu" class="firstpage"><h2 class="XBOX">Jeux pour XBOX</h2></div>';
+				for(var i=0;i<arr3.length;i++){
+					document.getElementById("contenu").innerHTML+='<div class="cover"><img class="bell" src="../'+arr6[i]+'"/><div class="text-block">'+arr4[i]+'</div></div>';
+				}
+			}
+			
+			function print_all_xbox(){
+				var cwidth=22;
+				var cheight=cwidth/.8;
+				for(var i=arr3.length;i>=0;i--){
+					if(arr3[i]!="XBOX"){
+						arr2.splice(i,1);
+						arr3.splice(i,1);
+						arr4.splice(i,1);
+						arr6.splice(i,1);
+						arr7.splice(i,1);
+						arr8.splice(i,1);
+						arr9.splice(i,1);
+						arr10.splice(i,1);
+						arr14.splice(i,1);
+						arr15.splice(i,1);
+					}
+				}
+				document.title="Tous les jeux XBOX";
+				document.body.innerHTML="";
+				document.body.innerHTML='<style>*{box-sizing:border-box;}.bell{max-width:'+cwidth+'mm;height:'+cheight+'mm;}.cover{max-width:'+cwidth+'mm;height:'+cheight+'mm;padding:0mm;position:relative;margin:0;text-align:center;color:#000;}.text-block{background:white;border-radius:50%;position:absolute;bottom:1mm;right:1mm;font-weight:bold;font-size:12pt;padding:2pt;}</style><div id="contenu" class="firstpage"><h2 class="XBOX">Jeux pour XBOX</h2></div>';
+				for(var i=0;i<arr3.length;i++){
+					document.getElementById("contenu").innerHTML+='<div class="cover"><img class="bell" src="../'+arr6[i]+'"/><div class="text-block">'+arr4[i]+'</div></div>';
+				}
+			}
+			
+			function print_all_ps(){
+				var cwidth=20.5;
+				var cheight=cwidth/.8;
+				for(var i=arr3.length;i>=0;i--){
+					if(arr16[i]!="PS"){
+						arr2.splice(i,1);
+						arr3.splice(i,1);
+						arr4.splice(i,1);
+						arr6.splice(i,1);
+						arr7.splice(i,1);
+						arr8.splice(i,1);
+						arr9.splice(i,1);
+						arr10.splice(i,1);
+						arr14.splice(i,1);
+						arr15.splice(i,1);
+					}
+				}
+				document.title="Tous les jeux Playstation";
+				document.body.innerHTML="";
+				document.body.innerHTML='<style>*{box-sizing:border-box;}.bell{max-width:'+cwidth+'mm;height:'+cheight+'mm;}.cover{max-width:'+cwidth+'mm;height:'+cheight+'mm;padding:0mm;position:relative;margin:0;text-align:center;color:#000;}.text-block{background:white;border-radius:50%;position:absolute;bottom:1mm;right:1mm;font-weight:bold;font-size:12pt;padding:2pt;}</style><div id="contenu" class="firstpage"><h2 class="PS5">Jeux pour Sony Playstation</h2></div>';
+				for(var i=0;i<arr3.length;i++){
+					document.getElementById("contenu").innerHTML+='<div class="cover"><img class="bell" src="../'+arr6[i]+'"/><div class="text-block">'+arr4[i]+'</div></div>';
+				}
+			}
+		</script>
+	</body>
+</html>
