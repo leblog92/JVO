@@ -1,0 +1,173 @@
+<!DOCTYPE HTML>
+<html lang="fr">
+	<head>
+		<meta charset="utf-8">
+		<title>Video Game Search</title>
+		<link rel="icon" type="image/png" href="ICO.png"/>
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
+		<style>
+			#logo{color:white;}
+			#progress{color:white;position:fixed;left:0;bottom:24px;height:60px;font-family:Consolas;font-size:50px;border:1px solid red;background:linear-gradient(90deg,rgba(255,0,0,0.6),rgba(255,0,0,0.8));transition:1s;text-align:center;opacity:1;}
+			#gstitle{-webkit-animation:color-animation 4s infinite;animation:color-animation 4s infinite;}
+			@-webkit-keyframes color-animation{0%{-webkit-filter:hue-rotate(0deg);}50%{-webkit-filter:hue-rotate(360deg);}100%{-webkit-filter:hue-rotate(0deg);}}
+			@keyframes color-animation{0%{filter:hue-rotate(0deg);}50%{filter:hue-rotate(360deg);}100%{filter:hue-rotate(0deg);}}
+			.center{margin-left:auto;margin-right:auto;}
+			.fwb{font-weight:bold;}
+			.specs{line-height:1.5em;font-size:14px;}
+			a{color:black;text-decoration:none;}
+			body,input[type="text"]{font-size:20px;}
+			body::-webkit-scrollbar{display:none;}
+			body{font-family:'Open Sans',sans-serif;background:linear-gradient(#fff,#f0f0f0) fixed;}
+			html,body{height:100%;margin:0;-moz-user-select:none;-webkit-user-select:none;-ms-user-select:none;user-select:none;}
+			img,td{vertical-align:middle;}
+			img.console{border-radius:50%;height:50px;width:auto;box-shadow:2.5px 2.5px 2.5px rgba(0,0,0,0.2);}
+			img.select{margin-left:1em;margin-right:1em;transform:rotate(0deg);border-radius:50%;height:90px;width:auto;box-shadow:2.5px 2.5px 4px rgba(0,0,0,0.2);transition:1s;}
+			img.select:hover{transform:rotate(10deg);}
+			img.cover{display:block;margin-left: auto;margin-right:auto;height:auto;width:80px;transition:0.33s}
+			img.cover:hover{height:auto;width:250px;}
+			input[type="text"]{padding:10px;border-radius:10px;/*visibility:hidden;*/}
+			span.hist{font-size:14px;text-align:left;}
+			span.num{background-color:#333;color:white;border-radius:50%;padding:5px;font-size:20px;}
+			td{background:#ddd;line-height:1em;border-radius:10px;padding:10px;box-shadow:5px 5px 5px rgba(0,0,0,0.2);}
+			#elibre{position:fixed;bottom:0;right:0;text-align:center;font-size:12px;}
+		</style>
+	</head>
+	<body>
+		<div style="text-align:center;">
+			<div id="logo" onclick='location.reload();'><br><img src="gamesearch.png" id="gstitle" width="375px"/><br></div><br>
+			<input autocapitalize="off" type="text" id="name_input" autofocus><br><br>
+		</div>
+		<table class="center" width="80%">
+			<tbody id="tab_results2">
+			<tr>
+				<td style="box-shadow:none;background:none;text-align:center">
+				<img class="select" src="Playstation.svg" onclick="allGames('PS')"/>
+				<img class="select" src="Switch.svg" onclick="allGames('Switch')"/>
+				<img class="select" src="XBOX.svg" onclick="allGames('XBOX')"/>
+				</td>
+			</tr>
+			</tbody>
+		</table>
+		<br>
+		<table class="center" width="80%">
+			<tbody id="tab_sel">
+			</tbody>
+		</table>
+		<table class="center" width="80%">
+			<tbody id="tab_results">
+			</tbody>
+		</table>
+
+		<script src="variables2.js"></script>
+		<script>
+			var logo=document.getElementById("logo");
+			var name_input=document.getElementById("name_input");
+			var data_input;
+			var tab_sel=document.getElementById("tab_sel");
+			var tab_results=document.getElementById("tab_results");
+			var progress=document.getElementById("progress");
+			var resultArr=[];
+			var resultImg=[];
+			var resultNum=[];
+			var resultPEGI=[];
+			var resultCover=[];
+			var resultHist=[];
+			var resultGenre=[];
+			var resultNBJ=[];
+			var resultQual=[];
+			var resultTail=[];
+			var resultLink=[];
+			var resultYou=[];
+			var str=name_input.value;
+			var input=document.querySelector('#name_input');
+
+			function show(){
+				tab_sel.innerHTML="";
+				tab_results.innerHTML="";
+				resultArr=[];
+				name_input.value=name_input.value.toLowerCase();
+				name_input.value=name_input.value.replace("é","e");
+				name_input.value=name_input.value.replace("è","e");
+				name_input.value=name_input.value.replace("ê","e");
+				name_input.value=name_input.value.replace("ë","e");
+				name_input.value=name_input.value.replace("î","i");
+				name_input.value=name_input.value.replace("ï","i");
+				name_input.value=name_input.value.replace("ô","o");
+				name_input.value=name_input.value.replace("ö","o");
+				name_input.value=name_input.value.replace("œ","oe");
+				name_input.value=name_input.value.replace("ù","u");
+				name_input.value=name_input.value.replace("ü","u");
+				str=name_input.value;
+				if (str.length > 1) {
+					for (var i=0;i < arr1.length;i++) {
+						if (arr1[i].indexOf(str) !=-1) {
+							resultArr.push(arr2[i]);
+							resultImg.push(arr3[i]);
+							resultNum.push(arr4[i]);
+							resultPEGI.push(arr5[i]);
+						}
+					}
+					if (resultArr.length==0) {
+						tab_results.innerHTML="<tr><td style='text-align:center;'>Aucun résultat ...<br><br><img src='TOAD.png' height='300px' width='auto' style='border-radius:10px;'/></td></tr>";
+					} else if (resultArr.length > 1) {
+						tab_results.innerHTML="<tr><td colspan='3' style='text-align:center;font-weight:bold;color:#000'>"+resultArr.length+" résultats</td></tr>";
+					}
+					for (var k=0;k < resultArr.length;k++) {
+						tab_results.innerHTML +="<tr id='tr"+k+"'><td colspan='3' style='text-align:center;font-weight:bold;'><img class='console' src='"+resultImg[k]+".svg'/> "+resultArr[k]+" <img src='"+resultPEGI[k]+".svg' height='50px' width='auto'/> <span class='num'>"+resultNum[k];+"</span></td></tr>";
+					}
+					tab_results.innerHTML +="<tr onclick='location.reload();'><td style='text-align:center;background:#000;border:2px solid #ddd;color:#fff;' colspan='3'><marquee direction='right'><img src='pacman.gif' height='20px' width='auto'/> restart ? <img src='ghost.gif' height='20px' width='auto'/></marquee></td></tr>";
+					resultArr=[];
+					resultImg=[];
+					resultNum=[];
+					resultPEGI=[];
+				}
+			}
+			name_input.onclick=function out() {
+				logo.style.display="none";
+				name_input.value="";
+				tab_sel.innerHTML="";
+				tab_results.innerHTML="<tr><td style='text-align:center;'><marquee scrollamount='24'>🔍 Recherche parmi "+arr1.length+" titres de jeux vidéo <img height='30px' height='auto' src='pikachu.gif'/></marquee></td></tr>";
+			};
+			var count=0;
+
+			function init() {
+			}
+
+			init();
+
+			function show_options(){
+				var options=document.getElementById("options");
+				if(options.style.display=="table"){
+					options.style.display="none";
+				} else{
+					options.style.display="table";
+				}
+}
+
+			function allGames(conso) {
+				tab_sel.innerHTML="";
+				for (var i=0;i<arr3.length;i++) {
+					if (arr3[i].indexOf(conso) !=-1) {
+						resultArr.push(arr2[i]);
+						resultImg.push(arr3[i]);
+						resultNum.push(arr4[i]);
+						resultPEGI.push(arr5[i]);
+					}
+				}
+				tab_results.innerHTML="<tr><td colspan='3' style='text-align:center;font-weight:bold;color:#000'>"+resultArr.length+" résultats</td></tr>";
+				for (var k=0;k<resultArr.length;k++) {
+					tab_results.innerHTML +="<tr id='tr"+k+"'><td colspan='3' style='text-align:center;font-weight:bold;'><img class='console' src='"+resultImg[k]+".svg'/> "+resultArr[k]+" <img src='"+resultPEGI[k]+".svg' height='50px' width='auto'/> <span class='num'>"+resultNum[k];+"</span></td></tr>";
+				}
+				tab_results.innerHTML+="<tr onclick='location.reload();'><td style='text-align:center;background:#000;border:2px solid #ddd;color:#fff;' colspan='3'><marquee direction='right'><img src='pacman.gif' height='20px' width='auto'/> restart ? <img src='ghost.gif' height='20px' width='auto'/></marquee></td></tr>";
+				resultArr=[];
+				resultImg=[];
+				resultNum=[];
+				resultPEGI=[];
+			}
+			
+			input.addEventListener("keyup",show);
+		</script>
+	</body>
+</html>
