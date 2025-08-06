@@ -158,7 +158,7 @@
 				}
 				tab_results.innerHTML="<tr><td colspan='3' style='text-align:center;font-weight:bold;color:#000'>"+resultArr.length+" résultats</td></tr>";
 				for (var k=0;k<resultArr.length;k++) {
-					tab_results.innerHTML +="<tr id='tr"+k+"'><td colspan='3' style='text-align:center;font-weight:bold;'><img class='console' src='"+resultImg[k]+".svg'/> "+resultArr[k]+" <img src='"+resultPEGI[k]+".svg' height='50px' width='auto'/> <span class='num'>"+resultNum[k];+"</span></td></tr>";
+					tab_results.innerHTML +="<tr id='tr"+k+"'><td colspan='3' style='text-align:center;font-weight:bold;'> <span class='num'>"+resultNum[k];+"</span> "+resultArr[k]+" <img class='console' src='"+resultImg[k]+".svg'/> <img src='"+resultPEGI[k]+".svg' height='50px' width='auto'/></td></tr>";
 				}
 				tab_results.innerHTML+="<tr onclick='location.reload();'><td style='text-align:center;background:#000;border:2px solid #ddd;color:#fff;' colspan='3'><marquee direction='right'><img src='pacman.gif' height='20px' width='auto'/> restart ? <img src='ghost.gif' height='20px' width='auto'/></marquee></td></tr>";
 				resultArr=[];
