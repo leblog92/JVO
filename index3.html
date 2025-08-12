@@ -1,0 +1,369 @@
+﻿<!DOCTYPE HTML>
+<html lang="fr">
+	<head>
+		<meta charset="utf-8">
+		<title>Video Game Search</title>
+		<link rel="icon" type="image/png" href="ICO.png"/>
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
+		<style>
+			#logo{color:white;}
+			#progress{color:white;position:fixed;left:0;bottom:24px;height:60px;font-family:Consolas;font-size:50px;border:1px solid red;background:linear-gradient(90deg,rgba(255,0,0,0.6),rgba(255,0,0,0.8));transition:1s;text-align:center;opacity:1;}
+			#gstitle{-webkit-animation:color-animation 4s infinite;animation:color-animation 4s infinite;}
+			@-webkit-keyframes color-animation{0%{-webkit-filter:hue-rotate(0deg);}50%{-webkit-filter:hue-rotate(360deg);}100%{-webkit-filter:hue-rotate(0deg);}}
+			@keyframes color-animation{0%{filter:hue-rotate(0deg);}50%{filter:hue-rotate(360deg);}100%{filter:hue-rotate(0deg);}}
+			.center{margin-left:auto;margin-right:auto;}
+			.fwb{font-weight:bold;}
+			.specs{line-height:1.5em;font-size:14px;}
+			a{color:black;text-decoration:none;}
+			body,input[type="text"]{font-size:20px;}
+			body::-webkit-scrollbar{display:none;}
+			body{font-family:'Open Sans',sans-serif;background:linear-gradient(#fff,#f0f0f0) fixed;}
+			html,body{height:100%;margin:0;-moz-user-select:none;-webkit-user-select:none;-ms-user-select:none;user-select:none;}
+			img,td{vertical-align:middle;}
+			img.console{border-radius:50%;height:50px;width:auto;box-shadow:2.5px 2.5px 2.5px rgba(0,0,0,0.2);}
+			img.select{margin-left:1em;margin-right:1em;transform:rotate(0deg);border-radius:50%;height:90px;width:auto;box-shadow:2.5px 2.5px 4px rgba(0,0,0,0.2);transition:1s;}
+			img.select:hover{transform:rotate(10deg);}
+			img.cover{display:block;margin-left: auto;margin-right:auto;height:auto;width:80px;transition:0.33s}
+			img.cover:hover{height:auto;width:250px;}
+			input[type="text"]{padding:10px;border-radius:10px;/*visibility:hidden;*/}
+			span.hist{font-size:14px;text-align:left;}
+			span.num{background-color:#333;color:white;border-radius:50%;padding:5px;font-size:20px;}
+			td{background:#ddd;line-height:1em;border-radius:10px;padding:10px;box-shadow:5px 5px 5px rgba(0,0,0,0.2);}
+			#elibre{position:fixed;bottom:0;right:0;text-align:center;font-size:12px;}
+		</style>
+	</head>
+	<body>
+		<!-- <img id="glide" src="link.png" height="200px" position="relative" width="auto"/> -->
+		<div style="text-align:center;">
+			<div id="logo" onclick='location.reload();'><br><img src="gamesearch.png" id="gstitle" width="375px"/><br></div><br>
+			<input autocapitalize="off" type="text" id="name_input" autofocus><br><br>
+		</div>
+		<div id="progress"></div>
+		<table class="center" width="80%">
+			<tbody id="tab_results2">
+			<tr>
+				<td style="box-shadow:none;background:none;text-align:center">
+				<img class="select" src="Playstation.svg" onclick="allGames('PS')"/>
+				<img class="select" src="Switch.svg" onclick="allGames('Switch')"/>
+				<img class="select" src="XBOX.svg" onclick="allGames('XBOX')"/>
+				</td>
+			</tr>
+			</tbody>
+		</table>
+		<br>
+		<table class="center" width="80%">
+			<tbody id="tab_sel">
+			</tbody>
+		</table>
+		<table class="center" width="80%">
+			<tbody id="tab_results">
+			</tbody>
+		</table>
+		<!-- 
+		<div id="elibre" style="background:rgba(0,0,0,0.5);padding:5px;border-radius:5px;">
+			<span style="color:white;margin:10px;" onclick="show_options();">💡 Help ?</span><br>
+			<table id="options" style="display:none;">
+			<tbody>
+			<tr><td colspan="2">Free storage space<span><span id="spandt"></span></span></td></tr>
+			<tr><td style="cursor: pointer;font-weight:bold;color:#fff;background:#074490;" onclick="allGames('PS')">PS5</td><td><input id="ps5mem" type="number" style="width:3em;" min="0" max="999" onchange="cookiechg();"/> Go</td></tr>
+			<tr><td style="cursor: pointer;font-weight:bold;color:#fff;background:#e60012;" onclick="allGames('Switch')">Switch</td><td><input id="swimem" type="number" style="width:3em;" min="0" max="999" onchange="cookiechg();"/> Go<br></td></tr>
+			<tr><td style="cursor: pointer;font-weight:bold;color:#fff;background:#0f7b0e;" onclick="allGames('XBOX')">XBOX</td><td><input id="xbomem" type="number" style="width:3em;" min="0" max="999" onchange="cookiechg();"/> Go</td></tr>
+			<tr><td colspan="2"><a href="https://catalogue.mediatheque-rueilmalmaison.fr/permalink/P-70029927-c706-4983-903b-9d8e6b7e81ef" target="_blank">📚 Catalogue JVO</a></td></tr>
+			<tr><td colspan="2"><a href="https://www.playstation.com/fr-fr/support/hardware/ps5/" target="_blank">⚙️ Aide PS5️</a></td></tr>
+			<tr><td colspan="2"><a href="https://www.nintendo.fr/Assistance/Contact/Reparations/Nintendo-Switch-1770156.html" target="_blank">⚙️ Aide Switch</a></td></tr>
+			<tr><td colspan="2"><a href="https://support.xbox.com/fr-FR/" target="_blank">⚙️ Aide XBOX</a></td></tr>
+			<tr><td colspan="2"><a href="https://pegi.info/fr" target="_blank">🔞 PEGI info</a></td></tr>
+			</tbody>
+			</table>
+		</div>
+		-->
+		<script src="variables.js"></script>
+		<script>
+			/*
+			var spandt=document.getElementById("spandt");
+			var ps5mem=document.getElementById("ps5mem");
+			var swimem=document.getElementById("swimem");
+			var xbomem=document.getElementById("xbomem");
+
+			function getCookie(cname){
+				let name=cname+"=";
+				let decodedCookie=decodeURIComponent(document.cookie);
+				let ca=decodedCookie.split(';');
+				for (let l=0;l<ca.length;l++) {
+					let c=ca[l];
+					while(c.charAt(0)==' ') {
+						c=c.substring(1);
+					}
+					if (c.indexOf(name)==0) {
+						return c.substring(name.length, c.length);
+					}
+				}
+				return "";
+			}
+
+			console.log(document.cookie);
+
+			if(document.cookie==null){
+			}else{
+				spandt.innerHTML="<br>"+getCookie("mod");
+				ps5mem.value=getCookie("ps5");
+				swimem.value=getCookie("swi");
+				xbomem.value=getCookie("xbo");
+			}
+
+			function cookiechg(){
+				var dt=new Date();
+				document.cookie="mod="+dt.toLocaleString()+";expires=Thu, 23 Mar 2042 12:00:00 UTC";
+				spandt.innerHTML="<br>"+getCookie("mod");
+				document.cookie="ps5="+ps5mem.value+";expires=Thu, 23 Mar 2042 12:00:00 UTC";
+				document.cookie="swi="+swimem.value+";expires=Thu, 23 Mar 2042 12:00:00 UTC";
+				document.cookie="xbo="+xbomem.value+";expires=Thu, 23 Mar 2042 12:00:00 UTC";
+				console.log(document.cookie);
+			}
+			*/
+
+			var waka=new Audio('waka.mp3');
+			var coin=new Audio('coin.mp3');
+			var logo=document.getElementById("logo");
+			var name_input=document.getElementById("name_input");
+			var data_input;
+			var tab_sel=document.getElementById("tab_sel");
+			var tab_results=document.getElementById("tab_results");
+			var progress=document.getElementById("progress");
+			var resultArr=[];
+			var resultImg=[];
+			var resultNum=[];
+			var resultPEGI=[];
+			var resultCover=[];
+			var resultHist=[];
+			var resultGenre=[];
+			var resultNBJ=[];
+			var resultQual=[];
+			var resultTail=[];
+			var resultLink=[];
+			var resultYou=[];
+			var str=name_input.value;
+			var input=document.querySelector('#name_input');
+
+			function show(){
+				//waka.currentTime=0;
+				//waka.play();
+				tab_sel.innerHTML="";
+				tab_results.innerHTML="";
+				resultArr=[];
+				name_input.value=name_input.value.toLowerCase();
+				name_input.value=name_input.value.replace("é","e");
+				name_input.value=name_input.value.replace("è","e");
+				name_input.value=name_input.value.replace("ê","e");
+				name_input.value=name_input.value.replace("ë","e");
+				name_input.value=name_input.value.replace("î","i");
+				name_input.value=name_input.value.replace("ï","i");
+				name_input.value=name_input.value.replace("ô","o");
+				name_input.value=name_input.value.replace("ö","o");
+				name_input.value=name_input.value.replace("œ","oe");
+				name_input.value=name_input.value.replace("ù","u");
+				name_input.value=name_input.value.replace("ü","u");
+				str=name_input.value;
+				if (str.length > 1) {
+					for (var i=0;i < arr1.length;i++) {
+						if (arr1[i].indexOf(str) !=-1) {
+							resultArr.push(arr2[i]);
+							resultImg.push(arr3[i]);
+							resultNum.push(arr4[i]);
+							resultPEGI.push(arr5[i]);
+							resultCover.push(arr6[i]);
+							resultHist.push(arr7[i]);
+							resultGenre.push(arr8[i]);
+							resultNBJ.push(arr9[i]);
+							resultQual.push(arr10[i]);
+							resultTail.push(arr11[i]);
+							resultLink.push(arr12[i]);
+							//resultYou.push(arr13[i]);
+						}
+					}
+					if (resultArr.length==0) {
+						tab_results.innerHTML="<tr><td style='text-align:center;'>Aucun résultat ...<br><br><img src='TOAD.png' height='300px' width='auto' style='border-radius:10px;'/></td></tr>";
+					} else if (resultArr.length > 1) {
+						tab_results.innerHTML="<tr><td colspan='3' style='text-align:center;font-weight:bold;color:#000'>"+resultArr.length+" résultats</td></tr>";
+					}
+					for (var k=0;k < resultArr.length;k++) {
+						tab_results.innerHTML +="<tr id='tr"+k+"' onClick='disp_click(this.id)'><td colspan='3' style='text-align:center;font-weight:bold;'><img class='console' src='"+resultImg[k]+".svg'/> "+resultArr[k]+" <img src='"+resultPEGI[k]+".svg' height='50px' width='auto'/> <span class='num'>"+resultNum[k];+"</span></td></tr>";
+						//tab_results.innerHTML +="<tr id='tr"+k+"z' style='display:none'><td style='text-align:center;'><img class='cover' src="+resultCover[k]+"></td><td><span class='hist'>"+resultHist[k]+" <a href='"+resultLink[k]+"' style='text-decoration: underline;' target='blank'>Plus de détails&nbsp;...</a></span><br><br><iframe width='560' height='315' src='"+resultYou[k]+"' title='YouTube video player' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe></td><td class='specs'>📁 <span class='fwb'>Genre :</span> "+resultGenre[k]+"<br>🎮 <span class='fwb'>Joueur(s) :</span> "+resultNBJ[k]+"<br>💾 <span class='fwb'>Taille :</span> "+resultTail[k]+" Go<br>🏅 <span class='fwb'>Qualités :</span> "+resultQual[k]+"</td></tr>";
+						tab_results.innerHTML +="<tr id='tr"+k+"z' style='display:none'><td style='text-align:center;'><img class='cover' src="+resultCover[k]+"></td><td><span class='hist'>"+resultHist[k]+" <a href='"+resultLink[k]+"' style='text-decoration: underline;' target='blank'>Plus de détails&nbsp;...</a></span></td><td class='specs'>📁 <span class='fwb'>Genre :</span> "+resultGenre[k]+"<br>🎮 <span class='fwb'>Joueur(s) :</span> "+resultNBJ[k]+"<br>💾 <span class='fwb'>Taille :</span> "+resultTail[k]+" Go<br>🏅 <span class='fwb'>Qualités :</span> "+resultQual[k]+"</td></tr>";
+					}
+					tab_results.innerHTML +="<tr onclick='location.reload();'><td style='text-align:center;background:#000;border:2px solid #ddd;color:#fff;' colspan='3'><marquee direction='right'><img src='pacman.gif' height='20px' width='auto'/> restart ? <img src='ghost.gif' height='20px' width='auto'/></marquee></td></tr>";
+					resultArr=[];
+					resultImg=[];
+					resultNum=[];
+					resultPEGI=[];
+					resultCover=[];
+					resultHist=[];
+					resultGenre=[];
+					resultNBJ=[];
+					resultQual=[];
+					resultTail=[];
+					resultLink=[];
+					//resultYou=[];
+				}
+			}
+			name_input.onclick=function out() {
+				logo.style.display="none";
+				name_input.value="";
+				tab_sel.innerHTML="";
+				tab_results.innerHTML="<tr><td style='text-align:center;'><marquee scrollamount='24'>🔍 Recherche parmi "+arr1.length+" titres de jeux vidéo <img height='30px' height='auto' src='pikachu.gif'/></marquee></td></tr>";
+			};
+			var count=0;
+
+			function preloadImage(url) {
+				var img=new Image();
+				img.src=url;
+				img.onload=function() {
+					count++;
+					progress.innerHTML=Math.round(count/(arr6.length) * 100)+"%";
+					progress.style.width=Math.round(count/(arr6.length) * 100)+"%";
+					if (Math.round(count/(arr6.length)*100)==100) {
+						progress.style.opacity=0;
+						//input.style.visibility="visible"; 
+						input.addEventListener("keyup",show);
+					}	
+				}
+			}
+
+			function init() {
+				for (var j=0;j < arr6.length;j++) {
+					preloadImage(arr6[j]);
+				}
+			}
+
+			init();
+
+			function disp_click(clicked_id) {
+				if(document.getElementById(clicked_id+"z").style.display=="table-row"){
+					document.getElementById(clicked_id+"z").style.display="none";
+				} else{
+					document.getElementById(clicked_id+"z").style.display="table-row";
+				}
+			}
+
+			function show_options(){
+				var options=document.getElementById("options");
+				if(options.style.display=="table"){
+					options.style.display="none";
+				} else{
+					options.style.display="table";
+				}
+}
+
+			function allGames(conso) {
+				//coin.currentTime=0;
+				//coin.play();
+				tab_sel.innerHTML="";
+				for (var i=0;i<arr3.length;i++) {
+					if (arr3[i].indexOf(conso) !=-1) {
+						resultArr.push(arr2[i]);
+						resultImg.push(arr3[i]);
+						resultNum.push(arr4[i]);
+						resultPEGI.push(arr5[i]);
+						resultCover.push(arr6[i]);
+						resultHist.push(arr7[i]);
+						resultGenre.push(arr8[i]);
+						resultNBJ.push(arr9[i]);
+						resultQual.push(arr10[i]);
+						resultTail.push(arr11[i]);
+						resultLink.push(arr12[i]);
+						//resultYou.push(arr13[i]);
+					}
+				}
+				tab_results.innerHTML="<tr><td colspan='3' style='text-align:center;font-weight:bold;color:#000'>"+resultArr.length+" résultats</td></tr>";
+				for (var k=0;k<resultArr.length;k++) {
+					tab_results.innerHTML +="<tr id='tr"+k+"' onClick='disp_click(this.id)'><td colspan='3' style='text-align:center;font-weight:bold;'><img class='console' src='"+resultImg[k]+".svg'/> "+resultArr[k]+" <img src='"+resultPEGI[k]+".svg' height='50px' width='auto'/> <span class='num'>"+resultNum[k];+"</span></td></tr>";
+					//tab_results.innerHTML +="<tr id='tr"+k+"z' style='display:none'><td style='text-align:center;'><img class='cover' src="+resultCover[k]+"></td><td><span class='hist'>"+resultHist[k]+" <a href='"+resultLink[k]+"' style='text-decoration: underline;' target='blank'>Plus de détails&nbsp;...</a><br><br><iframe width='560' height='315' src='"+resultYou[k]+"' title='YouTube video player' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe></span></td><td class='specs'>📁 <span class='fwb'>Genre :</span> "+resultGenre[k]+"<br>🎮 <span class='fwb'>Joueur(s) :</span> "+resultNBJ[k]+"<br>💾 <span class='fwb'>Taille :</span> ≈"+resultTail[k]+" Go<br>🏅 <span class='fwb'>Qualités :</span> "+resultQual[k]+"</td></tr>";
+					tab_results.innerHTML +="<tr id='tr"+k+"z' style='display:none'><td style='text-align:center;'><img class='cover' src="+resultCover[k]+"></td><td><span class='hist'>"+resultHist[k]+" <a href='"+resultLink[k]+"' style='text-decoration: underline;' target='blank'>Plus de détails&nbsp;...</a></span></td><td class='specs'>📁 <span class='fwb'>Genre :</span> "+resultGenre[k]+"<br>🎮 <span class='fwb'>Joueur(s) :</span> "+resultNBJ[k]+"<br>💾 <span class='fwb'>Taille :</span> ≈"+resultTail[k]+" Go<br>🏅 <span class='fwb'>Qualités :</span> "+resultQual[k]+"</td></tr>";
+				}
+				tab_results.innerHTML+="<tr onclick='location.reload();'><td style='text-align:center;background:#000;border:2px solid #ddd;color:#fff;' colspan='3'><marquee direction='right'><img src='pacman.gif' height='20px' width='auto'/> restart ? <img src='ghost.gif' height='20px' width='auto'/></marquee></td></tr>";
+				resultArr=[];
+				resultImg=[];
+				resultNum=[];
+				resultPEGI=[];
+				resultCover=[];
+				resultHist=[];
+				resultGenre=[];
+				resultNBJ=[];
+				resultQual=[];
+				resultTail=[];
+				resultLink=[];
+				//resultYou=[];
+			}
+			
+			function selection() {
+				for (var i=0;i<arr14.length;i++) {
+					if (arr14[i]==1){
+						resultArr.push(arr2[i]);
+						resultImg.push(arr3[i]);
+						resultNum.push(arr4[i]);
+						resultPEGI.push(arr5[i]);
+						resultCover.push(arr6[i]);
+						resultHist.push(arr7[i]);
+						resultGenre.push(arr8[i]);
+						resultNBJ.push(arr9[i]);
+						resultQual.push(arr10[i]);
+						resultTail.push(arr11[i]);
+						resultLink.push(arr12[i]);
+					}
+				}
+				document.getElementById("tab_sel").innerHTML="<tr><td colspan='3' style='text-align:center;font-weight:bold;color:#fff;background:#000;'>Sélection disponible dans la salle Jeux Vidéo<br>"+resultArr.length+" résultats + l'ensemble des jeux Switch</td></tr>";
+				for (var k=0;k<resultArr.length;k++) {
+					tab_results.innerHTML +="<tr id='tr"+k+"' onClick='disp_click(this.id)'><td colspan='3' style='text-align:center;font-weight:bold;'><img class='console' src='"+resultImg[k]+".svg'/> "+resultArr[k]+" <img src='"+resultPEGI[k]+".svg' height='50px' width='auto'/> <span class='num'>"+resultNum[k];+"</span></td></tr>";
+					//tab_results.innerHTML +="<tr id='tr"+k+"z' style='display:none'><td style='text-align:center;'><img class='cover' src="+resultCover[k]+"></td><td><span class='hist'>"+resultHist[k]+" <a href='"+resultLink[k]+"' style='text-decoration: underline;' target='blank'>Plus de détails&nbsp;...</a><br><br><iframe width='560' height='315' src='"+resultYou[k]+"' title='YouTube video player' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe></span></td><td class='specs'>📁 <span class='fwb'>Genre :</span> "+resultGenre[k]+"<br>🎮 <span class='fwb'>Joueur(s) :</span> "+resultNBJ[k]+"<br>💾 <span class='fwb'>Taille :</span> ≈"+resultTail[k]+" Go<br>🏅 <span class='fwb'>Qualités :</span> "+resultQual[k]+"</td></tr>";
+					tab_results.innerHTML +="<tr id='tr"+k+"z' style='display:none'><td style='text-align:center;'><img class='cover' src="+resultCover[k]+"></td><td><span class='hist'>"+resultHist[k]+" <a href='"+resultLink[k]+"' style='text-decoration: underline;' target='blank'>Plus de détails&nbsp;...</a></span></td><td class='specs'>📁 <span class='fwb'>Genre :</span> "+resultGenre[k]+"<br>🎮 <span class='fwb'>Joueur(s) :</span> "+resultNBJ[k]+"<br>💾 <span class='fwb'>Taille :</span> ≈"+resultTail[k]+" Go<br>🏅 <span class='fwb'>Qualités :</span> "+resultQual[k]+"</td></tr>";
+				}
+				tab_results.innerHTML+="<tr onclick='location.reload();'><td style='text-align:center;background:#000;border:2px solid #ddd;color:#fff;' colspan='3'><marquee direction='right'><img src='pacman.gif' height='20px' width='auto'/> restart ? <img src='ghost.gif' height='20px' width='auto'/></marquee></td></tr>";
+				resultArr=[];
+				resultImg=[];
+				resultNum=[];
+				resultPEGI=[];
+				resultCover=[];
+				resultHist=[];
+				resultGenre=[];
+				resultNBJ=[];
+				resultQual=[];
+				resultTail=[];
+				resultLink=[];
+				//resultYou=[];
+			}
+			selection();
+			
+		</script>
+	</body>
+</html>
+
+<!-- <style>
+.frame1{
+border:1px solid black;
+width:18cm;
+height:8cm;
+}
+.frame2{
+border:1px solid black;
+width:4cm;
+height:6cm;
+margin:0.5cm;
+display:block;
+float:left;
+}
+.frame3{
+border:1px solid black;
+width:12cm;
+height:6cm;
+float:right;
+margin-top:0.5cm;
+margin-right:0.5cm;
+}
+
+</style>
+<div class="frame1">
+<div class="frame2"></div>
+<div class="frame3"></div>
+</div> -->

@@ -1,4 +1,4 @@
-﻿<!DOCTYPE HTML>
+<!DOCTYPE HTML>
 <html lang="fr">
 	<head>
 		<meta charset="utf-8">
@@ -35,12 +35,10 @@
 		</style>
 	</head>
 	<body>
-		<!-- <img id="glide" src="link.png" height="200px" position="relative" width="auto"/> -->
 		<div style="text-align:center;">
 			<div id="logo" onclick='location.reload();'><br><img src="gamesearch.png" id="gstitle" width="375px"/><br></div><br>
 			<input autocapitalize="off" type="text" id="name_input" autofocus><br><br>
 		</div>
-		<div id="progress"></div>
 		<table class="center" width="80%">
 			<tbody id="tab_results2">
 			<tr>
@@ -61,71 +59,9 @@
 			<tbody id="tab_results">
 			</tbody>
 		</table>
-		<!-- 
-		<div id="elibre" style="background:rgba(0,0,0,0.5);padding:5px;border-radius:5px;">
-			<span style="color:white;margin:10px;" onclick="show_options();">💡 Help ?</span><br>
-			<table id="options" style="display:none;">
-			<tbody>
-			<tr><td colspan="2">Free storage space<span><span id="spandt"></span></span></td></tr>
-			<tr><td style="cursor: pointer;font-weight:bold;color:#fff;background:#074490;" onclick="allGames('PS')">PS5</td><td><input id="ps5mem" type="number" style="width:3em;" min="0" max="999" onchange="cookiechg();"/> Go</td></tr>
-			<tr><td style="cursor: pointer;font-weight:bold;color:#fff;background:#e60012;" onclick="allGames('Switch')">Switch</td><td><input id="swimem" type="number" style="width:3em;" min="0" max="999" onchange="cookiechg();"/> Go<br></td></tr>
-			<tr><td style="cursor: pointer;font-weight:bold;color:#fff;background:#0f7b0e;" onclick="allGames('XBOX')">XBOX</td><td><input id="xbomem" type="number" style="width:3em;" min="0" max="999" onchange="cookiechg();"/> Go</td></tr>
-			<tr><td colspan="2"><a href="https://catalogue.mediatheque-rueilmalmaison.fr/permalink/P-70029927-c706-4983-903b-9d8e6b7e81ef" target="_blank">📚 Catalogue JVO</a></td></tr>
-			<tr><td colspan="2"><a href="https://www.playstation.com/fr-fr/support/hardware/ps5/" target="_blank">⚙️ Aide PS5️</a></td></tr>
-			<tr><td colspan="2"><a href="https://www.nintendo.fr/Assistance/Contact/Reparations/Nintendo-Switch-1770156.html" target="_blank">⚙️ Aide Switch</a></td></tr>
-			<tr><td colspan="2"><a href="https://support.xbox.com/fr-FR/" target="_blank">⚙️ Aide XBOX</a></td></tr>
-			<tr><td colspan="2"><a href="https://pegi.info/fr" target="_blank">🔞 PEGI info</a></td></tr>
-			</tbody>
-			</table>
-		</div>
-		-->
-		<script src="variables.js"></script>
+
+		<script src="variables2.js"></script>
 		<script>
-			/*
-			var spandt=document.getElementById("spandt");
-			var ps5mem=document.getElementById("ps5mem");
-			var swimem=document.getElementById("swimem");
-			var xbomem=document.getElementById("xbomem");
-
-			function getCookie(cname){
-				let name=cname+"=";
-				let decodedCookie=decodeURIComponent(document.cookie);
-				let ca=decodedCookie.split(';');
-				for (let l=0;l<ca.length;l++) {
-					let c=ca[l];
-					while(c.charAt(0)==' ') {
-						c=c.substring(1);
-					}
-					if (c.indexOf(name)==0) {
-						return c.substring(name.length, c.length);
-					}
-				}
-				return "";
-			}
-
-			console.log(document.cookie);
-
-			if(document.cookie==null){
-			}else{
-				spandt.innerHTML="<br>"+getCookie("mod");
-				ps5mem.value=getCookie("ps5");
-				swimem.value=getCookie("swi");
-				xbomem.value=getCookie("xbo");
-			}
-
-			function cookiechg(){
-				var dt=new Date();
-				document.cookie="mod="+dt.toLocaleString()+";expires=Thu, 23 Mar 2042 12:00:00 UTC";
-				spandt.innerHTML="<br>"+getCookie("mod");
-				document.cookie="ps5="+ps5mem.value+";expires=Thu, 23 Mar 2042 12:00:00 UTC";
-				document.cookie="swi="+swimem.value+";expires=Thu, 23 Mar 2042 12:00:00 UTC";
-				document.cookie="xbo="+xbomem.value+";expires=Thu, 23 Mar 2042 12:00:00 UTC";
-				console.log(document.cookie);
-			}
-			*/
-
-			var waka=new Audio('waka.mp3');
-			var coin=new Audio('coin.mp3');
 			var logo=document.getElementById("logo");
 			var name_input=document.getElementById("name_input");
 			var data_input;
@@ -148,8 +84,6 @@
 			var input=document.querySelector('#name_input');
 
 			function show(){
-				//waka.currentTime=0;
-				//waka.play();
 				tab_sel.innerHTML="";
 				tab_results.innerHTML="";
 				resultArr=[];
@@ -173,14 +107,6 @@
 							resultImg.push(arr3[i]);
 							resultNum.push(arr4[i]);
 							resultPEGI.push(arr5[i]);
-							resultCover.push(arr6[i]);
-							resultHist.push(arr7[i]);
-							resultGenre.push(arr8[i]);
-							resultNBJ.push(arr9[i]);
-							resultQual.push(arr10[i]);
-							resultTail.push(arr11[i]);
-							resultLink.push(arr12[i]);
-							//resultYou.push(arr13[i]);
 						}
 					}
 					if (resultArr.length==0) {
@@ -189,23 +115,13 @@
 						tab_results.innerHTML="<tr><td colspan='3' style='text-align:center;font-weight:bold;color:#000'>"+resultArr.length+" résultats</td></tr>";
 					}
 					for (var k=0;k < resultArr.length;k++) {
-						tab_results.innerHTML +="<tr id='tr"+k+"' onClick='disp_click(this.id)'><td colspan='3' style='text-align:center;font-weight:bold;'><img class='console' src='"+resultImg[k]+".svg'/> "+resultArr[k]+" <img src='"+resultPEGI[k]+".svg' height='50px' width='auto'/> <span class='num'>"+resultNum[k];+"</span></td></tr>";
-						//tab_results.innerHTML +="<tr id='tr"+k+"z' style='display:none'><td style='text-align:center;'><img class='cover' src="+resultCover[k]+"></td><td><span class='hist'>"+resultHist[k]+" <a href='"+resultLink[k]+"' style='text-decoration: underline;' target='blank'>Plus de détails&nbsp;...</a></span><br><br><iframe width='560' height='315' src='"+resultYou[k]+"' title='YouTube video player' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe></td><td class='specs'>📁 <span class='fwb'>Genre :</span> "+resultGenre[k]+"<br>🎮 <span class='fwb'>Joueur(s) :</span> "+resultNBJ[k]+"<br>💾 <span class='fwb'>Taille :</span> "+resultTail[k]+" Go<br>🏅 <span class='fwb'>Qualités :</span> "+resultQual[k]+"</td></tr>";
-						tab_results.innerHTML +="<tr id='tr"+k+"z' style='display:none'><td style='text-align:center;'><img class='cover' src="+resultCover[k]+"></td><td><span class='hist'>"+resultHist[k]+" <a href='"+resultLink[k]+"' style='text-decoration: underline;' target='blank'>Plus de détails&nbsp;...</a></span></td><td class='specs'>📁 <span class='fwb'>Genre :</span> "+resultGenre[k]+"<br>🎮 <span class='fwb'>Joueur(s) :</span> "+resultNBJ[k]+"<br>💾 <span class='fwb'>Taille :</span> "+resultTail[k]+" Go<br>🏅 <span class='fwb'>Qualités :</span> "+resultQual[k]+"</td></tr>";
+						tab_results.innerHTML +="<tr id='tr"+k+"'><td colspan='3' style='text-align:center;font-weight:bold;'><img class='console' src='"+resultImg[k]+".svg'/> "+resultArr[k]+" <img src='"+resultPEGI[k]+".svg' height='50px' width='auto'/> <span class='num'>"+resultNum[k];+"</span></td></tr>";
 					}
 					tab_results.innerHTML +="<tr onclick='location.reload();'><td style='text-align:center;background:#000;border:2px solid #ddd;color:#fff;' colspan='3'><marquee direction='right'><img src='pacman.gif' height='20px' width='auto'/> restart ? <img src='ghost.gif' height='20px' width='auto'/></marquee></td></tr>";
 					resultArr=[];
 					resultImg=[];
 					resultNum=[];
 					resultPEGI=[];
-					resultCover=[];
-					resultHist=[];
-					resultGenre=[];
-					resultNBJ=[];
-					resultQual=[];
-					resultTail=[];
-					resultLink=[];
-					//resultYou=[];
 				}
 			}
 			name_input.onclick=function out() {
@@ -216,36 +132,10 @@
 			};
 			var count=0;
 
-			function preloadImage(url) {
-				var img=new Image();
-				img.src=url;
-				img.onload=function() {
-					count++;
-					progress.innerHTML=Math.round(count/(arr6.length) * 100)+"%";
-					progress.style.width=Math.round(count/(arr6.length) * 100)+"%";
-					if (Math.round(count/(arr6.length)*100)==100) {
-						progress.style.opacity=0;
-						//input.style.visibility="visible"; 
-						input.addEventListener("keyup",show);
-					}	
-				}
-			}
-
 			function init() {
-				for (var j=0;j < arr6.length;j++) {
-					preloadImage(arr6[j]);
-				}
 			}
 
 			init();
-
-			function disp_click(clicked_id) {
-				if(document.getElementById(clicked_id+"z").style.display=="table-row"){
-					document.getElementById(clicked_id+"z").style.display="none";
-				} else{
-					document.getElementById(clicked_id+"z").style.display="table-row";
-				}
-			}
 
 			function show_options(){
 				var options=document.getElementById("options");
@@ -257,8 +147,6 @@
 }
 
 			function allGames(conso) {
-				//coin.currentTime=0;
-				//coin.play();
 				tab_sel.innerHTML="";
 				for (var i=0;i<arr3.length;i++) {
 					if (arr3[i].indexOf(conso) !=-1) {
@@ -266,104 +154,20 @@
 						resultImg.push(arr3[i]);
 						resultNum.push(arr4[i]);
 						resultPEGI.push(arr5[i]);
-						resultCover.push(arr6[i]);
-						resultHist.push(arr7[i]);
-						resultGenre.push(arr8[i]);
-						resultNBJ.push(arr9[i]);
-						resultQual.push(arr10[i]);
-						resultTail.push(arr11[i]);
-						resultLink.push(arr12[i]);
-						//resultYou.push(arr13[i]);
 					}
 				}
 				tab_results.innerHTML="<tr><td colspan='3' style='text-align:center;font-weight:bold;color:#000'>"+resultArr.length+" résultats</td></tr>";
 				for (var k=0;k<resultArr.length;k++) {
-					tab_results.innerHTML +="<tr id='tr"+k+"' onClick='disp_click(this.id)'><td colspan='3' style='text-align:center;font-weight:bold;'><img class='console' src='"+resultImg[k]+".svg'/> "+resultArr[k]+" <img src='"+resultPEGI[k]+".svg' height='50px' width='auto'/> <span class='num'>"+resultNum[k];+"</span></td></tr>";
-					//tab_results.innerHTML +="<tr id='tr"+k+"z' style='display:none'><td style='text-align:center;'><img class='cover' src="+resultCover[k]+"></td><td><span class='hist'>"+resultHist[k]+" <a href='"+resultLink[k]+"' style='text-decoration: underline;' target='blank'>Plus de détails&nbsp;...</a><br><br><iframe width='560' height='315' src='"+resultYou[k]+"' title='YouTube video player' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe></span></td><td class='specs'>📁 <span class='fwb'>Genre :</span> "+resultGenre[k]+"<br>🎮 <span class='fwb'>Joueur(s) :</span> "+resultNBJ[k]+"<br>💾 <span class='fwb'>Taille :</span> ≈"+resultTail[k]+" Go<br>🏅 <span class='fwb'>Qualités :</span> "+resultQual[k]+"</td></tr>";
-					tab_results.innerHTML +="<tr id='tr"+k+"z' style='display:none'><td style='text-align:center;'><img class='cover' src="+resultCover[k]+"></td><td><span class='hist'>"+resultHist[k]+" <a href='"+resultLink[k]+"' style='text-decoration: underline;' target='blank'>Plus de détails&nbsp;...</a></span></td><td class='specs'>📁 <span class='fwb'>Genre :</span> "+resultGenre[k]+"<br>🎮 <span class='fwb'>Joueur(s) :</span> "+resultNBJ[k]+"<br>💾 <span class='fwb'>Taille :</span> ≈"+resultTail[k]+" Go<br>🏅 <span class='fwb'>Qualités :</span> "+resultQual[k]+"</td></tr>";
+					tab_results.innerHTML +="<tr id='tr"+k+"'><td colspan='3' style='text-align:center;font-weight:bold;'><img class='console' src='"+resultImg[k]+".svg'/> "+resultArr[k]+" <img src='"+resultPEGI[k]+".svg' height='40px' width='auto'/> <span class='num'>"+resultNum[k];+"</span></td></tr>";
 				}
 				tab_results.innerHTML+="<tr onclick='location.reload();'><td style='text-align:center;background:#000;border:2px solid #ddd;color:#fff;' colspan='3'><marquee direction='right'><img src='pacman.gif' height='20px' width='auto'/> restart ? <img src='ghost.gif' height='20px' width='auto'/></marquee></td></tr>";
 				resultArr=[];
 				resultImg=[];
 				resultNum=[];
 				resultPEGI=[];
-				resultCover=[];
-				resultHist=[];
-				resultGenre=[];
-				resultNBJ=[];
-				resultQual=[];
-				resultTail=[];
-				resultLink=[];
-				//resultYou=[];
 			}
 			
-			function selection() {
-				for (var i=0;i<arr14.length;i++) {
-					if (arr14[i]==1){
-						resultArr.push(arr2[i]);
-						resultImg.push(arr3[i]);
-						resultNum.push(arr4[i]);
-						resultPEGI.push(arr5[i]);
-						resultCover.push(arr6[i]);
-						resultHist.push(arr7[i]);
-						resultGenre.push(arr8[i]);
-						resultNBJ.push(arr9[i]);
-						resultQual.push(arr10[i]);
-						resultTail.push(arr11[i]);
-						resultLink.push(arr12[i]);
-					}
-				}
-				document.getElementById("tab_sel").innerHTML="<tr><td colspan='3' style='text-align:center;font-weight:bold;color:#fff;background:#000;'>Sélection disponible dans la salle Jeux Vidéo<br>"+resultArr.length+" résultats + l'ensemble des jeux Switch</td></tr>";
-				for (var k=0;k<resultArr.length;k++) {
-					tab_results.innerHTML +="<tr id='tr"+k+"' onClick='disp_click(this.id)'><td colspan='3' style='text-align:center;font-weight:bold;'><img class='console' src='"+resultImg[k]+".svg'/> "+resultArr[k]+" <img src='"+resultPEGI[k]+".svg' height='50px' width='auto'/> <span class='num'>"+resultNum[k];+"</span></td></tr>";
-					//tab_results.innerHTML +="<tr id='tr"+k+"z' style='display:none'><td style='text-align:center;'><img class='cover' src="+resultCover[k]+"></td><td><span class='hist'>"+resultHist[k]+" <a href='"+resultLink[k]+"' style='text-decoration: underline;' target='blank'>Plus de détails&nbsp;...</a><br><br><iframe width='560' height='315' src='"+resultYou[k]+"' title='YouTube video player' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe></span></td><td class='specs'>📁 <span class='fwb'>Genre :</span> "+resultGenre[k]+"<br>🎮 <span class='fwb'>Joueur(s) :</span> "+resultNBJ[k]+"<br>💾 <span class='fwb'>Taille :</span> ≈"+resultTail[k]+" Go<br>🏅 <span class='fwb'>Qualités :</span> "+resultQual[k]+"</td></tr>";
-					tab_results.innerHTML +="<tr id='tr"+k+"z' style='display:none'><td style='text-align:center;'><img class='cover' src="+resultCover[k]+"></td><td><span class='hist'>"+resultHist[k]+" <a href='"+resultLink[k]+"' style='text-decoration: underline;' target='blank'>Plus de détails&nbsp;...</a></span></td><td class='specs'>📁 <span class='fwb'>Genre :</span> "+resultGenre[k]+"<br>🎮 <span class='fwb'>Joueur(s) :</span> "+resultNBJ[k]+"<br>💾 <span class='fwb'>Taille :</span> ≈"+resultTail[k]+" Go<br>🏅 <span class='fwb'>Qualités :</span> "+resultQual[k]+"</td></tr>";
-				}
-				tab_results.innerHTML+="<tr onclick='location.reload();'><td style='text-align:center;background:#000;border:2px solid #ddd;color:#fff;' colspan='3'><marquee direction='right'><img src='pacman.gif' height='20px' width='auto'/> restart ? <img src='ghost.gif' height='20px' width='auto'/></marquee></td></tr>";
-				resultArr=[];
-				resultImg=[];
-				resultNum=[];
-				resultPEGI=[];
-				resultCover=[];
-				resultHist=[];
-				resultGenre=[];
-				resultNBJ=[];
-				resultQual=[];
-				resultTail=[];
-				resultLink=[];
-				//resultYou=[];
-			}
-			selection();
-			
+			input.addEventListener("keyup",show);
 		</script>
 	</body>
 </html>
-
-<!-- <style>
-.frame1{
-border:1px solid black;
-width:18cm;
-height:8cm;
-}
-.frame2{
-border:1px solid black;
-width:4cm;
-height:6cm;
-margin:0.5cm;
-display:block;
-float:left;
-}
-.frame3{
-border:1px solid black;
-width:12cm;
-height:6cm;
-float:right;
-margin-top:0.5cm;
-margin-right:0.5cm;
-}
-
-</style>
-<div class="frame1">
-<div class="frame2"></div>
-<div class="frame3"></div>
-</div> -->
