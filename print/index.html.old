@@ -1,0 +1,53 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Affiche Jeux Vidéo</title>
+    <style>
+        body { font-family: sans-serif; margin: 20px; }
+        h1 { text-align: center; }
+        .menu { margin-bottom: 20px; }
+        .jeu { margin: 10px 0; padding: 10px; border: 1px solid #ccc; border-radius: 8px; }
+        .hidden { display: none; }
+        button { margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <h1>Affiche des Jeux Vidéo</h1>
+    <div class="menu">
+        <h2>Choisissez les jeux à afficher :</h2>
+        <form id="selectionForm">
+            <label><input type="checkbox" name="jeu" value="1" checked> Jeu 1</label><br>
+            <label><input type="checkbox" name="jeu" value="2" checked> Jeu 2</label><br>
+            <label><input type="checkbox" name="jeu" value="3" checked> Jeu 3</label><br>
+            <label><input type="checkbox" name="jeu" value="4" checked> Jeu 4</label><br>
+            <label><input type="checkbox" name="jeu" value="5" checked> Jeu 5</label><br>
+        </form>
+        <button onclick="updateDisplay()">Mettre à jour l'affiche</button>
+        <button onclick="window.print()">Imprimer</button>
+    </div>
+
+    <div id="affiche">
+        <div class="jeu" id="jeu1"><strong>Jeu 1 :</strong><br>Après s'être écrasée sur un monde en perpétuel changement, Sélène doit explorer les ruines d'une ancienne civilisation pour s'échapper...</div>
+        <div class="jeu" id="jeu2"><strong>Jeu 2 :</strong><br>Suivez Sackboy dans une aventure épique en 3D parsemée de plates-formes...</div>
+        <div class="jeu" id="jeu3"><strong>Jeu 3 :</strong><br>NBA 2K21 offre une immersion exceptionnelle dans toutes les facettes de la NBA...</div>
+        <div class="jeu" id="jeu4"><strong>Jeu 4 :</strong><br>Dans un avenir lointain, après la découverte d'une hormone cérébrale psionique...</div>
+        <div class="jeu" id="jeu5"><strong>Jeu 5 :</strong><br>Dans un monde imaginaire post-industriel tombé aux mains de Shinra Electric...</div>
+    </div>
+
+    <script>
+        function updateDisplay() {
+            const checkboxes = document.querySelectorAll('input[name="jeu"]');
+            checkboxes.forEach(cb => {
+                const jeuDiv = document.getElementById("jeu" + cb.value);
+                if (cb.checked) {
+                    jeuDiv.classList.remove("hidden");
+                } else {
+                    jeuDiv.classList.add("hidden");
+                }
+            });
+        }
+    </script>
+</body>
+</html>
