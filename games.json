@@ -12,7 +12,7 @@
     "genre": "jeu de tir",
     "players": "1",
     "qualities": "réflexes, observation, persévérance",
-    "size_go": 59.0,
+    "size_go": 59,
     "installed": 0,
     "store_url": "https://store.playstation.com/fr-fr/product/EP9000-PPSA01285_00-RETURNALGAME0001"
   },
@@ -29,7 +29,7 @@
     "genre": "action",
     "players": "1 à 4",
     "qualities": "réflexes, coopération, observation",
-    "size_go": 31.0,
+    "size_go": 31,
     "installed": 0,
     "store_url": "https://store.playstation.com/fr-fr/product/EP9000-PPSA01288_00-SACKBOYADVENTURE"
   },
@@ -46,7 +46,7 @@
     "genre": "sport",
     "players": "1 à 4",
     "qualities": "réflexes, coopération",
-    "size_go": 150.0,
+    "size_go": 150,
     "installed": 0,
     "store_url": "https://store.playstation.com/fr-fr/product/EP1001-PPSA01388_00-NBA2K21000000000"
   },
@@ -63,7 +63,7 @@
     "genre": "jeu de rôle",
     "players": "1",
     "qualities": "réflexion, curiosité",
-    "size_go": 16.0,
+    "size_go": 16,
     "installed": 0,
     "store_url": "https://store.playstation.com/fr-fr/product/EP0700-PPSA02174_00-SCRLTNXS00000000"
   },
@@ -80,7 +80,7 @@
     "genre": "jeu de rôle",
     "players": "1",
     "qualities": "réflexion, observation, curiosité",
-    "size_go": 100.0,
+    "size_go": 100,
     "installed": 0,
     "store_url": "https://store.playstation.com/fr-fr/product/EP0082-PPSA01911_00-5827003902180177"
   },
@@ -97,7 +97,7 @@
     "genre": "action",
     "players": "1",
     "qualities": "réflexes, observation",
-    "size_go": 50.0,
+    "size_go": 50,
     "installed": 0,
     "store_url": "https://store.playstation.com/fr-fr/product/EP9000-PPSA01474_00-RATCHETCLANKRIFT"
   },
@@ -114,7 +114,7 @@
     "genre": "action, jeu de tir",
     "players": "1",
     "qualities": "réflexes, observation",
-    "size_go": 70.0,
+    "size_go": 70,
     "installed": 0,
     "store_url": "https://store.playstation.com/fr-fr/product/EP0082-PPSA01779_00-1955314285649692"
   },
@@ -131,7 +131,7 @@
     "genre": "simulation",
     "players": "1 à 4",
     "qualities": "coopération, coordination, gestion du stress",
-    "size_go": 8.0,
+    "size_go": 8,
     "installed": 0,
     "store_url": "https://store.playstation.com/fr-fr/product/EP4064-PPSA01528_00-0538983162460184"
   },
@@ -148,7 +148,7 @@
     "genre": "jeu de tir",
     "players": "1",
     "qualities": "observation, gestion du stress",
-    "size_go": 30.0,
+    "size_go": 30,
     "installed": 0,
     "store_url": "https://store.playstation.com/fr-fr/product/EP0102-PPSA01557_00-VILLAGEFULLGAMEX"
   },
@@ -165,7 +165,7 @@
     "genre": "aventure",
     "players": "1",
     "qualities": "observation, curiosité, persévérance",
-    "size_go": 12.0,
+    "size_go": 12,
     "installed": 0,
     "store_url": "https://store.playstation.com/fr-fr/product/EP5426-PPSA02457_00-BELOWZERSUB79247"
   },
@@ -182,7 +182,7 @@
     "genre": "action, aventure, jeu de rôle",
     "players": "1",
     "qualities": "persévérance, observation, réflexes, patience",
-    "size_go": 66.0,
+    "size_go": 66,
     "installed": 0,
     "store_url": "https://store.playstation.com/fr-fr/product/EP9000-PPSA01341_00-DEMONSSOULS00000"
   },
@@ -199,7 +199,7 @@
     "genre": "action",
     "players": "1",
     "qualities": "observation, curiosité, réflexes",
-    "size_go": 50.0,
+    "size_go": 50,
     "installed": 0,
     "store_url": "https://store.playstation.com/fr-fr/product/EP9000-PPSA01417_00-MARVELSSMMORALES"
   },
@@ -216,8 +216,8 @@
     "genre": "action, aventure, réflexion",
     "players": "2 (et strictement 2)",
     "qualities": "coopération",
-    "size_go": 40.0,
-    "installed": 1,
+    "size_go": 40,
+    "installed": 0,
     "store_url": "https://store.playstation.com/fr-fr/product/EP0006-PPSA02343_00-ITTAKESTWORETAIL"
   },
   {
@@ -233,7 +233,7 @@
     "genre": "action, aventure",
     "players": "1",
     "qualities": "réflexes, observation",
-    "size_go": 50.0,
+    "size_go": 50,
     "installed": 0,
     "store_url": "https://store.playstation.com/fr-fr/product/EP9000-CUSA07410_00-0000000GODOFWARN"
   },
@@ -250,7 +250,7 @@
     "genre": "action, course",
     "players": "1 à 4",
     "qualities": "réflexes",
-    "size_go": 17.0,
+    "size_go": 17,
     "installed": 0,
     "store_url": "https://store.playstation.com/fr-fr/product/EP0002-CUSA14876_00-CRASHTEAMRACING1"
   },
@@ -267,7 +267,7 @@
     "genre": "action, aventure, jeu de rôle",
     "players": "1",
     "qualities": "réflexion, observation, curiosité",
-    "size_go": 50.0,
+    "size_go": 50,
     "installed": 0,
     "store_url": "https://store.playstation.com/fr-fr/product/EP4497-CUSA05572_00-00000000000GOTY2"
   },
@@ -284,7 +284,7 @@
     "genre": "combat",
     "players": "1 à 2",
     "qualities": "réflexes, prise de décision rapide, observation",
-    "size_go": 6.0,
+    "size_go": 6,
     "installed": 0,
     "store_url": "https://store.playstation.com/fr-fr/product/EP0102-CUSA01222_00-SF5FULLGAME00000"
   },
@@ -301,7 +301,7 @@
     "genre": "simulation",
     "players": "1 à 4",
     "qualities": "curiosité, imagination, persévérance, réflexion",
-    "size_go": 2.0,
+    "size_go": 2,
     "installed": 0,
     "store_url": "https://store.playstation.com/fr-fr/product/EP4433-CUSA00265_00-MINECRAFTPS40001"
   },
@@ -318,7 +318,7 @@
     "genre": "course",
     "players": "1 à 2",
     "qualities": "réflexes, observation, prise de décision rapide, persévérance",
-    "size_go": 24.0,
+    "size_go": 24,
     "installed": 0,
     "store_url": "https://store.playstation.com/fr-fr/product/EP9000-CUSA05670_00-WIPEOUTOMEGA00EU"
   },
@@ -335,7 +335,7 @@
     "genre": "action, jeu de rôle",
     "players": "1",
     "qualities": "observation, curiosité, persévérance",
-    "size_go": 49.0,
+    "size_go": 49,
     "installed": 0,
     "store_url": "https://store.playstation.com/fr-fr/product/EP9000-CUSA10211_00-HRZCE00000000000"
   },
@@ -352,7 +352,7 @@
     "genre": "jeu de rôle",
     "players": "1",
     "qualities": "réflexion, réflexes, planification, observation",
-    "size_go": 70.0,
+    "size_go": 70,
     "installed": 0,
     "store_url": "https://store.playstation.com/fr-fr/product/EP4497-PPSA04029_00-0000000000000N22"
   },
@@ -369,7 +369,7 @@
     "genre": "sport",
     "players": "1 à 4",
     "qualities": "coordination, observation, patience",
-    "size_go": 11.0,
+    "size_go": 11,
     "installed": 0,
     "store_url": "https://store.playstation.com/fr-fr/product/EP9000-CUSA02171_00-0011223344556677"
   },
@@ -386,7 +386,7 @@
     "genre": "course",
     "players": "1 à 2",
     "qualities": "réflexes",
-    "size_go": 60.0,
+    "size_go": 60,
     "installed": 0,
     "store_url": "https://store.playstation.com/fr-fr/product/EP9001-CUSA02168_00-GTSPORT000000000"
   },
@@ -403,7 +403,7 @@
     "genre": "action, jeu de rôle",
     "players": "1",
     "qualities": "réflexion, observation",
-    "size_go": 40.0,
+    "size_go": 40,
     "installed": 0,
     "store_url": "https://store.playstation.com/fr-fr/product/EP0082-CUSA12025_00-KINGDOMHEARTSX30"
   },
@@ -420,7 +420,7 @@
     "genre": "action, aventure",
     "players": "1",
     "qualities": "curiosité, observation",
-    "size_go": 105.0,
+    "size_go": 105,
     "installed": 0,
     "store_url": "https://store.playstation.com/fr-fr/product/EP1004-CUSA08519_00-REDEMPTIONFULL02"
   },
@@ -437,7 +437,7 @@
     "genre": "action, aventure",
     "players": "1",
     "qualities": "curiosité, observation",
-    "size_go": 50.0,
+    "size_go": 50,
     "installed": 0,
     "store_url": "https://store.playstation.com/fr-fr/product/EP9000-CUSA09175_00-DAYSGONECOMPLETE"
   },
@@ -454,7 +454,7 @@
     "genre": "action, aventure",
     "players": "1",
     "qualities": "curiosité, observation, réflexes, tolérance, empathie",
-    "size_go": 95.0,
+    "size_go": 95,
     "installed": 0,
     "store_url": "https://store.playstation.com/fr-fr/product/EP9000-CUSA10249_00-THELASTOFUSPART2"
   },
@@ -471,7 +471,7 @@
     "genre": "action, aventure",
     "players": "1",
     "qualities": "observation, curiosité, goût de l'entreprenariat",
-    "size_go": 59.0,
+    "size_go": 59,
     "installed": 0,
     "store_url": "https://store.playstation.com/fr-fr/product/EP1004-CUSA00411_00-PREMIUMPACKOG001"
   },
@@ -488,7 +488,7 @@
     "genre": "action, aventure, jeu de rôle",
     "players": "1",
     "qualities": "réflexion, observation, curiosité",
-    "size_go": 35.0,
+    "size_go": 35,
     "installed": 0,
     "store_url": "https://store.playstation.com/fr-fr/product/EP0177-PPSA02384_00-LIKEADRAGON00000"
   },
@@ -505,7 +505,7 @@
     "genre": "aventure, jeu de tir",
     "players": "1",
     "qualities": "curiosité, observation",
-    "size_go": 50.0,
+    "size_go": 50,
     "installed": 0,
     "store_url": "https://store.playstation.com/fr-fr/product/EP0001-PPSA01870_00-FC6EDSTANDARD000"
   },
@@ -522,7 +522,7 @@
     "genre": "jeu de tir",
     "players": "1 à 2",
     "qualities": "réflexe, coopération",
-    "size_go": 285.0,
+    "size_go": 285,
     "installed": 0,
     "store_url": "https://store.playstation.com/fr-fr/product/EP0002-CUSA24267_00-CODCWSTANDARD001"
   },
@@ -539,7 +539,7 @@
     "genre": "sport",
     "players": "1 à 4",
     "qualities": "réflexes, prise de décision rapide",
-    "size_go": 58.0,
+    "size_go": 58,
     "installed": 0,
     "store_url": "https://store.playstation.com/fr-fr/product/EP0006-PPSA01326_00-PS5LAUNCHBUNDLE0"
   },
@@ -556,7 +556,7 @@
     "genre": "aventure, jeu de rôle",
     "players": "1",
     "qualities": "réflexion, observation",
-    "size_go": 40.0,
+    "size_go": 40,
     "installed": 0,
     "store_url": "https://store.playstation.com/fr-fr/product/EP0700-PPSA02745_00-TOARISEPS5000001"
   },
@@ -1729,7 +1729,7 @@
     "genre": "jeu de rôle",
     "players": "1",
     "qualities": "réflexion, observation, persévérance",
-    "size_go": 0.0,
+    "size_go": 0,
     "installed": 0,
     "store_url": "https://www.nintendo.fr/Jeux/Nintendo-Switch/Pokemon-Let-s-Go-Evoli-1382835.html"
   },
@@ -1746,7 +1746,7 @@
     "genre": "jeu de rôle",
     "players": "1",
     "qualities": "réflexion, observation, persévérance",
-    "size_go": 0.0,
+    "size_go": 0,
     "installed": 0,
     "store_url": "https://www.nintendo.fr/Jeux/Nintendo-Switch/Pokemon-Let-s-Go-Pikachu-1382836.html"
   },
@@ -1763,7 +1763,7 @@
     "genre": "jeu de rôle",
     "players": "1",
     "qualities": "réflexion, observation, persévérance",
-    "size_go": 0.0,
+    "size_go": 0,
     "installed": 0,
     "store_url": "https://www.nintendo.fr/Jeux/Nintendo-Switch/Pokemon-Bouclier-1522110.html"
   },
@@ -1780,7 +1780,7 @@
     "genre": "jeu de rôle",
     "players": "1",
     "qualities": "réflexion, observation, persévérance",
-    "size_go": 0.0,
+    "size_go": 0,
     "installed": 0,
     "store_url": "https://www.nintendo.fr/Jeux/Nintendo-Switch/Pokemon-Epee-1522111.html"
   },
@@ -1797,7 +1797,7 @@
     "genre": "aventure",
     "players": "1",
     "qualities": "observation, réflexion, patience",
-    "size_go": 0.0,
+    "size_go": 0,
     "installed": 0,
     "store_url": "https://www.nintendo.fr/Jeux/Nintendo-Switch/New-Pokemon-Snap-1799500.html"
   },
@@ -1814,7 +1814,7 @@
     "genre": "combat",
     "players": "1 à 2",
     "qualities": "réflexe, observation, prise de décision rapide",
-    "size_go": 0.0,
+    "size_go": 0,
     "installed": 0,
     "store_url": "https://www.nintendo.fr/Jeux/Nintendo-Switch/Pokken-Tournament-DX-1231536.html"
   },
@@ -1831,7 +1831,7 @@
     "genre": "plateformes",
     "players": "1 à 4",
     "qualities": "réflexes, persévérance",
-    "size_go": 0.0,
+    "size_go": 0,
     "installed": 0,
     "store_url": "https://www.nintendo.fr/Jeux/Nintendo-Switch/New-Super-Mario-Bros-U-Deluxe-1438640.html"
   },
@@ -1848,7 +1848,7 @@
     "genre": "course",
     "players": "1 à 4",
     "qualities": "réflexes, anticipation, prise de décision rapide",
-    "size_go": 0.0,
+    "size_go": 0,
     "installed": 0,
     "store_url": "https://www.nintendo.fr/Jeux/Nintendo-Switch/Mario-Kart-8-Deluxe-1173281.html"
   },
@@ -1865,7 +1865,7 @@
     "genre": "combat action",
     "players": "1 à 8",
     "qualities": "réflexes, prise de décision rapide",
-    "size_go": 0.0,
+    "size_go": 0,
     "installed": 0,
     "store_url": "https://www.nintendo.fr/Jeux/Nintendo-Switch/Super-Smash-Bros-Ultimate-1395713.html"
   },
@@ -1882,7 +1882,7 @@
     "genre": "sport",
     "players": "1 à 8",
     "qualities": "réflexes, sens du rythme",
-    "size_go": 0.0,
+    "size_go": 0,
     "installed": 0,
     "store_url": "https://www.nintendo.fr/Jeux/Nintendo-Switch/Mario-Sonic-aux-Jeux-Olympiques-de-Tokyo-2020-1575303.html"
   },
@@ -1899,7 +1899,7 @@
     "genre": "aventure",
     "players": "1 à 2",
     "qualities": "réflexion, coopération",
-    "size_go": 0.0,
+    "size_go": 0,
     "installed": 0,
     "store_url": "https://www.nintendo.fr/Jeux/Nintendo-Switch/Luigi-s-Mansion-3-1437312.html"
   },
@@ -1916,7 +1916,7 @@
     "genre": "jeu de société",
     "players": "1 à 4",
     "qualities": "réflexion, coopération",
-    "size_go": 0.0,
+    "size_go": 0,
     "installed": 0,
     "store_url": "https://www.nintendo.fr/Jeux/Nintendo-Switch/Mario-Party-Superstars-1987416.html"
   },
@@ -1933,7 +1933,7 @@
     "genre": "sport",
     "players": "1 à 4",
     "qualities": "coordination, précision",
-    "size_go": 0.0,
+    "size_go": 0,
     "installed": 0,
     "store_url": "https://www.nintendo.fr/Jeux/Nintendo-Switch/Mario-Golf-Super-Rush-1923515.html"
   },
@@ -1950,7 +1950,7 @@
     "genre": "jeu de société",
     "players": "1 à 4",
     "qualities": "réflexion, coopération",
-    "size_go": 0.0,
+    "size_go": 0,
     "installed": 0,
     "store_url": "https://www.nintendo.fr/Jeux/Nintendo-Switch/Super-Mario-Party-1388641.html"
   },
@@ -1967,7 +1967,7 @@
     "genre": "plateformes",
     "players": "1 à 4",
     "qualities": "réflexes, observation, coopération",
-    "size_go": 0.0,
+    "size_go": 0,
     "installed": 0,
     "store_url": "https://www.nintendo.fr/Jeux/Nintendo-Switch/Super-Mario-3D-World-Bowser-s-Fury-1832228.html"
   },
@@ -1984,7 +1984,7 @@
     "genre": "action aventure",
     "players": "1",
     "qualities": "réflexion, observation",
-    "size_go": 0.0,
+    "size_go": 0,
     "installed": 0,
     "store_url": "https://www.nintendo.fr/Jeux/Nintendo-Switch/Paper-Mario-The-Origami-King-1782440.html"
   },
@@ -2001,7 +2001,7 @@
     "genre": "plateformes",
     "players": "1 à 4",
     "qualities": "coopération, réflexes, observation, prise de décision rapide",
-    "size_go": 0.0,
+    "size_go": 0,
     "installed": 0,
     "store_url": "https://www.nintendo.fr/Jeux/Nintendo-Switch/WarioWare-Get-It-Together--1987424.html"
   },
@@ -2018,7 +2018,7 @@
     "genre": "action, aventure",
     "players": "1",
     "qualities": "observation, curiosité, réflexes",
-    "size_go": 0.0,
+    "size_go": 0,
     "installed": 0,
     "store_url": "https://www.nintendo.fr/Jeux/Wii-U/The-Legend-of-Zelda-Breath-of-the-Wild-893260.html"
   },
@@ -2035,7 +2035,7 @@
     "genre": "musique, danse",
     "players": "1 à 2",
     "qualities": "sens du rythme",
-    "size_go": 0.0,
+    "size_go": 0,
     "installed": 0,
     "store_url": "https://www.nintendo.fr/Jeux/Jeux-a-telecharger-sur-Nintendo-Switch/Cadence-of-Hyrule-Crypt-of-the-NecroDancer-Featuring-The-Legend-of-Zelda-1533129.html"
   },
@@ -2052,7 +2052,7 @@
     "genre": "plateformes",
     "players": "1 à 4",
     "qualities": "réflexes, coopération, observation",
-    "size_go": 0.0,
+    "size_go": 0,
     "installed": 0,
     "store_url": "https://www.nintendo.fr/Jeux/Nintendo-Switch/Kirby-Star-Allies-1233956.html"
   },
@@ -2069,7 +2069,7 @@
     "genre": "simulation",
     "players": "1",
     "qualities": "observation, patience, créativité",
-    "size_go": 0.0,
+    "size_go": 0,
     "installed": 0,
     "store_url": "https://www.nintendo.fr/Jeux/Nintendo-Switch/Animal-Crossing-New-Horizons-1438623.html"
   },
@@ -2086,7 +2086,7 @@
     "genre": "action, aventure",
     "players": "1",
     "qualities": "réflexes, persévérance, observation",
-    "size_go": 0.0,
+    "size_go": 0,
     "installed": 0,
     "store_url": "https://www.nintendo.fr/Jeux/Jeux-a-telecharger-sur-Nintendo-Switch/Hollow-Knight-1125772.html"
   },
@@ -2103,7 +2103,7 @@
     "genre": "aventure réflexion",
     "players": "1",
     "qualities": "réflexion, observation",
-    "size_go": 0.0,
+    "size_go": 0,
     "installed": 0,
     "store_url": "https://www.nintendo.fr/Jeux/Nintendo-Switch/Lumo-1304441.html"
   },
@@ -2120,7 +2120,7 @@
     "genre": "action jeu de rôle",
     "players": "1",
     "qualities": "réflexes, persévérance",
-    "size_go": 0.0,
+    "size_go": 0,
     "installed": 0,
     "store_url": "https://www.nintendo.fr/Jeux/Jeux-a-telecharger-sur-Nintendo-Switch/Hades-1821819.html"
   },
@@ -2137,7 +2137,7 @@
     "genre": "jeu de tir action aventure",
     "players": "1",
     "qualities": "réflexes, persévérance, observation",
-    "size_go": 0.0,
+    "size_go": 0,
     "installed": 0,
     "store_url": "https://www.nintendo.fr/Jeux/Nintendo-Switch/Metroid-Dread-1987653.html"
   },
@@ -2154,7 +2154,7 @@
     "genre": "plateformes",
     "players": "1",
     "qualities": "réflexion, persévérance",
-    "size_go": 0.0,
+    "size_go": 0,
     "installed": 0,
     "store_url": "https://www.nintendo.fr/Jeux/Nintendo-Switch/Oddworld-New-n-Tasty-1857707.html"
   },
@@ -2171,7 +2171,7 @@
     "genre": "action jeu de rôle",
     "players": "1",
     "qualities": "réflexes, observation",
-    "size_go": 0.0,
+    "size_go": 0,
     "installed": 0,
     "store_url": "https://www.nintendo.fr/Jeux/Nintendo-Switch/DRAGON-BALL-Z-KAKAROT-A-NEW-POWER-AWAKENS-SET-1987413.html"
   },
@@ -2188,7 +2188,7 @@
     "genre": "combat sport",
     "players": "1 à 4",
     "qualities": "endurance, persévérance, observation",
-    "size_go": 0.0,
+    "size_go": 0,
     "installed": 0,
     "store_url": "https://www.nintendo.fr/Jeux/Nintendo-Switch/ARMS-1173200.html"
   },
@@ -2205,7 +2205,7 @@
     "genre": "aventure",
     "players": "1 à 4",
     "qualities": "imagination, créativité, coopération, planification, observation",
-    "size_go": 0.0,
+    "size_go": 0,
     "installed": 0,
     "store_url": "https://www.nintendo.fr/Jeux/Nintendo-Switch/Minecraft-1386505.html"
   },
@@ -2222,7 +2222,7 @@
     "genre": "stratégie",
     "players": "1 à 4",
     "qualities": "coopération, gestion du stress",
-    "size_go": 0.0,
+    "size_go": 0,
     "installed": 0,
     "store_url": "https://www.nintendo.fr/Jeux/Nintendo-Switch/Overcooked-2-1388792.html"
   },
@@ -2239,7 +2239,7 @@
     "genre": "plateformes aventure",
     "players": "1",
     "qualities": "reflexes, persévérance",
-    "size_go": 0.0,
+    "size_go": 0,
     "installed": 0,
     "store_url": "https://www.nintendo.fr/Jeux/Nintendo-Switch/Crash-Bandicoot-N-Sane-Trilogy-1347784.html"
   },
@@ -2256,7 +2256,7 @@
     "genre": "jeu de tir",
     "players": "1 à 4 (en ligne)",
     "qualities": "coordination, précision, prise de décision rapide",
-    "size_go": 0.0,
+    "size_go": 0,
     "installed": 0,
     "store_url": "https://www.nintendo.fr/Jeux/Nintendo-Switch/Splatoon-2-1173295.html"
   },
@@ -2273,7 +2273,7 @@
     "genre": "plateformes",
     "players": "1 à 4",
     "qualities": "réflexes, coopération, persévérance",
-    "size_go": 0.0,
+    "size_go": 0,
     "installed": 0,
     "store_url": "https://www.nintendo.fr/Jeux/Nintendo-Switch/Rayman-Legends-Definitive-Edition-1176776.html"
   },
@@ -2290,7 +2290,7 @@
     "genre": "musique dance",
     "players": "1 à 6",
     "qualities": "sens du rythme, coordination",
-    "size_go": 0.0,
+    "size_go": 0,
     "installed": 0,
     "store_url": "https://www.nintendo.fr/Jeux/Nintendo-Switch/Just-Dance-2018--1286991.html"
   },
@@ -2307,7 +2307,7 @@
     "genre": "musique dance",
     "players": "1 à 6",
     "qualities": "sens du rythme, coordination",
-    "size_go": 0.0,
+    "size_go": 0,
     "installed": 0,
     "store_url": "https://www.nintendo.fr/Jeux/Nintendo-Switch/Just-Dance-2021-1832849.html"
   },
@@ -2324,7 +2324,7 @@
     "genre": "sport",
     "players": "1 à 4",
     "qualities": "réflexes, prise de décision rapide",
-    "size_go": 0.0,
+    "size_go": 0,
     "installed": 0,
     "store_url": "https://www.nintendo.fr/Jeux/Nintendo-Switch/FIFA-21-Edition-Essentielle-sur-Nintendo-Switch--1841548.html"
   },
@@ -2341,7 +2341,7 @@
     "genre": "réflexion",
     "players": "1",
     "qualities": "réflexion",
-    "size_go": 0.0,
+    "size_go": 0,
     "installed": 0,
     "store_url": "https://www.nintendo.fr/Jeux/Nintendo-Switch/L-AVENTURE-LAYTON-Katrielle-et-la-conspiration-des-millionnaires-Edition-Deluxe-1589842.html"
   },
@@ -2358,7 +2358,7 @@
     "genre": "jeu de société",
     "players": "1 à 2",
     "qualities": "réflexes, patience",
-    "size_go": 0.0,
+    "size_go": 0,
     "installed": 0,
     "store_url": "https://www.nintendo.fr/Jeux/Nintendo-Switch/1-2-Switch-1173186.html"
   },
@@ -2375,7 +2375,7 @@
     "genre": "jeu de société",
     "players": "1 à 4",
     "qualities": "réflexion, curiosité",
-    "size_go": 0.0,
+    "size_go": 0,
     "installed": 0,
     "store_url": "https://www.nintendo.fr/Jeux/Nintendo-Switch/51-Worldwide-Games-1748086.html"
   },
@@ -2392,7 +2392,7 @@
     "genre": "jeu de rôle, jeu de tir, combat, aventure",
     "players": "1",
     "qualities": "réflexes, observation, persévérance, prise de décision rapide",
-    "size_go": 0.0,
+    "size_go": 0,
     "installed": 0,
     "store_url": "https://www.nintendo.fr/Jeux/Nintendo-Switch/MONSTER-HUNTER-RISE-1843169.html"
   },
@@ -2409,7 +2409,7 @@
     "genre": "jeu de rôle, aventure",
     "players": "1",
     "qualities": "réflexion, observation",
-    "size_go": 0.0,
+    "size_go": 0,
     "installed": 0,
     "store_url": "https://www.nintendo.fr/Jeux/Nintendo-Switch/Monster-Hunter-Stories-2-Wings-of-Ruin-1946088.html"
   },
@@ -2443,7 +2443,7 @@
     "genre": "plateforme, réflexion",
     "players": "1",
     "qualities": "réflexion",
-    "size_go": 0.0,
+    "size_go": 0,
     "installed": 0,
     "store_url": "https://www.nintendo.fr/Jeux/Nintendo-Switch/Little-Nightmares-II-1891827.html"
   },
@@ -2460,7 +2460,7 @@
     "genre": "combat",
     "players": "1 à 2",
     "qualities": "réflexes, persévérance",
-    "size_go": 0.0,
+    "size_go": 0,
     "installed": 0,
     "store_url": "https://www.nintendo.fr/Jeux/Nintendo-Switch/Hyrule-Warriors-L-Ere-du-Fleau-1838129.html"
   },
@@ -2477,7 +2477,7 @@
     "genre": "plateformes",
     "players": "1 à 2",
     "qualities": "réflexes, observation, persévérance",
-    "size_go": 0.0,
+    "size_go": 0,
     "installed": 0,
     "store_url": "https://www.nintendo.fr/Jeux/Nintendo-Switch/Super-Mario-Odyssey-1173332.html"
   },
@@ -2494,7 +2494,7 @@
     "genre": "plateformes",
     "players": "1 à 4",
     "qualities": "réflexes, persévérance, équilibre",
-    "size_go": 0.0,
+    "size_go": 0,
     "installed": 0,
     "store_url": "https://www.nintendo.fr/Jeux/Nintendo-Switch/Super-Monkey-Ball-Banana-Blitz-HD-1649998.html"
   },
@@ -2511,7 +2511,7 @@
     "genre": "aventure",
     "players": "1",
     "qualities": "coordination, curiosité, réflexion, observation",
-    "size_go": 0.0,
+    "size_go": 0,
     "installed": 0,
     "store_url": "https://www.nintendo.fr/Jeux/Nintendo-Switch/The-Legend-of-Zelda-Skyward-Sword-HD-1923575.html"
   },
@@ -2528,7 +2528,7 @@
     "genre": "aventure, plateformes",
     "players": "1",
     "qualities": "réflexion, observation",
-    "size_go": 0.0,
+    "size_go": 0,
     "installed": 0,
     "store_url": "https://www.nintendo.fr/Jeux/Nintendo-Switch/Sea-of-Solitude-The-Director-s-Cut-1930022.html"
   },
@@ -2545,7 +2545,7 @@
     "genre": "aventure, jeu de rôle",
     "players": "1",
     "qualities": "réflexes, observation, persévérance",
-    "size_go": 0.0,
+    "size_go": 0,
     "installed": 0,
     "store_url": "https://www.nintendo.fr/Jeux/Jeux-Nintendo-Switch/Shin-Megami-Tensei-V-1987419.html"
   },
@@ -2562,7 +2562,7 @@
     "genre": "danse, musique",
     "players": "1 à 4",
     "qualities": "réflexion, observation, persévérance",
-    "size_go": 0.0,
+    "size_go": 0,
     "installed": 0,
     "store_url": "https://www.nintendo.fr/Jeux/Jeux-Nintendo-Switch/JUST-DANCE-2022-1986930.html"
   },
@@ -2579,7 +2579,7 @@
     "genre": "jeu de rôle",
     "players": "1",
     "qualities": "réflexion, observation, persévérance",
-    "size_go": 0.0,
+    "size_go": 0,
     "installed": 0,
     "store_url": "https://www.nintendo.fr/Jeux/Jeux-Nintendo-Switch/Pokemon-Diamant-Etincelant-1930566.html"
   },
@@ -2596,7 +2596,7 @@
     "genre": "jeu de rôle",
     "players": "1",
     "qualities": "réflexion, observation, persévérance",
-    "size_go": 0.0,
+    "size_go": 0,
     "installed": 0,
     "store_url": "https://www.nintendo.fr/Jeux/Jeux-Nintendo-Switch/Pokemon-Perle-Scintillante-1930567.html"
   },
@@ -2613,7 +2613,7 @@
     "genre": "aventure, jeu de rôle",
     "players": "1",
     "qualities": "curiosité, observation, réflexion",
-    "size_go": 0.0,
+    "size_go": 0,
     "installed": 0,
     "store_url": ""
   },
@@ -2630,7 +2630,7 @@
     "genre": "aventure, platefromes",
     "players": "1 à 2",
     "qualities": "réflexes, persévérance",
-    "size_go": 0.0,
+    "size_go": 0,
     "installed": 0,
     "store_url": ""
   },
@@ -2647,7 +2647,7 @@
     "genre": "réflexion",
     "players": "1",
     "qualities": "créativité, réflexion",
-    "size_go": 0.0,
+    "size_go": 0,
     "installed": 0,
     "store_url": ""
   },
@@ -2664,7 +2664,7 @@
     "genre": "action",
     "players": "1",
     "qualities": "réflexes, persévérance",
-    "size_go": 0.0,
+    "size_go": 0,
     "installed": 0,
     "store_url": ""
   },
@@ -2681,7 +2681,7 @@
     "genre": "aventure",
     "players": "1 à 4",
     "qualities": "créativité, curiosité",
-    "size_go": 0.0,
+    "size_go": 0,
     "installed": 0,
     "store_url": ""
   },
@@ -2698,7 +2698,7 @@
     "genre": "arcade, sport",
     "players": "1 à 8",
     "qualities": "réflexes, observation",
-    "size_go": 0.0,
+    "size_go": 0,
     "installed": 0,
     "store_url": ""
   },
@@ -2715,7 +2715,7 @@
     "genre": "combat, sport",
     "players": "1 à 8",
     "qualities": "réflexes, observation",
-    "size_go": 0.0,
+    "size_go": 0,
     "installed": 0,
     "store_url": ""
   },
@@ -2732,7 +2732,7 @@
     "genre": "action, jeu de rôle, aventure",
     "players": "1",
     "qualities": "curiosité, réflexion",
-    "size_go": 0.0,
+    "size_go": 0,
     "installed": 0,
     "store_url": ""
   },
@@ -2749,7 +2749,7 @@
     "genre": "stratégie",
     "players": "1",
     "qualities": "réflexion, observation, patience",
-    "size_go": 0.0,
+    "size_go": 0,
     "installed": 0,
     "store_url": ""
   },
@@ -2766,7 +2766,7 @@
     "genre": "stratégie",
     "players": "1",
     "qualities": "réflexion, observation",
-    "size_go": 0.0,
+    "size_go": 0,
     "installed": 0,
     "store_url": ""
   },
@@ -2783,7 +2783,7 @@
     "genre": "jeu de rôle, stratégie",
     "players": "1",
     "qualities": "réflexes, observation, persévérance",
-    "size_go": 0.0,
+    "size_go": 0,
     "installed": 0,
     "store_url": ""
   },
@@ -2800,7 +2800,7 @@
     "genre": "jeu de rôle",
     "players": "1",
     "qualities": "réflexion, observation, persévérance",
-    "size_go": 0.0,
+    "size_go": 0,
     "installed": 0,
     "store_url": ""
   },
@@ -2817,7 +2817,7 @@
     "genre": "stratégie",
     "players": "1",
     "qualities": "réflexion, observation, persévérance",
-    "size_go": 0.0,
+    "size_go": 0,
     "installed": 0,
     "store_url": ""
   },
@@ -2834,7 +2834,7 @@
     "genre": "aventure, jeu de rôle",
     "players": "1 (jusqu'à 8 en ligne)",
     "qualities": "réflexion, observation, persévérance",
-    "size_go": 0.0,
+    "size_go": 0,
     "installed": 0,
     "store_url": ""
   },
@@ -2868,7 +2868,7 @@
     "genre": "sport",
     "players": "1 à 4",
     "qualities": "curiosité, observation, réflexion",
-    "size_go": 0.0,
+    "size_go": 0,
     "installed": 0,
     "store_url": ""
   },
@@ -3565,7 +3565,7 @@
     "genre": "action, aventure",
     "players": "1",
     "qualities": "curiosité, observation, réflexes",
-    "size_go": 47.0,
+    "size_go": 47,
     "installed": 0,
     "store_url": "https://www.xbox.com/fr-FR/games/assassins-creed-valhalla"
   },
@@ -3583,7 +3583,7 @@
     "players": "1 à 2",
     "qualities": "curiosité, observation",
     "size_go": null,
-    "installed": 1,
+    "installed": 0,
     "store_url": "https://www.xbox.com/fr-fr/games/store/lego-harry-potter-collection/c3qj2z8q7hfr"
   },
   {
@@ -3600,7 +3600,7 @@
     "players": "1 à 2",
     "qualities": "réflexes",
     "size_go": null,
-    "installed": 1,
+    "installed": 0,
     "store_url": "https://www.xbox.com/fr-fr/games/store/hot-wheels-unleashed/9nlcvdb447qz"
   },
   {
@@ -3667,7 +3667,7 @@
     "genre": "jeu de tir",
     "players": "1",
     "qualities": "observation, gestion du stress",
-    "size_go": 30.0,
+    "size_go": 30,
     "installed": 0,
     "store_url": "https://www.xbox.com/fr-FR/games/resident-evil-village"
   },
@@ -3684,7 +3684,7 @@
     "genre": "aventure",
     "players": "1 (en ligne)",
     "qualities": "curiosité, observation",
-    "size_go": 47.0,
+    "size_go": 47,
     "installed": 0,
     "store_url": "https://www.xbox.com/fr-FR/games/sea-of-thieves"
   },
@@ -3735,7 +3735,7 @@
     "genre": "jeu de rôle",
     "players": "1",
     "qualities": "curiosité, observation, réflexion",
-    "size_go": 101.0,
+    "size_go": 101,
     "installed": 0,
     "store_url": "https://www.xbox.com/fr-FR/games/cyberpunk-2077"
   },
@@ -3752,7 +3752,7 @@
     "genre": "stratégie",
     "players": "1",
     "qualities": "réflexion, persévérance",
-    "size_go": 28.0,
+    "size_go": 28,
     "installed": 0,
     "store_url": "https://www.xbox.com/fr-FR/games/gears-tactics"
   },
@@ -3803,7 +3803,7 @@
     "genre": "sport",
     "players": "1 à 4",
     "qualities": "réflexes, prise de décision rapide",
-    "size_go": 52.0,
+    "size_go": 52,
     "installed": 0,
     "store_url": "https://www.xbox.com/fr-FR/games/fifa-21"
   },
@@ -3819,9 +3819,9 @@
     "desc": "Pilotez plus de 450 véhicules à travers la campagne anglaise, faites des courses ou profitez du paysage, seul ou en ligne avec vos amis !",
     "genre": "course",
     "players": "1",
-    "qualities": "réflexes, observation, curiosité",
-    "size_go": 71.0,
-    "installed": 1,
+    "qualities": "curiosité, observation, réflexes",
+    "size_go": 71,
+    "installed": 0,
     "store_url": "https://www.xbox.com/fr-FR/games/forza-horizon-4"
   },
   {
@@ -3854,7 +3854,7 @@
     "genre": "action jeu de rôle aventure",
     "players": "1",
     "qualities": "réflexes, observation, réflexion",
-    "size_go": 36.0,
+    "size_go": 36,
     "installed": 0,
     "store_url": "https://www.xbox.com/fr-fr/games/store/Immortals-Fenyx-Rising/C07KJZRH0L7S"
   },
@@ -3887,9 +3887,9 @@
     "desc": "Construisez, explorez, creusez ou grimpez, une petite cabane en terre ou un château fort, tout est valable, les possibilités sont infinies et n’ont pour seules limites que votre imagination.",
     "genre": "aventure",
     "players": "1 à 4",
-    "qualities": "imagination, créativité, coopération, planification, observation",
-    "size_go": 1.0,
-    "installed": 1,
+    "qualities": "coopération, créativité, imagination, observation, planification",
+    "size_go": 1,
+    "installed": 0,
     "store_url": "https://www.xbox.com/fr-fr/games/store/minecraft/9nblggh537bl"
   },
   {
@@ -3939,7 +3939,7 @@
     "genre": "action",
     "players": "1",
     "qualities": "gestion du stress",
-    "size_go": 23.0,
+    "size_go": 23,
     "installed": 0,
     "store_url": "https://www.xbox.com/fr-FR/games/the-medium"
   },
@@ -3956,7 +3956,7 @@
     "genre": "kombat (aka combat)",
     "players": "1 à 2",
     "qualities": "réflexes, persévérance",
-    "size_go": 123.0,
+    "size_go": 123,
     "installed": 0,
     "store_url": "https://www.xbox.com/fr-FR/games/mortal-kombat-11"
   },
@@ -3990,7 +3990,7 @@
     "genre": "action jeu de rôle aventure",
     "players": "1",
     "qualities": "réflexion, observation, curiosité",
-    "size_go": 37.0,
+    "size_go": 37,
     "installed": 0,
     "store_url": "https://www.xbox.com/fr-fr/games/store/yakuza-like-a-dragon/9nxcswcqtnfg"
   },
@@ -4007,7 +4007,7 @@
     "genre": "arcade action",
     "players": "1 (jusqu'à 4 en ligne)",
     "qualities": "curiosité, observation",
-    "size_go": 106.0,
+    "size_go": 106,
     "installed": 0,
     "store_url": "https://www.xbox.com/fr-FR/games/marvels-avengers"
   },
@@ -4058,7 +4058,7 @@
     "genre": "jeu de tir",
     "players": "1 à 2",
     "qualities": "réflexe, coopération",
-    "size_go": 129.0,
+    "size_go": 129,
     "installed": 0,
     "store_url": "https://www.xbox.com/fr-FR/games/call-of-duty-black-ops-cold-war"
   },
@@ -4176,9 +4176,9 @@
     "desc": "Dragon Ball FighterZ est un jeu de combat 2D développé par Arc System Works et édité par Bandai Namco. Cette nouvelle adaptation de la franchise Dragon Ball met en scène les personnages iconiques de la série dans des affrontements explosifs en 3 versus 3.",
     "genre": "combat",
     "players": "1 à 2",
-    "qualities": "réflexes, persévérance",
+    "qualities": "persévérance, réflexes",
     "size_go": null,
-    "installed": 1,
+    "installed": 0,
     "store_url": ""
   },
   {
@@ -4246,7 +4246,7 @@
     "players": "1",
     "qualities": "curiosité, observation",
     "size_go": null,
-    "installed": 1,
+    "installed": 0,
     "store_url": ""
   },
   {
@@ -4261,9 +4261,9 @@
     "desc": "Sonic se retrouve perdu sur une île ancienne remplie de créatures étranges après être parti à la recherche des Chaos Emeralds.",
     "genre": "action, aventure",
     "players": "1",
-    "qualities": "réflexes, persévérance",
+    "qualities": "persévérance, réflexes",
     "size_go": null,
-    "installed": 1,
+    "installed": 0,
     "store_url": ""
   },
   {
@@ -4295,9 +4295,9 @@
     "desc": "Découvre les mystères que renferme Minecraft Legends, un nouveau jeu d’action et de stratégie. Menez vos alliés dans des batailles héroïques pour défendre la Surface contre les piglins destructeurs.",
     "genre": "aventure, stratégie",
     "players": "1 à 4",
-    "qualities": "réflexes, persévérance",
+    "qualities": "persévérance, réflexes",
     "size_go": null,
-    "installed": 1,
+    "installed": 0,
     "store_url": ""
   },
   {
@@ -4331,7 +4331,7 @@
     "players": "1",
     "qualities": "curiosité, observation",
     "size_go": null,
-    "installed": 1,
+    "installed": 0,
     "store_url": ""
   },
   {
@@ -4397,9 +4397,9 @@
     "desc": "Bienvenue au Motorfest, le rendez-vous ultime de tous les passionnés d'automobile. Jouez avec des pilotes du monde entier et réalisez vos plus grands rêves de courses automobiles. Explorez Hawaï, un terrain de jeu passionnant et riche, au volant de centaines de véhicules légendaires du passé, du présent et du futur.",
     "genre": "course",
     "players": "",
-    "qualities": "réflexe, coopération",
+    "qualities": "coopération",
     "size_go": null,
-    "installed": 1,
+    "installed": 0,
     "store_url": ""
   },
   {
