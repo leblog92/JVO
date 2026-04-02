@@ -1,19 +1,6 @@
 Claude je t'aime et je suis désolé, grosse demande, beaucoup de travail, bref dans le désordre :
-- (grosse priorité) "index.html" ou "admin.html" désolé les images ne s'affichent pas et créent des problèmes en local ou en ligne lien du Github : https://github.com/leblog92/JVO (je précise que si les images sont placées à la racine tout refonctionne.)
-- "admin.html" mettre dans le formulaire une valeur min et max (pour un jeu local pas en ligne) pour le nombre de joueurs pour avoir des valeurs au lieu d'une chaîne de caractères
-- "admin.html" rendre ajustable la largeur de la partie édition
-- "global" proposer une manière sûre de récupérer automatiquement les données des jeux depuis les sites officiels
-- "index.html" ajouter un champ lien vers la notice BnF (exemple https://catalogue.bnf.fr/ark:/12148/cb46902160g)
-- "index.html" et "admin.html" ajouter un champ lien permanent catalogue médiatheque rueil (https://www.mediatheque-rueilmalmaison.fr/) (par exemple : https://www.mediatheque-rueilmalmaison.fr/ark:/75242/pf0000398447.locale=fr) (attention affichage "dynamique")
-- "index.html" et "admin.html" ajouter un champ lien de Bande-annonce de présentation sur les chaines youtube officielles (par exemple : https://www.youtube.com/@NintendoFR)
-- "index.html" et "admin.html" ajouter un champ pour la date de sortie et proposer de trier par date de sortie 
-- "games.json" réordonner les genres et qualités existants dans le json
-- "admin.html" ajouter un menu/lien/fonctionnalité print dans admin qui permet d'imprimer :
-  1)un catalogue de tous les jeux (disque ou cartouche (donc empruntables) format livret () avec une couverture "JVO\print\cover.png")
-  2)ou une affiche de tous les jeux installés (pdf/format A4 marges min, titre simple Jeux sur place {nom_console} (exemple:Video Game Booklet PS.pdf))
-  3)ou une affiche de 
-- ordonner les démat par ordre alphabétique (Titre) dans le games.json
-- pour xbox rajouter dans média : game pass
-- "index.html" Puce plus visible dans si le jeu est installé
-- largeur de "404.png" 600px
+- les images s'affichent !! trop cool !!
+- "admin.html" convertir le nombre de joueurs dans le fichier json (si nécessair) pour avoir des valeurs au lieu d'une chaîne de caractères
+- "admin.html" rendre ajustable la largeur de la partie édition jusqu'à 50% de la largeur de la fenêtre
+- "global" proposer une manière performante de récupérer automatiquement les données des jeux depuis les sites officiels/ou non :)
 - donner recommandations
