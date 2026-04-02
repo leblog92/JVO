@@ -1,0 +1,3 @@
+# Lignes à ajouter dans votre .gitignore :
+rawg_key.txt
+*.key.txt

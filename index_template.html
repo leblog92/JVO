@@ -161,10 +161,13 @@
   .badge-XBOX { background: var(--xb); }
   .badge-installed {
     position: absolute; top: 6px; right: 6px;
-    width: 16px; height: 16px;
-    background: #22c55e;
+    width: 22px; height: 22px;
+    background: #16a34a;
     border-radius: 50%;
     border: 2px solid #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; color: #fff; font-weight: 700;
+    box-shadow: 0 1px 4px rgba(0,0,0,.25);
   }
   .card-info {
     padding: 8px 10px 10px;
@@ -332,6 +335,7 @@
     <option value="alpha">A → Z</option>
     <option value="pegi">PEGI</option>
     <option value="size">Taille</option>
+    <option value="date">Date de sortie</option>
   </select>
 </div>
 
@@ -404,6 +408,7 @@ function render() {
   if (sortMode === 'alpha') list.sort((a,b) => a.name.localeCompare(b.name, 'fr'));
   else if (sortMode === 'pegi') list.sort((a,b) => a.pegi - b.pegi || a.id - b.id);
   else if (sortMode === 'size') list.sort((a,b) => (b.size_go||0) - (a.size_go||0));
+  else if (sortMode === 'date') list.sort((a,b) => (b.release_date||'').localeCompare(a.release_date||''));
   else list.sort((a,b) => a.id - b.id);
 
   const grid = document.getElementById('grid');
@@ -419,11 +424,11 @@ function render() {
   empty.style.display = 'none';
 
   grid.innerHTML = list.map(g => {
-    const coverSrc = g.cover ? g.cover + '.png' : '';
+    const coverSrc = g.cover ? 'covers/' + g.cover + '.png' : '';
     const coverHtml = coverSrc
       ? `<img src="${coverSrc}" alt="${g.name}" loading="lazy" onerror="this.parentNode.innerHTML='<div class=no-cover>—</div>'">`
       : `<div class="no-cover">pas de jaquette</div>`;
-    const installed = g.installed ? `<div class="badge-installed" title="Installé"></div>` : '';
+    const installed = g.installed ? `<div class="badge-installed" title="Installé">&#10003;</div>` : '';
     return `<div class="card" onclick="openPanel(${g.id})">
       <div class="card-cover">
         ${coverHtml}
@@ -480,7 +485,7 @@ function openPanel(id) {
   // Cover
   const wrap = document.getElementById('panel-cover-wrap');
   if (g.cover) {
-    wrap.innerHTML = `<img src="${g.cover}.png" alt="${g.name}" onerror="this.parentNode.innerHTML='<div class=no-cover>pas de jaquette</div>'">`;
+    wrap.innerHTML = `<img src="covers/${g.cover}.png" alt="${g.name}" onerror="this.parentNode.innerHTML='<div class=no-cover>pas de jaquette</div>'">`;
   } else {
     wrap.innerHTML = `<div class="no-cover">pas de jaquette</div>`;
   }
@@ -504,13 +509,30 @@ function openPanel(id) {
 
   // Rows
   const rows = [];
-  if (g.genre)     rows.push(['Genre', g.genre]);
-  if (g.players)   rows.push(['Joueurs', g.players]);
-  if (g.qualities) rows.push(['Qualités', g.qualities]);
-  if (g.size_go)   rows.push(['Taille', g.size_go + ' Go']);
+  if (g.release_date) rows.push(['Date de sortie', g.release_date]);
+  if (g.genre)        rows.push(['Genre', g.genre]);
+  if (g.players_min)  rows.push(['Joueurs', g.players_min === g.players_max ? g.players_min+' joueur'+(g.players_min>1?'s':'') : g.players_min+' → '+g.players_max+' joueurs']);
+  if (g.qualities)    rows.push(['Qualités', g.qualities]);
+  if (g.size_go)      rows.push(['Taille', g.size_go + ' Go']);
+  if (g.media)        rows.push(['Média', g.media]);
   document.getElementById('panel-rows').innerHTML = rows.map(([k,v]) =>
     `<div class="panel-row"><dt>${k}</dt><dd>${v}</dd></div>`
   ).join('');
+
+  // Extra links
+  const extraLinks = document.getElementById('panel-extra-links') || (() => {
+    const d = document.createElement('div');
+    d.id = 'panel-extra-links';
+    d.style.cssText = 'display:flex;flex-wrap:wrap;gap:8px;margin-top:4px;';
+    document.getElementById('panel-rows').after(d);
+    return d;
+  })();
+  extraLinks.innerHTML = '';
+  const mkLink = (href, label, emoji) => {
+    if (!href) return '';
+    return `<a href="${href}" target="_blank" style="display:inline-flex;align-items:center;gap:4px;padding:5px 10px;background:var(--bg);border:1px solid var(--border);border-radius:6px;font-size:11px;color:var(--text);text-decoration:none;">${emoji} ${label}</a>`;
+  };
+  extraLinks.innerHTML = mkLink(g.url_trailer,'Bande-annonce','&#127909;') + mkLink(g.url_bnf,'BnF','&#128218;') + mkLink(g.url_mediatheque,'Médiathèque','&#128196;');
 
   // Store link
   const link = document.getElementById('panel-link');
