@@ -9,3 +9,5 @@ réordonner les genres et qualités existants dans le json
 print dans admin
 ordonner les démat par ordre alphabétique dans le games.json
 pour xbox rajouter démat gamepass
+Github : https://github.com/leblog92/JVO
+Puce plus visible dans index si jeu installé
