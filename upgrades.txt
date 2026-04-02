@@ -1,6 +1,4 @@
-Claude je t'aime et je suis désolé, grosse demande, beaucoup de travail, bref dans le désordre :
-- les images s'affichent !! trop cool !!
-- "admin.html" convertir le nombre de joueurs dans le fichier json (si nécessair) pour avoir des valeurs au lieu d'une chaîne de caractères
 - "admin.html" rendre ajustable la largeur de la partie édition jusqu'à 50% de la largeur de la fenêtre
 - "global" proposer une manière performante de récupérer automatiquement les données des jeux depuis les sites officiels/ou non :)
+- centrer titre tout en majuscules/+grand et diminuer le lower padding du titre pour une composition hamonieuse
 - donner recommandations
