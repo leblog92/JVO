@@ -1,0 +1,539 @@
+<!DOCTYPE HTML>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>JVO — Jeux Vidéo</title>
+<link rel="icon" type="image/png" href="ICO.png"/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,500;0,700;1,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:       #f5f4f0;
+    --surface:  #ffffff;
+    --border:   #e2e0d8;
+    --text:     #1a1917;
+    --muted:    #888580;
+    --accent:   #1a1917;
+    --ps:       #003791;
+    --sw:       #e4000f;
+    --xb:       #107c10;
+    --radius:   10px;
+    --shadow:   0 2px 12px rgba(0,0,0,.08);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* ── Header ── */
+  header {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    padding: 14px 24px;
+    display: flex; align-items: center; gap: 16px;
+  }
+  header img#logo { height: 32px; width: auto; cursor: pointer; }
+  .search-wrap {
+    flex: 1;
+    position: relative;
+  }
+  .search-wrap svg {
+    position: absolute; left: 12px; top: 50%; transform: translateY(-50%);
+    width: 16px; height: 16px; stroke: var(--muted); fill: none;
+    stroke-width: 2; stroke-linecap: round;
+    pointer-events: none;
+  }
+  #search {
+    width: 100%;
+    padding: 10px 12px 10px 38px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    outline: none;
+    transition: border-color .15s;
+  }
+  #search:focus { border-color: var(--accent); }
+  #search-count {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    white-space: nowrap;
+    min-width: 70px;
+    text-align: right;
+  }
+
+  /* ── Toolbar ── */
+  .toolbar {
+    padding: 12px 24px;
+    display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+    border-bottom: 1px solid var(--border);
+  }
+  .filter-group { display: flex; gap: 6px; }
+  .pill {
+    display: flex; align-items: center; gap: 5px;
+    padding: 5px 12px;
+    font-size: 13px; font-weight: 500;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 99px;
+    cursor: pointer;
+    transition: all .15s;
+    user-select: none;
+  }
+  .pill:hover { border-color: var(--accent); }
+  .pill.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .pill .dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: currentColor; opacity: .6;
+  }
+  .pill[data-console="PS5"].active, .pill[data-console="PS4"].active { background: var(--ps); border-color: var(--ps); }
+  .pill[data-console="Switch"].active { background: var(--sw); border-color: var(--sw); }
+  .pill[data-console="XBOX"].active  { background: var(--xb); border-color: var(--xb); }
+
+  .sep { width: 1px; height: 22px; background: var(--border); margin: 0 4px; }
+
+  select#sort-sel {
+    padding: 5px 28px 5px 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px; font-weight: 500;
+    background: var(--surface) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23888'/%3E%3C/svg%3E") no-repeat right 8px center;
+    border: 1px solid var(--border);
+    border-radius: 99px;
+    appearance: none;
+    cursor: pointer;
+    outline: none;
+  }
+
+  /* ── Grid ── */
+  main {
+    padding: 20px 24px 40px;
+  }
+  #grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 14px;
+  }
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform .15s, box-shadow .15s;
+    display: flex; flex-direction: column;
+  }
+  .card:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
+  .card-cover {
+    aspect-ratio: 3/4;
+    background: var(--bg);
+    overflow: hidden;
+    position: relative;
+  }
+  .card-cover img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .card-cover .no-cover {
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; color: var(--muted);
+    font-style: italic;
+  }
+  .card-badge {
+    position: absolute; top: 6px; left: 6px;
+    font-family: 'DM Mono', monospace;
+    font-size: 9px; font-weight: 500;
+    padding: 2px 5px;
+    border-radius: 4px;
+    color: #fff;
+    letter-spacing: .03em;
+  }
+  .badge-PS4, .badge-PS5 { background: var(--ps); }
+  .badge-Switch { background: var(--sw); }
+  .badge-XBOX { background: var(--xb); }
+  .badge-installed {
+    position: absolute; top: 6px; right: 6px;
+    width: 16px; height: 16px;
+    background: #22c55e;
+    border-radius: 50%;
+    border: 2px solid #fff;
+  }
+  .card-info {
+    padding: 8px 10px 10px;
+    flex: 1;
+  }
+  .card-name {
+    font-size: 12px; font-weight: 500;
+    line-height: 1.3;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .card-meta {
+    margin-top: 5px;
+    font-size: 10px; color: var(--muted);
+    display: flex; align-items: center; gap: 5px;
+  }
+  .pegi-badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px; font-weight: 500;
+    padding: 1px 4px;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+  }
+
+  /* ── Empty state ── */
+  #empty {
+    display: none;
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--muted);
+  }
+  #empty img { height: 120px; width: auto; border-radius: 10px; margin-bottom: 16px; opacity: .7; }
+  #empty p { font-size: 15px; }
+
+  /* ── Detail panel ── */
+  #overlay {
+    display: none;
+    position: fixed; inset: 0; z-index: 200;
+    background: rgba(0,0,0,.45);
+    backdrop-filter: blur(3px);
+  }
+  #overlay.open { display: flex; align-items: center; justify-content: center; }
+  #panel {
+    background: var(--surface);
+    border-radius: 16px;
+    width: min(680px, calc(100vw - 32px));
+    max-height: calc(100vh - 48px);
+    overflow-y: auto;
+    box-shadow: 0 24px 64px rgba(0,0,0,.2);
+    position: relative;
+  }
+  #panel-close {
+    margin-left: auto; flex-shrink: 0;
+    width: 28px; height: 28px;
+    background: var(--bg); border: 1px solid var(--border);
+    border-radius: 50%; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; color: var(--muted);
+    transition: background .15s;
+  }
+  #panel-close:hover { background: var(--border); }
+  .panel-layout {
+    display: flex; gap: 0;
+  }
+  .panel-cover {
+    width: 200px; min-width: 200px;
+    background: var(--bg);
+    border-radius: 16px 0 0 16px;
+    overflow: hidden;
+    display: flex; align-items: stretch;
+  }
+  .panel-cover img {
+    width: 100%; object-fit: cover; display: block;
+  }
+  .panel-cover .no-cover {
+    width: 100%; display: flex; align-items: center; justify-content: center;
+    color: var(--muted); font-style: italic; font-size: 13px;
+    padding: 20px;
+  }
+  .panel-body {
+    flex: 1; padding: 24px 24px 24px 22px;
+    display: flex; flex-direction: column; gap: 14px;
+    min-width: 0;
+  }
+  .panel-top { display: flex; align-items: center; gap: 10px; }
+  .console-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px; font-weight: 500;
+    padding: 3px 8px; border-radius: 4px;
+    color: #fff; white-space: nowrap;
+    margin-top: 3px;
+  }
+  .tag-PS4, .tag-PS5 { background: var(--ps); }
+  .tag-Switch { background: var(--sw); }
+  .tag-XBOX { background: var(--xb); }
+  #panel-name {
+    font-size: 18px; font-weight: 700;
+    line-height: 1.2; flex: 1; min-width: 0;
+  }
+  .panel-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chip {
+    font-size: 11px; padding: 3px 9px;
+    background: var(--bg); border: 1px solid var(--border);
+    border-radius: 99px; color: var(--muted);
+  }
+  #panel-desc {
+    font-size: 13px; line-height: 1.65;
+    color: #444;
+  }
+  .panel-rows { display: flex; flex-direction: column; gap: 8px; }
+  .panel-row {
+    display: flex; gap: 10px;
+    font-size: 13px;
+  }
+  .panel-row dt {
+    color: var(--muted); min-width: 90px; font-weight: 500;
+  }
+  .panel-row dd { color: var(--text); }
+  #panel-link {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 9px 16px;
+    background: var(--accent); color: #fff;
+    border-radius: 8px; font-size: 13px; font-weight: 500;
+    text-decoration: none;
+    transition: opacity .15s;
+    align-self: flex-start;
+  }
+  #panel-link:hover { opacity: .85; }
+  #panel-link svg { width: 12px; height: 12px; fill: none; stroke: #fff; stroke-width: 2; stroke-linecap: round; }
+
+  @media (max-width: 540px) {
+    .panel-layout { flex-direction: column; }
+    .panel-cover { width: 100%; min-width: unset; height: 200px; border-radius: 16px 16px 0 0; }
+    header { padding: 10px 14px; }
+    .toolbar { padding: 10px 14px; }
+    main { padding: 14px 14px 40px; }
+    #grid { grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 10px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <img id="logo" src="gamesearch.png" alt="JVO" onclick="resetSearch()">
+  <div class="search-wrap">
+    <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22"/></svg>
+    <input type="text" id="search" placeholder="Rechercher un jeu…" autocomplete="off" autocapitalize="off" spellcheck="false">
+  </div>
+  <span id="search-count"></span>
+</header>
+
+<div class="toolbar">
+  <div class="filter-group" id="console-filters">
+    <button class="pill active" data-console="ALL">Tous</button>
+    <button class="pill" data-console="PS5"><span class="dot" style="background:var(--ps)"></span>PS5</button>
+    <button class="pill" data-console="PS4"><span class="dot" style="background:var(--ps)"></span>PS4</button>
+    <button class="pill" data-console="Switch"><span class="dot" style="background:var(--sw)"></span>Switch</button>
+    <button class="pill" data-console="XBOX"><span class="dot" style="background:var(--xb)"></span>XBOX</button>
+  </div>
+  <div class="sep"></div>
+  <select id="sort-sel">
+    <option value="id">Ordre catalogue</option>
+    <option value="alpha">A → Z</option>
+    <option value="pegi">PEGI</option>
+    <option value="size">Taille</option>
+  </select>
+</div>
+
+<main>
+  <div id="grid"></div>
+  <div id="empty">
+    <img src="TOAD.png" alt="">
+    <p>Aucun jeu trouvé…</p>
+  </div>
+</main>
+
+<!-- Detail overlay -->
+<div id="overlay">
+  <div id="panel">
+    <div class="panel-layout">
+      <div class="panel-cover" id="panel-cover-wrap"></div>
+      <div class="panel-body">
+        <div class="panel-top">
+          <span class="console-tag" id="panel-console-tag"></span>
+          <div id="panel-name"></div>
+          <button id="panel-close" onclick="closePanel()">✕</button>
+        </div>
+        <div class="panel-chips" id="panel-chips"></div>
+        <p id="panel-desc"></p>
+        <dl class="panel-rows" id="panel-rows"></dl>
+        <a id="panel-link" href="#" target="_blank" style="display:none">
+          Voir sur le store
+          <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+let GAMES = [];
+let activeConsole = 'ALL';
+let sortMode = 'id';
+let searchStr = '';
+let debounceTimer;
+
+// ── Normalize for search ──
+function norm(s) {
+  return (s || '').toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .replace(/['']/g, ' ');
+}
+
+// ── Load data ──
+GAMES = /*__GAMES_DATA__*/;
+render();
+document.getElementById('search').focus();
+
+// ── Render ──
+function render() {
+  let list = [...GAMES];
+
+  // Filter console
+  if (activeConsole !== 'ALL') {
+    list = list.filter(g => g.console === activeConsole);
+  }
+
+  // Filter search
+  if (searchStr.length > 1) {
+    const q = norm(searchStr);
+    list = list.filter(g => norm(g.search).includes(q) || norm(g.name).includes(q));
+  }
+
+  // Sort
+  if (sortMode === 'alpha') list.sort((a,b) => a.name.localeCompare(b.name, 'fr'));
+  else if (sortMode === 'pegi') list.sort((a,b) => a.pegi - b.pegi || a.id - b.id);
+  else if (sortMode === 'size') list.sort((a,b) => (b.size_go||0) - (a.size_go||0));
+  else list.sort((a,b) => a.id - b.id);
+
+  const grid = document.getElementById('grid');
+  const empty = document.getElementById('empty');
+
+  document.getElementById('search-count').textContent = list.length + ' jeu' + (list.length > 1 ? 'x' : '');
+
+  if (list.length === 0) {
+    grid.innerHTML = '';
+    empty.style.display = 'block';
+    return;
+  }
+  empty.style.display = 'none';
+
+  grid.innerHTML = list.map(g => {
+    const coverSrc = g.cover ? g.cover + '.png' : '';
+    const coverHtml = coverSrc
+      ? `<img src="${coverSrc}" alt="${g.name}" loading="lazy" onerror="this.parentNode.innerHTML='<div class=no-cover>—</div>'">`
+      : `<div class="no-cover">pas de jaquette</div>`;
+    const installed = g.installed ? `<div class="badge-installed" title="Installé"></div>` : '';
+    return `<div class="card" onclick="openPanel(${g.id})">
+      <div class="card-cover">
+        ${coverHtml}
+        <span class="card-badge badge-${g.console}">${g.console}${g.num_id && g.num_id!=='👻' ? ' · '+g.num_id : ''}</span>
+        ${installed}
+      </div>
+      <div class="card-info">
+        <div class="card-name">${g.name}</div>
+        <div class="card-meta">
+          ${g.pegi ? `<span class="pegi-badge">${g.pegi}+</span>` : ''}
+          ${g.genre || ''}
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ── Console filter pills ──
+document.getElementById('console-filters').addEventListener('click', e => {
+  const pill = e.target.closest('.pill');
+  if (!pill) return;
+  document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
+  pill.classList.add('active');
+  activeConsole = pill.dataset.console;
+  render();
+});
+
+// ── Sort ──
+document.getElementById('sort-sel').addEventListener('change', e => {
+  sortMode = e.target.value;
+  render();
+});
+
+// ── Search ──
+document.getElementById('search').addEventListener('input', e => {
+  clearTimeout(debounceTimer);
+  debounceTimer = setTimeout(() => {
+    searchStr = e.target.value;
+    render();
+  }, 120);
+});
+
+function resetSearch() {
+  document.getElementById('search').value = '';
+  searchStr = '';
+  render();
+}
+
+// ── Detail panel ──
+function openPanel(id) {
+  const g = GAMES.find(x => x.id === id);
+  if (!g) return;
+
+  // Cover
+  const wrap = document.getElementById('panel-cover-wrap');
+  if (g.cover) {
+    wrap.innerHTML = `<img src="${g.cover}.png" alt="${g.name}" onerror="this.parentNode.innerHTML='<div class=no-cover>pas de jaquette</div>'">`;
+  } else {
+    wrap.innerHTML = `<div class="no-cover">pas de jaquette</div>`;
+  }
+
+  document.getElementById('panel-name').textContent = g.name;
+
+  const tag = document.getElementById('panel-console-tag');
+  tag.textContent = g.console;
+  tag.className = 'console-tag tag-' + g.console;
+
+  // Chips
+  const chips = [];
+  if (g.pegi) chips.push(`PEGI ${g.pegi}`);
+  if (g.media) chips.push(g.media);
+  if (g.num_id && g.num_id !== '👻') chips.push('N°' + g.num_id);
+  if (g.installed) chips.push('✓ installé');
+  document.getElementById('panel-chips').innerHTML = chips.map(c => `<span class="chip">${c}</span>`).join('');
+
+  document.getElementById('panel-desc').textContent = g.desc || '';
+  document.getElementById('panel-desc').style.display = g.desc ? '' : 'none';
+
+  // Rows
+  const rows = [];
+  if (g.genre)     rows.push(['Genre', g.genre]);
+  if (g.players)   rows.push(['Joueurs', g.players]);
+  if (g.qualities) rows.push(['Qualités', g.qualities]);
+  if (g.size_go)   rows.push(['Taille', g.size_go + ' Go']);
+  document.getElementById('panel-rows').innerHTML = rows.map(([k,v]) =>
+    `<div class="panel-row"><dt>${k}</dt><dd>${v}</dd></div>`
+  ).join('');
+
+  // Store link
+  const link = document.getElementById('panel-link');
+  if (g.store_url) {
+    link.href = g.store_url;
+    link.style.display = 'inline-flex';
+  } else {
+    link.style.display = 'none';
+  }
+
+  document.getElementById('overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closePanel() {
+  document.getElementById('overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.getElementById('overlay').addEventListener('click', e => {
+  if (e.target === document.getElementById('overlay')) closePanel();
+});
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closePanel(); });
+</script>
+</body>
+</html>
