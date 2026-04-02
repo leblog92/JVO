@@ -25,7 +25,7 @@ header h1{font-size:16px;font-weight:700;letter-spacing:-.02em;}
 header .subtitle{font-size:12px;color:var(--muted);font-family:'DM Mono',monospace;}
 .hdr-right{margin-left:auto;display:flex;align-items:center;gap:10px;}
 
-.layout{display:grid;grid-template-columns:1fr 380px;height:calc(100vh - 57px);}
+.layout{display:grid;grid-template-columns:1fr 520px;height:calc(100vh - 57px);}
 
 /* ── List pane ── */
 .list-pane{
@@ -320,28 +320,17 @@ input[type=text].list-search:focus{border-color:var(--accent);}
           <label>Genre <span id="f-genre-val" style="font-weight:400;color:var(--muted);font-size:10px;"></span></label>
           <div class="cb-grid" id="f-genre-grid">
 <label class="cb-item"><input type="checkbox" id="f-genre_action" data-val="action" onchange="onCheckChange('f-genre')"><span>action</span></label>
-<label class="cb-item"><input type="checkbox" id="f-genre_action__aventure" data-val="action, aventure" onchange="onCheckChange('f-genre')"><span>action, aventure</span></label>
-<label class="cb-item"><input type="checkbox" id="f-genre_action__combat" data-val="action, combat" onchange="onCheckChange('f-genre')"><span>action, combat</span></label>
-<label class="cb-item"><input type="checkbox" id="f-genre_action__course" data-val="action, course" onchange="onCheckChange('f-genre')"><span>action, course</span></label>
-<label class="cb-item"><input type="checkbox" id="f-genre_action__jeu_de_r_le" data-val="action, jeu de rôle" onchange="onCheckChange('f-genre')"><span>action, jeu de rôle</span></label>
-<label class="cb-item"><input type="checkbox" id="f-genre_action__jeu_de_tir" data-val="action, jeu de tir" onchange="onCheckChange('f-genre')"><span>action, jeu de tir</span></label>
-<label class="cb-item"><input type="checkbox" id="f-genre_action__plateforme" data-val="action, plateforme" onchange="onCheckChange('f-genre')"><span>action, plateforme</span></label>
-<label class="cb-item"><input type="checkbox" id="f-genre_action__r_flexion" data-val="action, réflexion" onchange="onCheckChange('f-genre')"><span>action, réflexion</span></label>
-<label class="cb-item"><input type="checkbox" id="f-genre_action__strat_gie" data-val="action, stratégie" onchange="onCheckChange('f-genre')"><span>action, stratégie</span></label>
 <label class="cb-item"><input type="checkbox" id="f-genre_arcade" data-val="arcade" onchange="onCheckChange('f-genre')"><span>arcade</span></label>
 <label class="cb-item"><input type="checkbox" id="f-genre_aventure" data-val="aventure" onchange="onCheckChange('f-genre')"><span>aventure</span></label>
-<label class="cb-item"><input type="checkbox" id="f-genre_aventure__r_flexion" data-val="aventure, réflexion" onchange="onCheckChange('f-genre')"><span>aventure, réflexion</span></label>
-<label class="cb-item"><input type="checkbox" id="f-genre_aventure__strat_gie" data-val="aventure, stratégie" onchange="onCheckChange('f-genre')"><span>aventure, stratégie</span></label>
 <label class="cb-item"><input type="checkbox" id="f-genre_combat" data-val="combat" onchange="onCheckChange('f-genre')"><span>combat</span></label>
 <label class="cb-item"><input type="checkbox" id="f-genre_coop_ration" data-val="coopération" onchange="onCheckChange('f-genre')"><span>coopération</span></label>
 <label class="cb-item"><input type="checkbox" id="f-genre_course" data-val="course" onchange="onCheckChange('f-genre')"><span>course</span></label>
-<label class="cb-item"><input type="checkbox" id="f-genre_danse__musique" data-val="danse, musique" onchange="onCheckChange('f-genre')"><span>danse, musique</span></label>
+<label class="cb-item"><input type="checkbox" id="f-genre_danse" data-val="danse" onchange="onCheckChange('f-genre')"><span>danse</span></label>
 <label class="cb-item"><input type="checkbox" id="f-genre_jeu_de_r_le" data-val="jeu de rôle" onchange="onCheckChange('f-genre')"><span>jeu de rôle</span></label>
 <label class="cb-item"><input type="checkbox" id="f-genre_jeu_de_soci_t_" data-val="jeu de société" onchange="onCheckChange('f-genre')"><span>jeu de société</span></label>
 <label class="cb-item"><input type="checkbox" id="f-genre_jeu_de_tir" data-val="jeu de tir" onchange="onCheckChange('f-genre')"><span>jeu de tir</span></label>
 <label class="cb-item"><input type="checkbox" id="f-genre_musique" data-val="musique" onchange="onCheckChange('f-genre')"><span>musique</span></label>
 <label class="cb-item"><input type="checkbox" id="f-genre_plateforme" data-val="plateforme" onchange="onCheckChange('f-genre')"><span>plateforme</span></label>
-<label class="cb-item"><input type="checkbox" id="f-genre_plateformes" data-val="plateformes" onchange="onCheckChange('f-genre')"><span>plateformes</span></label>
 <label class="cb-item"><input type="checkbox" id="f-genre_puzzle" data-val="puzzle" onchange="onCheckChange('f-genre')"><span>puzzle</span></label>
 <label class="cb-item"><input type="checkbox" id="f-genre_r_flexion" data-val="réflexion" onchange="onCheckChange('f-genre')"><span>réflexion</span></label>
 <label class="cb-item"><input type="checkbox" id="f-genre_simulation" data-val="simulation" onchange="onCheckChange('f-genre')"><span>simulation</span></label>
@@ -498,7 +487,7 @@ function fillForm(g) {
   document.getElementById('f-console').value = g.console || 'PS5';
   document.getElementById('f-pegi').value = g.pegi || 3;
   document.getElementById('f-search').value = g.search || '';
-  document.getElementById('f-cover').value = g.cover || '';
+  document.getElementById('f-cover').value = (g.cover || '').replace(/^covers\//, '');
   document.getElementById('f-media').value = g.media || '';
   document.getElementById('f-numid').value = g.num_id || '';
   document.getElementById('f-players').value = g.players || '';
@@ -548,10 +537,15 @@ function onNameInput() {
   document.getElementById('f-search').value = autoSearch(name);
 }
 function updateCoverPreview() {
-  const cover = document.getElementById('f-cover').value.trim();
-  const prev = document.getElementById('cover-preview');
-  if (cover) {
-    prev.innerHTML = `<img src="${cover}.png" alt="" style="width:100%;height:100%;object-fit:cover" onerror="this.parentNode.innerHTML='<span class=nc>image introuvable</span>'">`;
+    const cover = document.getElementById('f-cover').value.trim();
+    const prev = document.getElementById('cover-preview');
+    if (cover) {
+      const base = cover.replace(/^\.?\/?(covers\/)?/, '');
+      const src = 'covers/' + base + '.png';
+      prev.innerHTML = '<img src="'+src+'" alt="" style="width:100%;height:100%;object-fit:cover" onerror="this.parentNode.innerHTML=\'<span class=nc>image introuvable</span>\'">';
+    } else {
+      prev.innerHTML = '<span class="nc">pas de jaquette</span>';
+    }
   } else {
     prev.innerHTML = `<span class="nc">pas de jaquette</span>`;
   }
@@ -571,7 +565,7 @@ function saveGame() {
     console: document.getElementById('f-console').value,
     pegi:    parseInt(document.getElementById('f-pegi').value),
     search:  document.getElementById('f-search').value.trim() || autoSearch(name),
-    cover:   document.getElementById('f-cover').value.trim(),
+    cover:   (() => { let c = document.getElementById('f-cover').value.trim(); return c.startsWith('covers/') ? c : (c ? 'covers/'+c : ''); })(),
     media:   document.getElementById('f-media').value,
     num_id:  document.getElementById('f-numid').value.trim(),
     players: document.getElementById('f-players').value.trim(),
