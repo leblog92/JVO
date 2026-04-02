@@ -1,20 +1,26 @@
-Github\JVO
+Microsoft Windows [version 10.0.26100.8037]
+(c) Microsoft Corporation. Tous droits réservés.
+
+C:\Users\kmatt\Documents\github\JVO>tree /f
 Structure du dossier
 Le numéro de série du volume est B6F1-9894
 C:.
+│   404.png
 │   admin.html
 │   admin_template.html
 │   games.json
-│   gamesearch.png
 │   ico.png
 │   index.html
 │   index_template.html
+│   logo.png
 │   README.md
-│   TOAD.png
+│   tree.txt
 │   update.bat
 │   update.py
+│   upgrades.txt
 │
 ├───covers
+│       nin_.png
 │       nin_12.png
 │       nin_13.png
 │       nin_3d.png
@@ -111,6 +117,7 @@ C:.
 │       nin_wario.png
 │       nin_wond.png
 │       nin_xen.png
+│       ps_.png
 │       ps_ac6.png
 │       ps_acs.png
 │       ps_asb.png
@@ -201,6 +208,7 @@ C:.
 │       ps_wipeout.png
 │       ps_witcher.png
 │       ps_yakusa.png
+│       xbox_.png
 │       xbox_alex.png
 │       xbox_assassin.png
 │       xbox_atlas.png

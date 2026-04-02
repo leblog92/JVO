@@ -1,0 +1,11 @@
+joueurs min/max
+automatiquement "farmer" les informations des jeux
+mettre min et max pr le nb de joueurs pour avoir des valeurs au lieu d'une chaîne de caractères
+lien notice bnf 
+lien catalogue mediatheque
+lien de Bande-annonce de présentation sur les chaines youtube officielles 
+rajouter la date de sortie/trier par date
+réordonner les genres et qualités existants dans le json
+print dans admin
+ordonner les démat par ordre alphabétique dans le games.json
+pour xbox rajouter démat gamepass

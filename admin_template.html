@@ -6,51 +6,25 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-:root {
+:root{
   --bg:#f5f4f0;--surface:#fff;--border:#e2e0d8;--text:#1a1917;--muted:#888580;
   --accent:#1a1917;--danger:#dc2626;--ok:#16a34a;
-  --ps:#003791;--sw:#e4000f;--xb:#107c10;
-  --r:10px;
+  --ps:#003791;--sw:#e4000f;--xb:#107c10;--r:10px;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
-
-/* ── Layout ── */
-header{
-  position:sticky;top:0;z-index:100;
-  background:var(--bg);border-bottom:1px solid var(--border);
-  padding:14px 24px;display:flex;align-items:center;gap:16px;
-}
-header h1{font-size:16px;font-weight:700;letter-spacing:-.02em;}
-header .subtitle{font-size:12px;color:var(--muted);font-family:'DM Mono',monospace;}
+header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:14px 24px;display:flex;align-items:center;gap:16px;}
+header h1{font-size:16px;font-weight:700;}
+.subtitle{font-size:12px;color:var(--muted);font-family:'DM Mono',monospace;}
 .hdr-right{margin-left:auto;display:flex;align-items:center;gap:10px;}
-
 .layout{display:grid;grid-template-columns:1fr 520px;height:calc(100vh - 57px);}
-
-/* ── List pane ── */
-.list-pane{
-  display:flex;flex-direction:column;
-  border-right:1px solid var(--border);
-  overflow:hidden;
-}
-.list-toolbar{
-  padding:12px 16px;border-bottom:1px solid var(--border);
-  display:flex;gap:8px;align-items:center;flex-wrap:wrap;
-}
+.list-pane{display:flex;flex-direction:column;border-right:1px solid var(--border);overflow:hidden;}
+.list-toolbar{padding:12px 16px;border-bottom:1px solid var(--border);display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
 .search-wrap{position:relative;flex:1;min-width:160px;}
 .search-wrap svg{position:absolute;left:9px;top:50%;transform:translateY(-50%);width:14px;height:14px;stroke:var(--muted);fill:none;stroke-width:2;stroke-linecap:round;pointer-events:none;}
-input[type=text].list-search{
-  width:100%;padding:7px 9px 7px 30px;
-  font-family:'DM Sans',sans-serif;font-size:13px;
-  background:var(--surface);border:1px solid var(--border);border-radius:var(--r);outline:none;
-}
-input[type=text].list-search:focus{border-color:var(--accent);}
-.pill{
-  display:inline-flex;align-items:center;gap:4px;
-  padding:4px 10px;font-size:12px;font-weight:500;
-  background:var(--surface);border:1px solid var(--border);border-radius:99px;
-  cursor:pointer;user-select:none;white-space:nowrap;transition:all .12s;
-}
+input.list-search{width:100%;padding:7px 9px 7px 30px;font-family:'DM Sans',sans-serif;font-size:13px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r);outline:none;}
+input.list-search:focus{border-color:var(--accent);}
+.pill{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;font-size:12px;font-weight:500;background:var(--surface);border:1px solid var(--border);border-radius:99px;cursor:pointer;user-select:none;white-space:nowrap;transition:all .12s;}
 .pill:hover{border-color:var(--accent);}
 .pill.active{background:var(--accent);color:#fff;border-color:var(--accent);}
 .pill[data-c="PS5"].active,.pill[data-c="PS4"].active{background:var(--ps);border-color:var(--ps);}
@@ -58,152 +32,68 @@ input[type=text].list-search:focus{border-color:var(--accent);}
 .pill[data-c="XBOX"].active{background:var(--xb);border-color:var(--xb);}
 .dot{width:6px;height:6px;border-radius:50%;background:currentColor;opacity:.7;}
 #list-count{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);white-space:nowrap;}
-
 .list-scroll{overflow-y:auto;flex:1;}
-.list-item{
-  display:flex;align-items:center;gap:10px;
-  padding:9px 16px;border-bottom:1px solid var(--border);
-  cursor:pointer;transition:background .1s;
-}
+.list-item{display:flex;align-items:center;gap:10px;padding:9px 16px;border-bottom:1px solid var(--border);cursor:pointer;transition:background .1s;}
 .list-item:hover{background:#faf9f6;}
 .list-item.selected{background:#f0ede6;}
-.item-cover{
-  width:32px;height:44px;border-radius:4px;
-  background:var(--bg);overflow:hidden;flex-shrink:0;
-  display:flex;align-items:center;justify-content:center;
-}
+.item-cover{width:32px;height:44px;border-radius:4px;background:var(--bg);overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center;}
 .item-cover img{width:100%;height:100%;object-fit:cover;}
 .item-cover .nc{font-size:9px;color:var(--muted);}
 .item-info{flex:1;min-width:0;}
 .item-name{font-size:13px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .item-sub{font-size:11px;color:var(--muted);margin-top:2px;display:flex;gap:6px;align-items:center;}
 .console-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
-.cd-PS4,.cd-PS5{background:var(--ps);}
-.cd-Switch{background:var(--sw);}
-.cd-XBOX{background:var(--xb);}
-.item-installed{width:8px;height:8px;border-radius:50%;background:var(--ok);flex-shrink:0;}
-
-/* ── Form pane ── */
-.form-pane{
-  display:flex;flex-direction:column;
-  overflow:hidden;
-}
-.form-header{
-  padding:14px 20px 12px;border-bottom:1px solid var(--border);
-  display:flex;align-items:center;gap:10px;
-}
+.cd-PS4,.cd-PS5{background:var(--ps);}.cd-Switch{background:var(--sw);}.cd-XBOX{background:var(--xb);}
+.item-installed{width:8px;height:8px;border-radius:50%;background:var(--ok);flex-shrink:0;margin-left:auto;}
+.form-pane{display:flex;flex-direction:column;overflow:hidden;}
+.form-header{padding:14px 20px 12px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;}
 .form-header h2{font-size:14px;font-weight:700;flex:1;}
 .form-scroll{overflow-y:auto;flex:1;padding:16px 20px 24px;}
-
-.form-cover-preview{
-  width:90px;height:120px;border-radius:6px;
-  background:var(--bg);border:1px solid var(--border);
-  overflow:hidden;display:flex;align-items:center;justify-content:center;
-  margin-bottom:16px;flex-shrink:0;
-}
+.form-cover-preview{width:90px;height:120px;border-radius:6px;background:var(--bg);border:1px solid var(--border);overflow:hidden;display:flex;align-items:center;justify-content:center;margin-bottom:16px;flex-shrink:0;}
 .form-cover-preview img{width:100%;height:100%;object-fit:cover;}
-.form-cover-preview .nc{font-size:10px;color:var(--muted);font-style:italic;}
-
+.form-cover-preview .nc{font-size:10px;color:var(--muted);font-style:italic;text-align:center;padding:6px;}
 .field{margin-bottom:14px;}
 .field label{display:block;font-size:11px;font-weight:500;color:var(--muted);margin-bottom:5px;letter-spacing:.04em;text-transform:uppercase;}
-.field input[type=text],
-.field input[type=number],
-.field input[type=url],
-.field select,
-.field textarea{
-  width:100%;padding:8px 10px;
-  font-family:'DM Sans',sans-serif;font-size:13px;
-  background:var(--surface);border:1px solid var(--border);
-  border-radius:8px;outline:none;transition:border-color .12s;
-  color:var(--text);
-}
+.field input[type=text],.field input[type=number],.field input[type=url],.field select,.field textarea{width:100%;padding:8px 10px;font-family:'DM Sans',sans-serif;font-size:13px;background:var(--surface);border:1px solid var(--border);border-radius:8px;outline:none;color:var(--text);}
 .field input:focus,.field select:focus,.field textarea:focus{border-color:var(--accent);}
 .field textarea{resize:vertical;min-height:72px;line-height:1.5;}
 .field select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23888'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;padding-right:28px;cursor:pointer;}
 .field-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
 .field-row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;}
-
 .toggle-wrap{display:flex;align-items:center;gap:10px;}
 .toggle{position:relative;width:36px;height:20px;cursor:pointer;}
 .toggle input{opacity:0;width:0;height:0;position:absolute;}
-.toggle-track{
-  position:absolute;inset:0;border-radius:99px;
-  background:var(--border);transition:background .2s;
-}
+.toggle-track{position:absolute;inset:0;border-radius:99px;background:var(--border);transition:background .2s;}
 .toggle input:checked+.toggle-track{background:var(--ok);}
-.toggle-thumb{
-  position:absolute;top:2px;left:2px;
-  width:16px;height:16px;border-radius:50%;background:#fff;
-  transition:transform .2s;box-shadow:0 1px 3px rgba(0,0,0,.2);
-}
+.toggle-thumb{position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#fff;transition:transform .2s;box-shadow:0 1px 3px rgba(0,0,0,.2);}
 .toggle input:checked~.toggle-thumb{transform:translateX(16px);}
 .toggle-label{font-size:13px;font-weight:500;}
-
 .sep{height:1px;background:var(--border);margin:16px 0;}
-
-/* ── Buttons ── */
-.btn{
-  display:inline-flex;align-items:center;gap:6px;
-  padding:8px 14px;border-radius:8px;font-size:13px;font-weight:500;
-  cursor:pointer;border:none;font-family:'DM Sans',sans-serif;
-  transition:opacity .12s;
-}
+.cb-grid{display:flex;flex-wrap:wrap;gap:5px;max-height:130px;overflow-y:auto;padding:6px;border:1px solid var(--border);border-radius:8px;background:var(--surface);}
+.cb-item{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:99px;border:1px solid var(--border);cursor:pointer;font-size:12px;user-select:none;transition:all .12s;background:var(--bg);}
+.cb-item:has(input:checked){background:var(--accent);color:#fff;border-color:var(--accent);}
+.cb-item input{display:none;}
+.cb-sub{font-weight:400;color:var(--muted);font-size:10px;margin-left:4px;}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:8px;font-size:13px;font-weight:500;cursor:pointer;border:none;font-family:'DM Sans',sans-serif;transition:opacity .12s;}
 .btn:hover{opacity:.85;}
 .btn-primary{background:var(--accent);color:#fff;}
 .btn-danger{background:var(--danger);color:#fff;}
 .btn-ghost{background:transparent;border:1px solid var(--border);color:var(--text);}
 .btn-ok{background:var(--ok);color:#fff;}
 .btn svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
-
-.form-actions{display:flex;gap:8px;margin-top:4px;flex-wrap:wrap;}
-
-/* ── Toast ── */
-#toast{
-  position:fixed;bottom:24px;right:24px;z-index:999;
-  padding:10px 16px;border-radius:8px;
-  font-size:13px;font-weight:500;
-  background:var(--accent);color:#fff;
-  opacity:0;transform:translateY(8px);
-  transition:all .2s;pointer-events:none;
-}
+.form-actions{display:flex;gap:8px;margin-top:4px;flex-wrap:wrap;align-items:center;}
+#toast{position:fixed;bottom:24px;right:24px;z-index:999;padding:10px 16px;border-radius:8px;font-size:13px;font-weight:500;background:var(--accent);color:#fff;opacity:0;transform:translateY(8px);transition:all .2s;pointer-events:none;}
 #toast.show{opacity:1;transform:none;}
 #toast.ok{background:var(--ok);}
 #toast.err{background:var(--danger);}
-
-/* ── Empty form ── */
-.empty-form{
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  height:100%;gap:12px;color:var(--muted);text-align:center;padding:40px;
-}
+#save-confirm{display:none;margin-top:12px;padding:10px 14px;border-radius:8px;background:#f0fdf4;border:1px solid #bbf7d0;font-size:13px;color:#166534;line-height:1.6;}
+#save-confirm.show{display:block;}
+.empty-form{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:12px;color:var(--muted);text-align:center;padding:40px;}
 .empty-form svg{width:40px;height:40px;stroke:var(--border);fill:none;stroke-width:1.5;stroke-linecap:round;}
 .empty-form p{font-size:13px;}
-
-@media(max-width:700px){
-  .layout{grid-template-columns:1fr;grid-template-rows:50vh 1fr;height:auto;}
-  .form-pane{border-top:1px solid var(--border);}
-}
-
-  .cb-grid {
-    display: flex; flex-wrap: wrap; gap: 5px;
-    max-height: 130px; overflow-y: auto;
-    padding: 6px; border: 1px solid var(--border);
-    border-radius: 8px; background: var(--surface);
-  }
-  .cb-item {
-    display: inline-flex; align-items: center; gap: 4px;
-    padding: 3px 9px; border-radius: 99px;
-    border: 1px solid var(--border); cursor: pointer;
-    font-size: 12px; user-select: none; transition: all .12s;
-    background: var(--bg);
-  }
-  .cb-item:has(input:checked) {
-    background: var(--accent); color: #fff; border-color: var(--accent);
-  }
-  .cb-item input { display: none; }
 </style>
 </head>
 <body>
-
 <header>
   <div>
     <h1>JVO — Admin</h1>
@@ -222,8 +112,6 @@ input[type=text].list-search:focus{border-color:var(--accent);}
 </header>
 
 <div class="layout">
-
-  <!-- ── Liste ── -->
   <div class="list-pane">
     <div class="list-toolbar">
       <div class="search-wrap">
@@ -242,7 +130,6 @@ input[type=text].list-search:focus{border-color:var(--accent);}
     <div class="list-scroll" id="list-scroll"></div>
   </div>
 
-  <!-- ── Formulaire ── -->
   <div class="form-pane">
     <div class="form-header">
       <h2 id="form-title">Sélectionnez un jeu</h2>
@@ -251,14 +138,11 @@ input[type=text].list-search:focus{border-color:var(--accent);}
     <div class="form-scroll" id="form-scroll">
       <div class="empty-form" id="empty-form">
         <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="9" x2="15" y2="9"/><line x1="9" y1="13" x2="13" y2="13"/></svg>
-        <p>Cliquez sur un jeu pour l'éditer<br>ou créez-en un nouveau.</p>
+        <p>Cliquez sur un jeu pour l’éditer<br>ou créez-en un nouveau.</p>
       </div>
       <div id="game-form" style="display:none">
-
         <div style="display:flex;gap:16px;align-items:flex-start;">
-          <div class="form-cover-preview" id="cover-preview">
-            <span class="nc">pas de jaquette</span>
-          </div>
+          <div class="form-cover-preview" id="cover-preview"><span class="nc">pas de jaquette</span></div>
           <div style="flex:1;min-width:0;">
             <div class="field">
               <label>Nom du jeu *</label>
@@ -267,120 +151,94 @@ input[type=text].list-search:focus{border-color:var(--accent);}
             <div class="field-row">
               <div class="field">
                 <label>Console *</label>
-                <select id="f-console">
-                  <option>PS5</option><option>PS4</option><option>Switch</option><option>XBOX</option>
-                </select>
+                <select id="f-console"><option>PS5</option><option>PS4</option><option>Switch</option><option>XBOX</option></select>
               </div>
               <div class="field">
                 <label>PEGI *</label>
-                <select id="f-pegi">
-                  <option value="3">3</option><option value="7">7</option>
-                  <option value="12">12</option><option value="16">16</option><option value="18">18</option>
-                </select>
+                <select id="f-pegi"><option value="3">3</option><option value="7">7</option><option value="12">12</option><option value="16">16</option><option value="18">18</option></select>
               </div>
             </div>
           </div>
         </div>
-
         <div class="field">
           <label>Recherche (auto-généré)</label>
           <input type="text" id="f-search" placeholder="ex: returnal">
         </div>
-
         <div class="field-row">
           <div class="field">
-            <label>Fichier jaquette</label>
+            <label>Fichier jaquette (sans .png)</label>
             <input type="text" id="f-cover" placeholder="ex: ps_returnal" oninput="updateCoverPreview()">
           </div>
           <div class="field">
             <label>Média</label>
-            <select id="f-media">
-              <option value="">—</option>
-              <option>disque</option><option>démat</option><option>cartouche</option>
-            </select>
+            <select id="f-media"><option value="">—</option><option>disque</option><option>démat</option><option>cartouche</option></select>
           </div>
         </div>
-
         <div class="field-row3">
-          <div class="field">
-            <label>N° catalogue</label>
-            <input type="text" id="f-numid" placeholder="ex: 01">
-          </div>
-          <div class="field">
-            <label>Joueurs</label>
-            <input type="text" id="f-players" placeholder="ex: 1 à 4">
-          </div>
-          <div class="field">
-            <label>Taille (Go)</label>
-            <input type="number" id="f-size" placeholder="ex: 59" min="0" step="0.1">
-          </div>
+          <div class="field"><label>N° catalogue</label><input type="text" id="f-numid" placeholder="ex: 01"></div>
+          <div class="field"><label>Joueurs</label><input type="text" id="f-players" placeholder="ex: 1 à 4"></div>
+          <div class="field"><label>Taille (Go)</label><input type="number" id="f-size" placeholder="ex: 59" min="0" step="0.1"></div>
         </div>
-
         <div class="field">
-          <label>Genre <span id="f-genre-val" style="font-weight:400;color:var(--muted);font-size:10px;"></span></label>
-          <div class="cb-grid" id="f-genre-grid">
-<label class="cb-item"><input type="checkbox" id="f-genre_action" data-val="action" onchange="onCheckChange('f-genre')"><span>action</span></label>
-<label class="cb-item"><input type="checkbox" id="f-genre_arcade" data-val="arcade" onchange="onCheckChange('f-genre')"><span>arcade</span></label>
-<label class="cb-item"><input type="checkbox" id="f-genre_aventure" data-val="aventure" onchange="onCheckChange('f-genre')"><span>aventure</span></label>
-<label class="cb-item"><input type="checkbox" id="f-genre_combat" data-val="combat" onchange="onCheckChange('f-genre')"><span>combat</span></label>
-<label class="cb-item"><input type="checkbox" id="f-genre_coop_ration" data-val="coopération" onchange="onCheckChange('f-genre')"><span>coopération</span></label>
-<label class="cb-item"><input type="checkbox" id="f-genre_course" data-val="course" onchange="onCheckChange('f-genre')"><span>course</span></label>
-<label class="cb-item"><input type="checkbox" id="f-genre_danse" data-val="danse" onchange="onCheckChange('f-genre')"><span>danse</span></label>
-<label class="cb-item"><input type="checkbox" id="f-genre_jeu_de_r_le" data-val="jeu de rôle" onchange="onCheckChange('f-genre')"><span>jeu de rôle</span></label>
-<label class="cb-item"><input type="checkbox" id="f-genre_jeu_de_soci_t_" data-val="jeu de société" onchange="onCheckChange('f-genre')"><span>jeu de société</span></label>
-<label class="cb-item"><input type="checkbox" id="f-genre_jeu_de_tir" data-val="jeu de tir" onchange="onCheckChange('f-genre')"><span>jeu de tir</span></label>
-<label class="cb-item"><input type="checkbox" id="f-genre_musique" data-val="musique" onchange="onCheckChange('f-genre')"><span>musique</span></label>
-<label class="cb-item"><input type="checkbox" id="f-genre_plateforme" data-val="plateforme" onchange="onCheckChange('f-genre')"><span>plateforme</span></label>
-<label class="cb-item"><input type="checkbox" id="f-genre_puzzle" data-val="puzzle" onchange="onCheckChange('f-genre')"><span>puzzle</span></label>
-<label class="cb-item"><input type="checkbox" id="f-genre_r_flexion" data-val="réflexion" onchange="onCheckChange('f-genre')"><span>réflexion</span></label>
-<label class="cb-item"><input type="checkbox" id="f-genre_simulation" data-val="simulation" onchange="onCheckChange('f-genre')"><span>simulation</span></label>
-<label class="cb-item"><input type="checkbox" id="f-genre_sport" data-val="sport" onchange="onCheckChange('f-genre')"><span>sport</span></label>
-<label class="cb-item"><input type="checkbox" id="f-genre_strat_gie" data-val="stratégie" onchange="onCheckChange('f-genre')"><span>stratégie</span></label>
+          <label>Genre <span class="cb-sub" id="f-genre-sub"></span></label>
+          <div class="cb-grid" id="cb-genre">
+<label class="cb-item"><input type="checkbox" data-val="action" onchange="onCB('genre')"><span>action</span></label>
+<label class="cb-item"><input type="checkbox" data-val="arcade" onchange="onCB('genre')"><span>arcade</span></label>
+<label class="cb-item"><input type="checkbox" data-val="aventure" onchange="onCB('genre')"><span>aventure</span></label>
+<label class="cb-item"><input type="checkbox" data-val="combat" onchange="onCB('genre')"><span>combat</span></label>
+<label class="cb-item"><input type="checkbox" data-val="coopération" onchange="onCB('genre')"><span>coopération</span></label>
+<label class="cb-item"><input type="checkbox" data-val="course" onchange="onCB('genre')"><span>course</span></label>
+<label class="cb-item"><input type="checkbox" data-val="danse" onchange="onCB('genre')"><span>danse</span></label>
+<label class="cb-item"><input type="checkbox" data-val="jeu de rôle" onchange="onCB('genre')"><span>jeu de rôle</span></label>
+<label class="cb-item"><input type="checkbox" data-val="jeu de société" onchange="onCB('genre')"><span>jeu de société</span></label>
+<label class="cb-item"><input type="checkbox" data-val="jeu de tir" onchange="onCB('genre')"><span>jeu de tir</span></label>
+<label class="cb-item"><input type="checkbox" data-val="musique" onchange="onCB('genre')"><span>musique</span></label>
+<label class="cb-item"><input type="checkbox" data-val="plateforme" onchange="onCB('genre')"><span>plateforme</span></label>
+<label class="cb-item"><input type="checkbox" data-val="puzzle" onchange="onCB('genre')"><span>puzzle</span></label>
+<label class="cb-item"><input type="checkbox" data-val="réflexion" onchange="onCB('genre')"><span>réflexion</span></label>
+<label class="cb-item"><input type="checkbox" data-val="simulation" onchange="onCB('genre')"><span>simulation</span></label>
+<label class="cb-item"><input type="checkbox" data-val="sport" onchange="onCB('genre')"><span>sport</span></label>
+<label class="cb-item"><input type="checkbox" data-val="stratégie" onchange="onCB('genre')"><span>stratégie</span></label>
           </div>
         </div>
-
         <div class="field">
-          <label>Qualités <span id="f-quality-val" style="font-weight:400;color:var(--muted);font-size:10px;"></span></label>
-          <div class="cb-grid" id="f-quality-grid">
-<label class="cb-item"><input type="checkbox" id="f-quality_anticipation" data-val="anticipation" onchange="onCheckChange('f-quality')"><span>anticipation</span></label>
-<label class="cb-item"><input type="checkbox" id="f-quality_communication" data-val="communication" onchange="onCheckChange('f-quality')"><span>communication</span></label>
-<label class="cb-item"><input type="checkbox" id="f-quality_concentration" data-val="concentration" onchange="onCheckChange('f-quality')"><span>concentration</span></label>
-<label class="cb-item"><input type="checkbox" id="f-quality_coop_ration" data-val="coopération" onchange="onCheckChange('f-quality')"><span>coopération</span></label>
-<label class="cb-item"><input type="checkbox" id="f-quality_coordination" data-val="coordination" onchange="onCheckChange('f-quality')"><span>coordination</span></label>
-<label class="cb-item"><input type="checkbox" id="f-quality_cr_ativit_" data-val="créativité" onchange="onCheckChange('f-quality')"><span>créativité</span></label>
-<label class="cb-item"><input type="checkbox" id="f-quality_curiosit_" data-val="curiosité" onchange="onCheckChange('f-quality')"><span>curiosité</span></label>
-<label class="cb-item"><input type="checkbox" id="f-quality_dext_rit_" data-val="dextérité" onchange="onCheckChange('f-quality')"><span>dextérité</span></label>
-<label class="cb-item"><input type="checkbox" id="f-quality_empathie" data-val="empathie" onchange="onCheckChange('f-quality')"><span>empathie</span></label>
-<label class="cb-item"><input type="checkbox" id="f-quality_endurance" data-val="endurance" onchange="onCheckChange('f-quality')"><span>endurance</span></label>
-<label class="cb-item"><input type="checkbox" id="f-quality_gestion_du_stress" data-val="gestion du stress" onchange="onCheckChange('f-quality')"><span>gestion du stress</span></label>
-<label class="cb-item"><input type="checkbox" id="f-quality_go_t_de_l_entreprenariat" data-val="goût de l'entreprenariat" onchange="onCheckChange('f-quality')"><span>goût de l'entreprenariat</span></label>
-<label class="cb-item"><input type="checkbox" id="f-quality_imagination" data-val="imagination" onchange="onCheckChange('f-quality')"><span>imagination</span></label>
-<label class="cb-item"><input type="checkbox" id="f-quality_observation" data-val="observation" onchange="onCheckChange('f-quality')"><span>observation</span></label>
-<label class="cb-item"><input type="checkbox" id="f-quality_patience" data-val="patience" onchange="onCheckChange('f-quality')"><span>patience</span></label>
-<label class="cb-item"><input type="checkbox" id="f-quality_pers_v_rance" data-val="persévérance" onchange="onCheckChange('f-quality')"><span>persévérance</span></label>
-<label class="cb-item"><input type="checkbox" id="f-quality_planification" data-val="planification" onchange="onCheckChange('f-quality')"><span>planification</span></label>
-<label class="cb-item"><input type="checkbox" id="f-quality_prise_de_d_cision_rapide" data-val="prise de décision rapide" onchange="onCheckChange('f-quality')"><span>prise de décision rapide</span></label>
-<label class="cb-item"><input type="checkbox" id="f-quality_pr_cision" data-val="précision" onchange="onCheckChange('f-quality')"><span>précision</span></label>
-<label class="cb-item"><input type="checkbox" id="f-quality_r_flexes" data-val="réflexes" onchange="onCheckChange('f-quality')"><span>réflexes</span></label>
-<label class="cb-item"><input type="checkbox" id="f-quality_r_flexion" data-val="réflexion" onchange="onCheckChange('f-quality')"><span>réflexion</span></label>
-<label class="cb-item"><input type="checkbox" id="f-quality_sens_du_rythme" data-val="sens du rythme" onchange="onCheckChange('f-quality')"><span>sens du rythme</span></label>
-<label class="cb-item"><input type="checkbox" id="f-quality_tol_rance" data-val="tolérance" onchange="onCheckChange('f-quality')"><span>tolérance</span></label>
-<label class="cb-item"><input type="checkbox" id="f-quality__quilibre" data-val="équilibre" onchange="onCheckChange('f-quality')"><span>équilibre</span></label>
+          <label>Qualités <span class="cb-sub" id="f-quality-sub"></span></label>
+          <div class="cb-grid" id="cb-quality">
+<label class="cb-item"><input type="checkbox" data-val="anticipation" onchange="onCB('quality')"><span>anticipation</span></label>
+<label class="cb-item"><input type="checkbox" data-val="communication" onchange="onCB('quality')"><span>communication</span></label>
+<label class="cb-item"><input type="checkbox" data-val="concentration" onchange="onCB('quality')"><span>concentration</span></label>
+<label class="cb-item"><input type="checkbox" data-val="coopération" onchange="onCB('quality')"><span>coopération</span></label>
+<label class="cb-item"><input type="checkbox" data-val="coordination" onchange="onCB('quality')"><span>coordination</span></label>
+<label class="cb-item"><input type="checkbox" data-val="créativité" onchange="onCB('quality')"><span>créativité</span></label>
+<label class="cb-item"><input type="checkbox" data-val="curiosité" onchange="onCB('quality')"><span>curiosité</span></label>
+<label class="cb-item"><input type="checkbox" data-val="dextérité" onchange="onCB('quality')"><span>dextérité</span></label>
+<label class="cb-item"><input type="checkbox" data-val="empathie" onchange="onCB('quality')"><span>empathie</span></label>
+<label class="cb-item"><input type="checkbox" data-val="endurance" onchange="onCB('quality')"><span>endurance</span></label>
+<label class="cb-item"><input type="checkbox" data-val="gestion du stress" onchange="onCB('quality')"><span>gestion du stress</span></label>
+<label class="cb-item"><input type="checkbox" data-val="goût de l'entreprenariat" onchange="onCB('quality')"><span>goût de l'entreprenariat</span></label>
+<label class="cb-item"><input type="checkbox" data-val="imagination" onchange="onCB('quality')"><span>imagination</span></label>
+<label class="cb-item"><input type="checkbox" data-val="observation" onchange="onCB('quality')"><span>observation</span></label>
+<label class="cb-item"><input type="checkbox" data-val="patience" onchange="onCB('quality')"><span>patience</span></label>
+<label class="cb-item"><input type="checkbox" data-val="persévérance" onchange="onCB('quality')"><span>persévérance</span></label>
+<label class="cb-item"><input type="checkbox" data-val="planification" onchange="onCB('quality')"><span>planification</span></label>
+<label class="cb-item"><input type="checkbox" data-val="prise de décision rapide" onchange="onCB('quality')"><span>prise de décision rapide</span></label>
+<label class="cb-item"><input type="checkbox" data-val="précision" onchange="onCB('quality')"><span>précision</span></label>
+<label class="cb-item"><input type="checkbox" data-val="réflexes" onchange="onCB('quality')"><span>réflexes</span></label>
+<label class="cb-item"><input type="checkbox" data-val="réflexion" onchange="onCB('quality')"><span>réflexion</span></label>
+<label class="cb-item"><input type="checkbox" data-val="sens du rythme" onchange="onCB('quality')"><span>sens du rythme</span></label>
+<label class="cb-item"><input type="checkbox" data-val="tolérance" onchange="onCB('quality')"><span>tolérance</span></label>
+<label class="cb-item"><input type="checkbox" data-val="équilibre" onchange="onCB('quality')"><span>équilibre</span></label>
           </div>
         </div>
-
         <div class="field">
           <label>Description</label>
           <textarea id="f-desc" rows="4" placeholder="Description courte du jeu…"></textarea>
         </div>
-
         <div class="field">
           <label>Lien store</label>
           <input type="url" id="f-url" placeholder="https://…">
         </div>
-
         <div class="sep"></div>
-
         <div class="toggle-wrap" style="margin-bottom:16px;">
           <label class="toggle">
             <input type="checkbox" id="f-installed">
@@ -389,7 +247,6 @@ input[type=text].list-search:focus{border-color:var(--accent);}
           </label>
           <span class="toggle-label">Jeu installé</span>
         </div>
-
         <div class="form-actions">
           <button class="btn btn-primary" onclick="saveGame()">
             <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
@@ -400,225 +257,223 @@ input[type=text].list-search:focus{border-color:var(--accent);}
             Supprimer
           </button>
         </div>
-
+        <div id="save-confirm"></div>
       </div>
     </div>
   </div>
-
 </div>
 
 <div id="toast"></div>
 
 <script>
-let GAMES = /*__GAMES_DATA__*/;
-let activeConsole = 'ALL';
-let selectedId = null;
-let isNew = false;
+var GAMES = /*__GAMES_DATA__*/;
+var activeConsole = "ALL";
+var selectedId    = null;
+var isNew         = false;
 
-// ── Normalize ──
 function norm(s) {
-  return (s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/['']/g,' ');
+  return (s||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
 }
 function autoSearch(name) {
-  return norm(name).replace(/[-:,!?.&()]/g,' ').replace(/\s+/g,' ').trim();
+  return norm(name).replace(/[-:,!?.&()]/g," ").replace(/\s+/g," ").trim();
 }
 
-// ── Init ──
+function onCB(field) {
+  var vals = getCBValues(field);
+  var sub = document.getElementById("f-"+field+"-sub");
+  if (sub) sub.textContent = vals ? "("+vals+")" : "";
+}
+function setCB(field, value) {
+  var vals = (value||"").split(",").map(function(s){ return s.trim().toLowerCase(); }).filter(Boolean);
+  document.querySelectorAll("#cb-"+field+" input").forEach(function(cb) {
+    cb.checked = vals.indexOf(cb.dataset.val.toLowerCase()) !== -1;
+  });
+  onCB(field);
+}
+function getCBValues(field) {
+  return Array.from(document.querySelectorAll("#cb-"+field+" input:checked"))
+    .map(function(el){ return el.dataset.val; })
+    .sort(function(a,b){ return a.localeCompare(b,"fr"); })
+    .join(", ");
+}
+
+function updateCoverPreview() {
+  var raw  = document.getElementById("f-cover").value.trim();
+  var prev = document.getElementById("cover-preview");
+  if (raw) {
+    var base = raw.replace(/^\.?[/\\]?(covers[/\\])?/,"");
+    var img  = document.createElement("img");
+    img.style.cssText = "width:100%;height:100%;object-fit:cover";
+    img.onerror = function() { prev.innerHTML = "<span class=\"nc\">image introuvable</span>"; };
+    img.src = "covers/" + base + ".png";
+    prev.innerHTML = "";
+    prev.appendChild(img);
+  } else {
+    prev.innerHTML = "<span class=\"nc\">pas de jaquette</span>";
+  }
+}
+
 renderList();
-document.getElementById('hdr-count').textContent = GAMES.length + ' jeux';
-document.getElementById('console-pills').addEventListener('click', e => {
-  const pill = e.target.closest('.pill');
-  if (!pill) return;
-  document.querySelectorAll('#console-pills .pill').forEach(p => p.classList.remove('active'));
-  pill.classList.add('active');
-  activeConsole = pill.dataset.c;
+document.getElementById("hdr-count").textContent = GAMES.length + " jeux";
+
+document.getElementById("console-pills").addEventListener("click", function(e) {
+  var p = e.target.closest(".pill");
+  if (!p) return;
+  document.querySelectorAll("#console-pills .pill").forEach(function(x){ x.classList.remove("active"); });
+  p.classList.add("active");
+  activeConsole = p.dataset.c;
   renderList();
 });
 
-// ── List ──
 function renderList() {
-  const q = norm(document.getElementById('list-search').value);
-  let list = GAMES.filter(g => {
-    if (activeConsole !== 'ALL' && g.console !== activeConsole) return false;
-    if (q.length > 1) return norm(g.name).includes(q) || norm(g.search||'').includes(q);
+  var q    = norm(document.getElementById("list-search").value);
+  var list = GAMES.filter(function(g) {
+    if (activeConsole !== "ALL" && g.console !== activeConsole) return false;
+    if (q.length > 1) return norm(g.name).indexOf(q) !== -1 || norm(g.search||"").indexOf(q) !== -1;
     return true;
   });
-  list.sort((a,b) => a.id - b.id);
-
-  document.getElementById('list-count').textContent = list.length;
-  document.getElementById('list-scroll').innerHTML = list.map(g => {
-    const coverHtml = g.cover
-      ? `<img src="${g.cover}.png" alt="" onerror="this.style.display='none'">`
-      : `<span class="nc">—</span>`;
-    const inst = g.installed ? `<div class="item-installed" title="Installé"></div>` : '';
-    return `<div class="list-item${g.id===selectedId?' selected':''}" onclick="selectGame(${g.id})">
-      <div class="item-cover">${coverHtml}</div>
-      <div class="item-info">
-        <div class="item-name">${g.name}</div>
-        <div class="item-sub">
-          <span class="console-dot cd-${g.console}"></span>
-          <span>${g.console}</span>
-          ${g.genre ? `<span>· ${g.genre}</span>` : ''}
-        </div>
-      </div>
-      ${inst}
-    </div>`;
-  }).join('');
+  list.sort(function(a,b){ return a.id - b.id; });
+  document.getElementById("list-count").textContent = list.length;
+  var html = "";
+  list.forEach(function(g) {
+    var coverImg = g.cover ? "<img src=\"" + g.cover + ".png\" style=\"width:100%;height:100%;object-fit:cover\" onerror=\"this.parentNode.innerHTML=''\">": "<span class=\"nc\">&mdash;</span>";
+    var instDot = g.installed ? "<div class=\"item-installed\" title=\"Install\u00e9\"></div>" : "";
+    var sel = g.id === selectedId ? " selected" : "";
+    var numBadge = (g.num_id && g.num_id !== "\ud83d\udc7b") ? "<span>\u00b7 " + g.num_id + "</span>" : "";
+    var genreBadge = g.genre ? "<span>\u00b7 " + g.genre + "</span>" : "";
+    html += "<div class=\"list-item" + sel + "\" onclick=\"selectGame(" + g.id + ")\">"
+          + "<div class=\"item-cover\">" + coverImg + "</div>"
+          + "<div class=\"item-info\">"
+            + "<div class=\"item-name\">" + g.name + "</div>"
+            + "<div class=\"item-sub\"><span class=\"console-dot cd-" + g.console + "\"></span><span>" + g.console + "</span>" + numBadge + genreBadge + "</div>"
+          + "</div>" + instDot + "</div>";
+  });
+  document.getElementById("list-scroll").innerHTML = html;
 }
 
-// ── Select ──
 function selectGame(id) {
-  selectedId = id;
-  isNew = false;
-  const g = GAMES.find(x => x.id === id);
-  if (!g) return;
-  fillForm(g);
-  renderList();
+  selectedId = id; isNew = false;
+  var g = GAMES.find(function(x){ return x.id === id; });
+  if (g) { fillForm(g); renderList(); }
 }
 
 function fillForm(g) {
-  document.getElementById('empty-form').style.display = 'none';
-  document.getElementById('game-form').style.display = '';
-  document.getElementById('form-title').textContent = g.name || 'Nouveau jeu';
-  document.getElementById('btn-cancel').style.display = isNew ? '' : 'none';
-  document.getElementById('btn-delete').style.display = isNew ? 'none' : '';
-
-  document.getElementById('f-name').value = g.name || '';
-  document.getElementById('f-console').value = g.console || 'PS5';
-  document.getElementById('f-pegi').value = g.pegi || 3;
-  document.getElementById('f-search').value = g.search || '';
-  document.getElementById('f-cover').value = (g.cover || '').replace(/^covers\//, '');
-  document.getElementById('f-media').value = g.media || '';
-  document.getElementById('f-numid').value = g.num_id || '';
-  document.getElementById('f-players').value = g.players || '';
-  document.getElementById('f-size').value = g.size_go || '';
-  setCheckboxes('f-genre-grid', g.genre || '');
-  setCheckboxes('f-quality-grid', g.qualities || '');
-  document.getElementById('f-desc').value = g.desc || '';
-  document.getElementById('f-url').value = g.store_url || '';
-  document.getElementById('f-installed').checked = !!g.installed;
+  document.getElementById("empty-form").style.display = "none";
+  document.getElementById("game-form").style.display  = "";
+  document.getElementById("form-title").textContent   = g.name || "Nouveau jeu";
+  document.getElementById("btn-cancel").style.display = isNew ? "" : "none";
+  document.getElementById("btn-delete").style.display = isNew ? "none" : "";
+  document.getElementById("save-confirm").className   = "";
+  document.getElementById("f-name").value    = g.name    || "";
+  document.getElementById("f-console").value = g.console || "PS5";
+  document.getElementById("f-pegi").value    = g.pegi    || 3;
+  document.getElementById("f-search").value  = g.search  || "";
+  document.getElementById("f-cover").value   = (g.cover  || "").replace(/^covers[\/\\]/,"");
+  document.getElementById("f-media").value   = g.media   || "";
+  document.getElementById("f-numid").value   = g.num_id  || "";
+  document.getElementById("f-players").value = g.players || "";
+  document.getElementById("f-size").value    = g.size_go || "";
+  document.getElementById("f-desc").value    = g.desc    || "";
+  document.getElementById("f-url").value     = g.store_url || "";
+  document.getElementById("f-installed").checked = !!g.installed;
+  setCB("genre",   g.genre     || "");
+  setCB("quality", g.qualities || "");
   updateCoverPreview();
-  document.getElementById('form-scroll').scrollTop = 0;
+  document.getElementById("form-scroll").scrollTop = 0;
 }
 
-// ── New ──
 function newGame() {
-  isNew = true;
-  selectedId = null;
-  const maxId = Math.max(0, ...GAMES.map(g => g.id));
-  const draft = {
-    id: maxId+1, console:'PS5', name:'', search:'', num_id:'',
-    pegi:7, media:'', cover:'', desc:'', genre:'', players:'',
-    qualities:'', size_go:null, installed:0, store_url:''
-  };
+  isNew = true; selectedId = null;
+  var maxId = Math.max.apply(null, [0].concat(GAMES.map(function(g){ return g.id; })));
+  var draft = {id:maxId+1,console:"PS5",name:"",search:"",num_id:"",pegi:7,media:"",cover:"",desc:"",genre:"",qualities:"",players:"",size_go:null,installed:0,store_url:""};
   GAMES.push(draft);
   selectedId = draft.id;
   fillForm(draft);
   renderList();
-  document.getElementById('f-name').focus();
+  document.getElementById("f-name").focus();
 }
 
 function cancelEdit() {
-  if (isNew && selectedId) {
-    GAMES = GAMES.filter(g => g.id !== selectedId);
-  }
-  selectedId = null;
-  isNew = false;
-  document.getElementById('empty-form').style.display = '';
-  document.getElementById('game-form').style.display = 'none';
-  document.getElementById('form-title').textContent = 'Sélectionnez un jeu';
-  document.getElementById('btn-cancel').style.display = 'none';
+  if (isNew && selectedId) GAMES = GAMES.filter(function(g){ return g.id !== selectedId; });
+  selectedId = null; isNew = false;
+  document.getElementById("empty-form").style.display = "";
+  document.getElementById("game-form").style.display  = "none";
+  document.getElementById("form-title").textContent   = "S\u00e9lectionnez un jeu";
+  document.getElementById("btn-cancel").style.display = "none";
   renderList();
 }
 
-// ── Auto-search & cover preview ──
 function onNameInput() {
-  const name = document.getElementById('f-name').value;
-  document.getElementById('f-search').value = autoSearch(name);
-}
-function updateCoverPreview() {
-    const cover = document.getElementById('f-cover').value.trim();
-    const prev = document.getElementById('cover-preview');
-    if (cover) {
-      const base = cover.replace(/^\.?\/?(covers\/)?/, '');
-      const src = 'covers/' + base + '.png';
-      prev.innerHTML = '<img src="'+src+'" alt="" style="width:100%;height:100%;object-fit:cover" onerror="this.parentNode.innerHTML=\'<span class=nc>image introuvable</span>\'">';
-    } else {
-      prev.innerHTML = '<span class="nc">pas de jaquette</span>';
-    }
-  } else {
-    prev.innerHTML = `<span class="nc">pas de jaquette</span>`;
-  }
+  document.getElementById("f-search").value = autoSearch(document.getElementById("f-name").value);
 }
 
-// ── Save ──
 function saveGame() {
-  const name = document.getElementById('f-name').value.trim();
-  if (!name) { toast('Le nom est obligatoire', 'err'); return; }
-
-  const idx = GAMES.findIndex(g => g.id === selectedId);
+  var name = document.getElementById("f-name").value.trim();
+  if (!name) { toast("Le nom est obligatoire", "err"); return; }
+  var idx = GAMES.findIndex(function(g){ return g.id === selectedId; });
   if (idx === -1) return;
-
-  GAMES[idx] = {
-    ...GAMES[idx],
-    name,
-    console: document.getElementById('f-console').value,
-    pegi:    parseInt(document.getElementById('f-pegi').value),
-    search:  document.getElementById('f-search').value.trim() || autoSearch(name),
-    cover:   (() => { let c = document.getElementById('f-cover').value.trim(); return c.startsWith('covers/') ? c : (c ? 'covers/'+c : ''); })(),
-    media:   document.getElementById('f-media').value,
-    num_id:  document.getElementById('f-numid').value.trim(),
-    players: document.getElementById('f-players').value.trim(),
-    size_go: parseFloat(document.getElementById('f-size').value) || null,
-    genre:   getCheckboxValues('f-genre-grid'),
-    qualities: getCheckboxValues('f-quality-grid'),
-    desc:    document.getElementById('f-desc').value.trim(),
-    store_url: document.getElementById('f-url').value.trim(),
-    installed: document.getElementById('f-installed').checked ? 1 : 0,
-  };
-
+  var rawCover = document.getElementById("f-cover").value.trim();
+  var cover    = rawCover ? "covers/" + rawCover.replace(/^\.?[/\\]?(covers[/\\])?/,"") : "";
+  GAMES[idx] = Object.assign({}, GAMES[idx], {
+    name:      name,
+    console:   document.getElementById("f-console").value,
+    pegi:      parseInt(document.getElementById("f-pegi").value),
+    search:    document.getElementById("f-search").value.trim() || autoSearch(name),
+    cover:     cover,
+    media:     document.getElementById("f-media").value,
+    num_id:    document.getElementById("f-numid").value.trim(),
+    players:   document.getElementById("f-players").value.trim(),
+    size_go:   parseFloat(document.getElementById("f-size").value) || null,
+    genre:     getCBValues("genre"),
+    qualities: getCBValues("quality"),
+    desc:      document.getElementById("f-desc").value.trim(),
+    store_url: document.getElementById("f-url").value.trim(),
+    installed: document.getElementById("f-installed").checked ? 1 : 0
+  });
   isNew = false;
-  document.getElementById('btn-cancel').style.display = 'none';
-  document.getElementById('btn-delete').style.display = '';
-  document.getElementById('form-title').textContent = name;
-  document.getElementById('hdr-count').textContent = GAMES.length + ' jeux';
+  document.getElementById("btn-cancel").style.display = "none";
+  document.getElementById("btn-delete").style.display = "";
+  document.getElementById("form-title").textContent   = name;
+  document.getElementById("hdr-count").textContent    = GAMES.length + " jeux";
+  var conf = document.getElementById("save-confirm");
+  conf.className = "show";
+  var ts = new Date().toLocaleTimeString("fr-FR",{hour:"2-digit",minute:"2-digit",second:"2-digit"});
+  conf.innerHTML = "<strong>&#10003; " + name + "</strong> enregistr&#233; &#224; " + ts + ".<br>"
+    + "Cliquez sur <strong>Exporter games.json</strong> pour sauvegarder sur disque,<br>"
+    + "puis lancez <strong>update.bat</strong> pour r&#233;g&#233;n&#233;rer le site.";
   renderList();
-  toast('Enregistré — pensez à exporter games.json', 'ok');
+  toast("Enregistr&#233;", "ok");
 }
 
-// ── Delete ──
 function deleteGame() {
   if (!selectedId) return;
-  const g = GAMES.find(x => x.id === selectedId);
-  if (!confirm(`Supprimer "${g?.name}" ?`)) return;
-  GAMES = GAMES.filter(x => x.id !== selectedId);
+  var g = GAMES.find(function(x){ return x.id === selectedId; });
+  if (!confirm("Supprimer \"" + (g ? g.name : "") + "\" ?")) return;
+  GAMES = GAMES.filter(function(x){ return x.id !== selectedId; });
   selectedId = null;
-  document.getElementById('empty-form').style.display = '';
-  document.getElementById('game-form').style.display = 'none';
-  document.getElementById('form-title').textContent = 'Sélectionnez un jeu';
-  document.getElementById('hdr-count').textContent = GAMES.length + ' jeux';
+  document.getElementById("empty-form").style.display = "";
+  document.getElementById("game-form").style.display  = "none";
+  document.getElementById("form-title").textContent   = "S&#233;lectionnez un jeu";
+  document.getElementById("hdr-count").textContent    = GAMES.length + " jeux";
   renderList();
-  toast('Jeu supprimé', 'ok');
+  toast("Jeu supprim&#233;", "ok");
 }
 
-// ── Export ──
 function exportJSON() {
-  const json = JSON.stringify(GAMES, null, 2);
-  const blob = new Blob([json], {type:'application/json'});
-  const a = document.createElement('a');
+  var blob = new Blob([JSON.stringify(GAMES, null, 2)], {type:"application/json"});
+  var a = document.createElement("a");
   a.href = URL.createObjectURL(blob);
-  a.download = 'games.json';
+  a.download = "games.json";
   a.click();
-  toast('games.json téléchargé !', 'ok');
+  toast("games.json t&#233;l&#233;charg&#233; !", "ok");
 }
 
-// ── Toast ──
-function toast(msg, type='') {
-  const el = document.getElementById('toast');
-  el.textContent = msg;
-  el.className = 'show' + (type ? ' '+type : '');
+function toast(msg, type) {
+  var el = document.getElementById("toast");
+  el.innerHTML = msg;
+  el.className = "show" + (type ? " "+type : "");
   clearTimeout(el._t);
-  el._t = setTimeout(() => el.className = '', 2800);
+  el._t = setTimeout(function(){ el.className = ""; }, 2800);
 }
 </script>
 </body>
