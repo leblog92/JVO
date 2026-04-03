@@ -1,4 +1,1 @@
-- "admin.html" rendre ajustable la largeur de la partie édition jusqu'à 75% de la largeur de la fenêtre
-- dans print centrer titre le mettre tout en majuscules et +grand et diminuer le lower padding du titre pour une composition hamonieuse
-- donner recommandations
-- la vue de la jaquette quand on clique sur un jeu est tronquée nntendo/ps/xbox
+
