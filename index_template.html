@@ -371,6 +371,13 @@
 </div>
 
 <script>
+
+function getCoverSrc(g) {
+  if (g.cover) return "covers/" + g.cover + ".png";
+  var t = {PS5:"covers/ps_.png",PS4:"covers/ps_.png",Switch:"covers/nin_.png",XBOX:"covers/xbox_.png"};
+  return t[g.console] || "";
+}
+
 let GAMES = /*__GAMES_DATA__*/;
 let activeConsole = 'ALL';
 let sortMode = 'id';
@@ -424,10 +431,10 @@ function render() {
   empty.style.display = 'none';
 
   grid.innerHTML = list.map(g => {
-    const coverSrc = g.cover ? 'covers/' + g.cover + '.png' : '';
+    const coverSrc = getCoverSrc(g);
     const coverHtml = coverSrc
       ? `<img src="${coverSrc}" alt="${g.name}" loading="lazy" onerror="this.parentNode.innerHTML='<div class=no-cover>—</div>'">`
-      : `<div class="no-cover">pas de jaquette</div>`;
+      : '';
     const installed = g.installed ? `<div class="badge-installed" title="Installé">&#10003;</div>` : '';
     return `<div class="card" onclick="openPanel(${g.id})">
       <div class="card-cover">
@@ -485,7 +492,7 @@ function openPanel(id) {
   // Cover
   const wrap = document.getElementById('panel-cover-wrap');
   if (g.cover) {
-    wrap.innerHTML = `<img src="covers/${g.cover}.png" alt="${g.name}" onerror="this.parentNode.innerHTML='<div class=no-cover>pas de jaquette</div>'">`;
+    wrap.innerHTML = `<img src="${getCoverSrc(g)}" alt="${g.name}" onerror="this.parentNode.innerHTML='<div class=no-cover>pas de jaquette</div>'">`;
   } else {
     wrap.innerHTML = `<div class="no-cover">pas de jaquette</div>`;
   }
