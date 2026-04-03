@@ -586,6 +586,14 @@ document.getElementById('overlay').addEventListener('click', e => {
   if (e.target === document.getElementById('overlay')) closePanel();
 });
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closePanel(); });
+
+// Expose to global scope (required for onclick handlers with type=module)
+window.getCoverSrc = getCoverSrc;
+window.norm = norm;
+window.render = render;
+window.resetSearch = resetSearch;
+window.openPanel = openPanel;
+window.closePanel = closePanel;
 </script>
 </body>
 </html>

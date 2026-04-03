@@ -715,6 +715,29 @@ function buildPrintHTML(mode) {
   return "<!DOCTYPE html><html><head><meta charset=\"utf-8\"><title>Affiche "+consoleLabel+"</title>"+css+"</head><body>"+body+"</body></html>";
 }
 
+
+// Expose to global scope (required for onclick handlers with type=module)
+window.getCoverSrc = getCoverSrc;
+window.norm = norm;
+window.autoSearch = autoSearch;
+window.onCB = onCB;
+window.setCB = setCB;
+window.getCBValues = getCBValues;
+window.updateCoverPreview = updateCoverPreview;
+window.renderList = renderList;
+window.selectGame = selectGame;
+window.fillForm = fillForm;
+window.newGame = newGame;
+window.cancelEdit = cancelEdit;
+window.onNameInput = onNameInput;
+window.saveGame = saveGame;
+window.deleteGame = deleteGame;
+window.exportJSON = exportJSON;
+window.toast = toast;
+window.openPrintModal = openPrintModal;
+window.closePrintModal = closePrintModal;
+window.doPrint = doPrint;
+window.buildPrintHTML = buildPrintHTML;
 </script>
 </body>
 </html>
