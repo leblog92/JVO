@@ -155,6 +155,18 @@ input.list-search:focus{border-color:var(--accent);}
       <strong>&#128444; Affiche jeux install&#233;s &#8212; Switch</strong>
       <span>Grille de jaquettes, format A4</span>
     </div>
+    <div class="print-option" onclick="doPrint('all-ps')">
+      <strong>&#128191; Tous les jeux disque/cartouche &#8212; PlayStation (PS4+PS5)</strong>
+      <span>Grille avec titres, format A4</span>
+    </div>
+    <div class="print-option" onclick="doPrint('all-switch')">
+      <strong>&#128191; Tous les jeux disque/cartouche &#8212; Switch</strong>
+      <span>Grille avec titres, format A4</span>
+    </div>
+    <div class="print-option" onclick="doPrint('all-xbox')">
+      <strong>&#128191; Tous les jeux disque/cartouche &#8212; XBOX</strong>
+      <span>Grille avec titres, format A4</span>
+    </div>
     <div class="print-actions">
       <button class="btn btn-ghost" onclick="closePrintModal()">Annuler</button>
     </div>
@@ -175,6 +187,10 @@ input.list-search:focus{border-color:var(--accent);}
         <button class="pill" data-c="Switch"><span class="dot" style="background:var(--sw)"></span>Switch</button>
         <button class="pill" data-c="XBOX"><span class="dot" style="background:var(--xb)"></span>XBOX</button>
       </div>
+      <label style="display:inline-flex;align-items:center;gap:5px;font-size:12px;cursor:pointer;white-space:nowrap;">
+        <input type="checkbox" id="filter-installed" onchange="renderList()" style="cursor:pointer;">
+        Install&#233;s
+      </label>
       <span id="list-count"></span>
     </div>
     <div class="list-scroll" id="list-scroll"></div>
@@ -460,7 +476,11 @@ function updateCoverPreview() {
     renderList();
     document.getElementById("hdr-count").textContent = GAMES.length + " jeux";
   } catch(e) {
-    toast("Erreur Firebase : " + e.message, "err");
+    var msg = e.code === 'permission-denied'
+      ? "Permissions Firestore insuffisantes — ouvrez les règles dans la console Firebase"
+      : "Erreur Firebase : " + e.message;
+    toast(msg, "err");
+    console.error(e);
   }
 })();
 document.getElementById("console-pills").addEventListener("click", function(e) {
@@ -474,8 +494,10 @@ document.getElementById("console-pills").addEventListener("click", function(e) {
 
 function renderList() {
   var q    = norm(document.getElementById("list-search").value);
+  var onlyInstalled = document.getElementById("filter-installed") && document.getElementById("filter-installed").checked;
   var list = GAMES.filter(function(g) {
     if (activeConsole !== "ALL" && g.console !== activeConsole) return false;
+    if (onlyInstalled && !g.installed) return false;
     if (q.length > 1) return norm(g.name).indexOf(q) !== -1 || norm(g.search||"").indexOf(q) !== -1;
     return true;
   });
@@ -675,6 +697,31 @@ function buildPrintHTML(mode) {
     + ".poster-badge{position:absolute;bottom:2mm;right:2mm;background:#fff;border-radius:50%;font-size:7pt;font-weight:bold;padding:1pt 3pt;}"
     + ".poster-title{font-size:16pt;font-weight:bold;text-align:center;text-transform:uppercase;letter-spacing:.05em;padding:6mm 8mm 4mm;}"
     + "</style>";
+
+
+  // All-physical modes per console
+  var allPhysicalMode = mode === "all-ps" || mode === "all-switch" || mode === "all-xbox";
+  if (allPhysicalMode) {
+    var consoles   = mode === "all-ps" ? ["PS5","PS4"] : mode === "all-switch" ? ["Switch"] : ["XBOX"];
+    var label      = mode === "all-ps" ? "PlayStation" : mode === "all-switch" ? "Switch" : "XBOX";
+    var col        = consoles.map(function(c){ return consoleColors[c]; })[0] || "#333";
+    var cw         = mode === "all-ps" ? 29 : mode === "all-switch" ? 17 : 22;
+    var ch         = Math.round(cw / (mode === "all-switch" ? 0.613 : 0.783));
+    var filtered   = GAMES.filter(function(g){
+      return consoles.indexOf(g.console) !== -1 && (g.media === "disque" || g.media === "cartouche");
+    }).sort(function(a,b){ return a.name.localeCompare(b.name,"fr"); });
+    var body = "<div class=\"poster-title\" style=\"color:"+col+"\">JEUX " + label.toUpperCase() + "</div>"
+      + "<div class=\"poster-grid\">";
+    filtered.forEach(function(g) {
+      body += "<div class=\"poster-item\" style=\"width:"+cw+"mm\">"
+        + (g.cover ? "<img src=\"covers/"+g.cover+".png\" style=\"width:"+cw+"mm;height:"+ch+"mm;object-fit:cover;\" onerror=\"this.style.display='none'\">" : "<div style=\"width:"+cw+"mm;height:"+ch+"mm;background:#eee\"></div>")
+        + (g.num_id && g.num_id !== "\ud83d\udc7b" ? "<div class=\"poster-badge\">"+g.num_id+"</div>" : "")
+        + "<div style=\"font-size:6pt;text-align:center;padding:0.5mm 1mm;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;max-width:"+cw+"mm\">"+g.name+"</div>"
+        + "</div>";
+    });
+    body += "</div>";
+    return "<!DOCTYPE html><html><head><meta charset=\"utf-8\"><title>Jeux "+label+"</title>"+css+"</head><body>"+body+"</body></html>";
+  }
 
   if (mode === "booklet") {
     var physical = GAMES.filter(function(g){ return g.media === "disque" || g.media === "cartouche"; });
