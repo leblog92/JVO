@@ -110,6 +110,15 @@ input.list-search:focus{border-color:var(--accent);}
 .print-option strong{font-size:13px;}
 .print-option span{font-size:11px;color:var(--muted);}
 .print-actions{display:flex;gap:8px;margin-top:16px;justify-content:flex-end;}
+
+.genre-dropdown{position:relative;display:inline-block;}
+.genre-btn{padding:5px 26px 5px 10px;font-family:"DM Sans",sans-serif;font-size:13px;background:var(--surface);border:1px solid var(--border);border-radius:99px;cursor:pointer;outline:none;white-space:nowrap;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23888'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 8px center;user-select:none;}
+.genre-panel{display:none;position:absolute;top:calc(100% + 6px);left:0;z-index:200;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:8px;box-shadow:0 8px 24px rgba(0,0,0,.12);min-width:180px;max-height:280px;overflow-y:auto;}
+.genre-panel.open{display:block;}
+.genre-panel label{display:flex;align-items:center;gap:7px;padding:4px 6px;border-radius:6px;cursor:pointer;font-size:13px;white-space:nowrap;}
+.genre-panel label:hover{background:var(--bg);}
+.genre-panel input{accent-color:var(--accent);cursor:pointer;}
+.genre-clear{display:block;margin-top:6px;padding:3px 6px;font-size:11px;color:var(--muted);cursor:pointer;text-align:center;border-top:1px solid var(--border);padding-top:6px;}
 </style>
 </head>
 <body>
@@ -187,8 +196,15 @@ input.list-search:focus{border-color:var(--accent);}
         <button class="pill" data-c="Switch"><span class="dot" style="background:var(--sw)"></span>Switch</button>
         <button class="pill" data-c="XBOX"><span class="dot" style="background:var(--xb)"></span>XBOX</button>
       </div>
+      <div class="genre-dropdown">
+        <button class="genre-btn" id="genre-btn-admin" onclick="toggleGenrePanelAdmin(event)">Genres</button>
+        <div class="genre-panel" id="genre-panel-admin">
+          <label><input type="checkbox" class="genre-cb" data-genre="action" onchange="applyGenreAdmin()"><span>action</span></label><label><input type="checkbox" class="genre-cb" data-genre="arcade" onchange="applyGenreAdmin()"><span>arcade</span></label><label><input type="checkbox" class="genre-cb" data-genre="aventure" onchange="applyGenreAdmin()"><span>aventure</span></label><label><input type="checkbox" class="genre-cb" data-genre="combat" onchange="applyGenreAdmin()"><span>combat</span></label><label><input type="checkbox" class="genre-cb" data-genre="coopération" onchange="applyGenreAdmin()"><span>coopération</span></label><label><input type="checkbox" class="genre-cb" data-genre="course" onchange="applyGenreAdmin()"><span>course</span></label><label><input type="checkbox" class="genre-cb" data-genre="danse" onchange="applyGenreAdmin()"><span>danse</span></label><label><input type="checkbox" class="genre-cb" data-genre="jeu de rôle" onchange="applyGenreAdmin()"><span>jeu de rôle</span></label><label><input type="checkbox" class="genre-cb" data-genre="jeu de société" onchange="applyGenreAdmin()"><span>jeu de société</span></label><label><input type="checkbox" class="genre-cb" data-genre="jeu de tir" onchange="applyGenreAdmin()"><span>jeu de tir</span></label><label><input type="checkbox" class="genre-cb" data-genre="musique" onchange="applyGenreAdmin()"><span>musique</span></label><label><input type="checkbox" class="genre-cb" data-genre="plateforme" onchange="applyGenreAdmin()"><span>plateforme</span></label><label><input type="checkbox" class="genre-cb" data-genre="puzzle" onchange="applyGenreAdmin()"><span>puzzle</span></label><label><input type="checkbox" class="genre-cb" data-genre="réflexion" onchange="applyGenreAdmin()"><span>réflexion</span></label><label><input type="checkbox" class="genre-cb" data-genre="simulation" onchange="applyGenreAdmin()"><span>simulation</span></label><label><input type="checkbox" class="genre-cb" data-genre="sport" onchange="applyGenreAdmin()"><span>sport</span></label><label><input type="checkbox" class="genre-cb" data-genre="stratégie" onchange="applyGenreAdmin()"><span>stratégie</span></label>
+          <span class="genre-clear" onclick="clearGenresAdmin()">Tout effacer</span>
+        </div>
+      </div>
       <label style="display:inline-flex;align-items:center;gap:5px;font-size:12px;cursor:pointer;white-space:nowrap;">
-        <input type="checkbox" id="filter-installed" onchange="renderList()" style="cursor:pointer;">
+        <input type="checkbox" id="filter-installed" onchange="renderList()" style="cursor:pointer;accent-color:var(--ok);">
         Install&#233;s
       </label>
       <span id="list-count"></span>
@@ -419,6 +435,26 @@ function getCoverSrc(g) {
   return t[g.console] || "";
 }
 
+
+function catalogueSort(a, b) {
+  var cg = {PS5:0, PS4:0, Switch:1, XBOX:2};
+  var ga = cg[a.console] ?? 9, gb = cg[b.console] ?? 9;
+  if (ga !== gb) return ga - gb;
+  var mg = function(g) {
+    if (g.media === 'game pass') return 2;
+    if (g.media === 'démat')     return 1;
+    return 0;
+  };
+  var ma = mg(a), mb = mg(b);
+  if (ma !== mb) return ma - mb;
+  if (ma === 0) {
+    var na = parseInt(a.num_id) || 9999;
+    var nb = parseInt(b.num_id) || 9999;
+    return na - nb;
+  }
+  return (a.name || '').localeCompare(b.name || '', 'fr');
+}
+
 function norm(s) {
   return (s||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
 }
@@ -495,13 +531,15 @@ document.getElementById("console-pills").addEventListener("click", function(e) {
 function renderList() {
   var q    = norm(document.getElementById("list-search").value);
   var onlyInstalled = document.getElementById("filter-installed") && document.getElementById("filter-installed").checked;
+  var genreF_list = Array.from(document.querySelectorAll("#genre-panel-admin .genre-cb:checked")).map(function(c){return c.dataset.genre;});
   var list = GAMES.filter(function(g) {
     if (activeConsole !== "ALL" && g.console !== activeConsole) return false;
     if (onlyInstalled && !g.installed) return false;
+    if (genreF_list.length && !genreF_list.some(function(s){return (g.genre||"").toLowerCase().indexOf(s)!==-1;})) return false;
     if (q.length > 1) return norm(g.name).indexOf(q) !== -1 || norm(g.search||"").indexOf(q) !== -1;
     return true;
   });
-  list.sort(function(a,b){ return a.id - b.id; });
+  list.sort(catalogueSort);
   document.getElementById("list-count").textContent = list.length;
   var html = "";
   list.forEach(function(g) {
@@ -785,6 +823,57 @@ window.openPrintModal = openPrintModal;
 window.closePrintModal = closePrintModal;
 window.doPrint = doPrint;
 window.buildPrintHTML = buildPrintHTML;
+
+// expose
+window.getCoverSrc = getCoverSrc;
+window.catalogueSort = catalogueSort;
+window.norm = norm;
+window.autoSearch = autoSearch;
+window.onCB = onCB;
+window.setCB = setCB;
+window.getCBValues = getCBValues;
+window.updateCoverPreview = updateCoverPreview;
+window.renderList = renderList;
+window.selectGame = selectGame;
+window.fillForm = fillForm;
+window.newGame = newGame;
+window.cancelEdit = cancelEdit;
+window.onNameInput = onNameInput;
+window.saveGame = saveGame;
+window.deleteGame = deleteGame;
+window.exportJSON = exportJSON;
+window.toast = toast;
+window.openPrintModal = openPrintModal;
+window.closePrintModal = closePrintModal;
+window.doPrint = doPrint;
+window.buildPrintHTML = buildPrintHTML;
+
+function toggleGenrePanelAdmin(e) {
+  e.stopPropagation();
+  var p = document.getElementById('genre-panel-admin');
+  if (p) p.classList.toggle('open');
+}
+function applyGenreAdmin() {
+  var sel = Array.from(document.querySelectorAll('#genre-panel-admin .genre-cb:checked')).map(function(c){return c.dataset.genre;});
+  var btn = document.getElementById('genre-btn-admin');
+  if (btn) btn.textContent = sel.length ? 'Genres (' + sel.length + ')' : 'Genres';
+  renderList();
+}
+function clearGenresAdmin() {
+  document.querySelectorAll('#genre-panel-admin .genre-cb').forEach(function(c){c.checked=false;});
+  var btn = document.getElementById('genre-btn-admin');
+  if (btn) btn.textContent = 'Genres';
+  renderList();
+}
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.genre-dropdown')) {
+    var p = document.getElementById('genre-panel-admin');
+    if (p) p.classList.remove('open');
+  }
+});
+window.toggleGenrePanelAdmin = toggleGenrePanelAdmin;
+window.applyGenreAdmin = applyGenreAdmin;
+window.clearGenresAdmin = clearGenresAdmin;
 </script>
 </body>
 </html>

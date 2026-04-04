@@ -308,6 +308,15 @@
     main { padding: 14px 14px 40px; }
     #grid { grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 10px; }
   }
+
+.genre-dropdown{position:relative;display:inline-block;}
+.genre-btn{padding:5px 26px 5px 10px;font-family:"DM Sans",sans-serif;font-size:13px;background:var(--surface);border:1px solid var(--border);border-radius:99px;cursor:pointer;outline:none;white-space:nowrap;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23888'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 8px center;user-select:none;}
+.genre-panel{display:none;position:absolute;top:calc(100% + 6px);left:0;z-index:200;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:8px;box-shadow:0 8px 24px rgba(0,0,0,.12);min-width:180px;max-height:280px;overflow-y:auto;}
+.genre-panel.open{display:block;}
+.genre-panel label{display:flex;align-items:center;gap:7px;padding:4px 6px;border-radius:6px;cursor:pointer;font-size:13px;white-space:nowrap;}
+.genre-panel label:hover{background:var(--bg);}
+.genre-panel input{accent-color:var(--accent);cursor:pointer;}
+.genre-clear{display:block;margin-top:6px;padding:3px 6px;font-size:11px;color:var(--muted);cursor:pointer;text-align:center;border-top:1px solid var(--border);padding-top:6px;}
 </style>
 </head>
 <body>
@@ -337,6 +346,16 @@
     <option value="size">Taille</option>
     <option value="date">Date de sortie</option>
   </select>
+  <div class="sep" style="height:22px;width:1px;background:var(--border);margin:0 2px;"></div>
+  <div class="genre-dropdown">
+        <button class="genre-btn" id="genre-btn" onclick="toggleGenrePanel(event)">Genres</button>
+        <div class="genre-panel" id="genre-panel">
+          <label><input type="checkbox" class="genre-cb" data-genre="action" onchange="applyGenre()"><span>action</span></label><label><input type="checkbox" class="genre-cb" data-genre="arcade" onchange="applyGenre()"><span>arcade</span></label><label><input type="checkbox" class="genre-cb" data-genre="aventure" onchange="applyGenre()"><span>aventure</span></label><label><input type="checkbox" class="genre-cb" data-genre="combat" onchange="applyGenre()"><span>combat</span></label><label><input type="checkbox" class="genre-cb" data-genre="coopération" onchange="applyGenre()"><span>coopération</span></label><label><input type="checkbox" class="genre-cb" data-genre="course" onchange="applyGenre()"><span>course</span></label><label><input type="checkbox" class="genre-cb" data-genre="danse" onchange="applyGenre()"><span>danse</span></label><label><input type="checkbox" class="genre-cb" data-genre="jeu de rôle" onchange="applyGenre()"><span>jeu de rôle</span></label><label><input type="checkbox" class="genre-cb" data-genre="jeu de société" onchange="applyGenre()"><span>jeu de société</span></label><label><input type="checkbox" class="genre-cb" data-genre="jeu de tir" onchange="applyGenre()"><span>jeu de tir</span></label><label><input type="checkbox" class="genre-cb" data-genre="musique" onchange="applyGenre()"><span>musique</span></label><label><input type="checkbox" class="genre-cb" data-genre="plateforme" onchange="applyGenre()"><span>plateforme</span></label><label><input type="checkbox" class="genre-cb" data-genre="puzzle" onchange="applyGenre()"><span>puzzle</span></label><label><input type="checkbox" class="genre-cb" data-genre="réflexion" onchange="applyGenre()"><span>réflexion</span></label><label><input type="checkbox" class="genre-cb" data-genre="simulation" onchange="applyGenre()"><span>simulation</span></label><label><input type="checkbox" class="genre-cb" data-genre="sport" onchange="applyGenre()"><span>sport</span></label><label><input type="checkbox" class="genre-cb" data-genre="stratégie" onchange="applyGenre()"><span>stratégie</span></label>
+          <span class="genre-clear" onclick="clearGenres()">Tout effacer</span>
+        </div>
+      </div>
+  
+  <label style="display:inline-flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;white-space:nowrap;margin-left:auto;"><input type="checkbox" id="filter-installed" onchange="render()" style="cursor:pointer;accent-color:var(--ok);width:15px;height:15px;"> Install&#233;s</label>
 </div>
 
 <main>
@@ -420,6 +439,32 @@ GAMES = [{"id":1,"console":"PS5","name":"Returnal","search":"returnal","num_id":
 })();
 
 // ── Render ──
+
+function catalogueSort(a, b) {
+  // Groupe console : PS4+PS5=0, Switch=1, XBOX=2
+  var cg = {PS5:0, PS4:0, Switch:1, XBOX:2};
+  var ga = cg[a.console] ?? 9, gb = cg[b.console] ?? 9;
+  if (ga !== gb) return ga - gb;
+
+  // Sous-groupe média : disque/cartouche=0, démat=1, game pass=2
+  var mg = function(g) {
+    if (g.media === 'game pass') return 2;
+    if (g.media === 'démat')     return 1;
+    return 0;
+  };
+  var ma = mg(a), mb = mg(b);
+  if (ma !== mb) return ma - mb;
+
+  // Dans physique : tri par numéro (num_id) — ignorer 👻
+  if (ma === 0) {
+    var na = parseInt(a.num_id) || 9999;
+    var nb = parseInt(b.num_id) || 9999;
+    return na - nb;
+  }
+  // Dans démat / game pass : tri alphabétique
+  return (a.name || '').localeCompare(b.name || '', 'fr');
+}
+
 function render() {
   let list = [...GAMES];
 
@@ -434,12 +479,20 @@ function render() {
     list = list.filter(g => norm(g.search).includes(q) || norm(g.name).includes(q));
   }
 
+  // Filter installed
+  const _fi = document.getElementById('filter-installed');
+  if (_fi && _fi.checked) list = list.filter(g => g.installed);
+
+  // Filter genre
+  var _sel = Array.from(document.querySelectorAll('#genre-panel .genre-cb:checked')).map(function(c){return c.dataset.genre;});
+  if (_sel.length) list = list.filter(function(g){ return _sel.some(function(s){ return (g.genre||'').toLowerCase().indexOf(s)!==-1; }); });
+
   // Sort
   if (sortMode === 'alpha') list.sort((a,b) => a.name.localeCompare(b.name, 'fr'));
   else if (sortMode === 'pegi') list.sort((a,b) => a.pegi - b.pegi || a.id - b.id);
   else if (sortMode === 'size') list.sort((a,b) => (b.size_go||0) - (a.size_go||0));
   else if (sortMode === 'date') list.sort((a,b) => (b.release_date||'').localeCompare(a.release_date||''));
-  else list.sort((a,b) => a.id - b.id);
+  else list.sort(catalogueSort);
 
   const grid = document.getElementById('grid');
   const empty = document.getElementById('empty');
@@ -594,6 +647,42 @@ window.render = render;
 window.resetSearch = resetSearch;
 window.openPanel = openPanel;
 window.closePanel = closePanel;
+
+// expose
+window.getCoverSrc = getCoverSrc;
+window.norm = norm;
+window.catalogueSort = catalogueSort;
+window.render = render;
+window.resetSearch = resetSearch;
+window.openPanel = openPanel;
+window.closePanel = closePanel;
+
+function toggleGenrePanel(e) {
+  e.stopPropagation();
+  var p = document.getElementById('genre-panel');
+  if (p) p.classList.toggle('open');
+}
+function applyGenre() {
+  var sel = Array.from(document.querySelectorAll('#genre-panel .genre-cb:checked')).map(function(c){return c.dataset.genre;});
+  var btn = document.getElementById('genre-btn');
+  if (btn) btn.textContent = sel.length ? 'Genres (' + sel.length + ')' : 'Genres';
+  render();
+}
+function clearGenres() {
+  document.querySelectorAll('#genre-panel .genre-cb').forEach(function(c){c.checked=false;});
+  var btn = document.getElementById('genre-btn');
+  if (btn) btn.textContent = 'Genres';
+  render();
+}
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.genre-dropdown')) {
+    var p = document.getElementById('genre-panel');
+    if (p) p.classList.remove('open');
+  }
+});
+window.toggleGenrePanel = toggleGenrePanel;
+window.applyGenre = applyGenre;
+window.clearGenres = clearGenres;
 </script>
 </body>
 </html>
