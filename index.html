@@ -2,6 +2,7 @@
 <html lang="fr">
 <head>
 <meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>JVO — Jeux Vidéo</title>
 <link rel="icon" type="image/png" href="ICO.png"/>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -300,13 +301,62 @@
   #panel-link:hover { opacity: .85; }
   #panel-link svg { width: 12px; height: 12px; fill: none; stroke: #fff; stroke-width: 2; stroke-linecap: round; }
 
+  /* ── Tablette ── */
+  @media (max-width: 768px) {
+    #grid { grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 11px; }
+    .toolbar { padding: 10px 16px; gap: 8px; }
+    header { padding: 10px 16px; gap: 10px; }
+    header img#logo { height: 26px; }
+    #search-count { display: none; }
+  }
+
+  /* ── Mobile ── */
   @media (max-width: 540px) {
+    /* Header compact */
+    header { padding: 8px 12px; gap: 8px; }
+    header img#logo { height: 22px; }
+    #search { font-size: 14px; padding: 8px 10px 8px 34px; }
+    #search-count { display: none; }
+
+    /* Toolbar : wrap sur 2 lignes */
+    .toolbar {
+      padding: 8px 12px;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .filter-group { gap: 4px; }
+    .pill { padding: 3px 8px; font-size: 11px; }
+    .genre-btn { font-size: 11px; padding: 3px 20px 3px 8px; }
+    select#sort-sel { font-size: 11px; padding: 3px 22px 3px 8px; }
+    .genre-panel { min-width: 160px; font-size: 12px; }
+
+    /* Grille : 2 colonnes minimum sur très petits écrans */
+    main { padding: 10px 10px 60px; }
+    #grid { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 8px; }
+    .card-name { font-size: 11px; }
+    .card-meta { font-size: 9px; }
+    .card-badge { font-size: 8px; }
+
+    /* Panel détail : plein écran en bas */
+    #overlay { align-items: flex-end; }
+    #panel {
+      border-radius: 16px 16px 0 0;
+      width: 100%;
+      max-height: 90vh;
+    }
     .panel-layout { flex-direction: column; }
-    .panel-cover { width: 100%; min-width: unset; height: 240px; border-radius: 16px 16px 0 0; }
-    header { padding: 10px 14px; }
-    .toolbar { padding: 10px 14px; }
-    main { padding: 14px 14px 40px; }
-    #grid { grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 10px; }
+    .panel-cover {
+      width: 100%; min-width: unset;
+      height: 200px;
+      border-radius: 16px 16px 0 0;
+    }
+    .panel-cover img { height: 100%; width: auto; margin: 0 auto; object-fit: contain; }
+    .panel-body { padding: 16px; }
+    #panel-name { font-size: 16px; }
+    #panel-link { width: 100%; justify-content: center; }
+
+    /* Installés label compact */
+    label[for="filter-installed"], label:has(#filter-installed) { font-size: 11px; }
   }
 
 .genre-dropdown{position:relative;display:inline-block;}
@@ -317,6 +367,10 @@
 .genre-panel label:hover{background:var(--bg);}
 .genre-panel input{accent-color:var(--accent);cursor:pointer;}
 .genre-clear{display:block;margin-top:6px;padding:3px 6px;font-size:11px;color:var(--muted);cursor:pointer;text-align:center;border-top:1px solid var(--border);padding-top:6px;}
+
+  @media (max-width: 380px) {
+    .genre-panel { left: auto; right: 0; }
+  }
 </style>
 </head>
 <body>
