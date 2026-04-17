@@ -44,7 +44,7 @@ input.list-search:focus{border-color:var(--accent);}
 .item-name{font-size:13px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .item-sub{font-size:11px;color:var(--muted);margin-top:1px;display:flex;gap:5px;align-items:center;}
 .console-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
-.cd-PS4,.cd-PS5{background:var(--ps);}.cd-Switch{background:var(--sw);}.cd-XBOX{background:var(--xb);}
+.cd-PS4,.cd-PS5{background:var(--ps);}.cd-Switch,.cd-Switch-2{background:var(--sw);}.cd-XBOX,.cd-XBOX-Series,.cd-XBOX-One{background:var(--xb);}
 .item-installed{width:8px;height:8px;border-radius:50%;background:var(--ok);flex-shrink:0;margin-left:auto;box-shadow:0 0 0 2px rgba(22,163,74,.2);}
 /* Resize handle */
 .resize-handle{width:4px;background:transparent;cursor:col-resize;flex-shrink:0;transition:background .15s;position:relative;z-index:10;}
@@ -194,7 +194,9 @@ input.list-search:focus{border-color:var(--accent);}
         <button class="pill" data-c="PS5"><span class="dot" style="background:var(--ps)"></span>PS5</button>
         <button class="pill" data-c="PS4"><span class="dot" style="background:var(--ps)"></span>PS4</button>
         <button class="pill" data-c="Switch"><span class="dot" style="background:var(--sw)"></span>Switch</button>
-        <button class="pill" data-c="XBOX"><span class="dot" style="background:var(--xb)"></span>XBOX</button>
+        <button class="pill" data-c="Switch 2"><span class="dot" style="background:var(--sw)"></span>Switch 2</button>
+        <button class="pill" data-c="XBOX Series"><span class="dot" style="background:var(--xb)"></span>XBOX Series</button>
+        <button class="pill" data-c="XBOX One"><span class="dot" style="background:var(--xb)"></span>XBOX One</button>
       </div>
       <div class="genre-dropdown">
         <button class="genre-btn" id="genre-btn-admin" onclick="toggleGenrePanelAdmin(event)">Genres</button>
@@ -437,22 +439,22 @@ function getCoverSrc(g) {
 
 
 function catalogueSort(a, b) {
-  var cg = {PS5:0, PS4:0, Switch:1, XBOX:2};
-  var ga = cg[a.console] ?? 9, gb = cg[b.console] ?? 9;
-  if (ga !== gb) return ga - gb;
-  var mg = function(g) {
-    if (g.media === 'game pass') return 2;
-    if (g.media === 'démat')     return 1;
-    return 0;
+  var cg = function(c) {
+    if (c==='PS5'||c==='PS4')                    return 0;
+    if (c==='Switch'||c==='Switch 2')             return 1;
+    if (c==='XBOX Series'||c==='XBOX One')        return 2;
+    return 9;
   };
-  var ma = mg(a), mb = mg(b);
-  if (ma !== mb) return ma - mb;
-  if (ma === 0) {
-    var na = parseInt(a.num_id) || 9999;
-    var nb = parseInt(b.num_id) || 9999;
+  var ga = cg(a.console), gb = cg(b.console);
+  if (ga !== gb) return ga - gb;
+  var phys = function(g){ return g.media==='disque'||g.media==='cartouche'; };
+  var pa = phys(a)?0:1, pb = phys(b)?0:1;
+  if (pa !== pb) return pa - pb;
+  if (pa === 0) {
+    var na = parseInt(a.num_id)||9999, nb = parseInt(b.num_id)||9999;
     return na - nb;
   }
-  return (a.name || '').localeCompare(b.name || '', 'fr');
+  return (a.name||'').localeCompare(b.name||'','fr');
 }
 
 function norm(s) {
@@ -522,9 +524,22 @@ function updateCoverPreview() {
 document.getElementById("console-pills").addEventListener("click", function(e) {
   var p = e.target.closest(".pill");
   if (!p) return;
-  document.querySelectorAll("#console-pills .pill").forEach(function(x){ x.classList.remove("active"); });
-  p.classList.add("active");
-  activeConsole = p.dataset.c;
+  var c = p.dataset.c;
+  if (c === "ALL") {
+    activeConsoles = new Set(["ALL"]);
+    document.querySelectorAll("#console-pills .pill").forEach(function(x){ x.classList.remove("active"); });
+    p.classList.add("active");
+  } else {
+    activeConsoles.delete("ALL");
+    document.querySelector("#console-pills [data-c='ALL']").classList.remove("active");
+    p.classList.toggle("active");
+    if (p.classList.contains("active")) activeConsoles.add(c);
+    else activeConsoles.delete(c);
+    if (activeConsoles.size === 0) {
+      activeConsoles.add("ALL");
+      document.querySelector("#console-pills [data-c='ALL']").classList.add("active");
+    }
+  }
   renderList();
 });
 
@@ -533,7 +548,7 @@ function renderList() {
   var onlyInstalled = document.getElementById("filter-installed") && document.getElementById("filter-installed").checked;
   var genreF_list = Array.from(document.querySelectorAll("#genre-panel-admin .genre-cb:checked")).map(function(c){return c.dataset.genre;});
   var list = GAMES.filter(function(g) {
-    if (activeConsole !== "ALL" && g.console !== activeConsole) return false;
+    if (!activeConsoles.has("ALL") && !activeConsoles.has(g.console)) return false;
     if (onlyInstalled && !g.installed) return false;
     if (genreF_list.length && !genreF_list.some(function(s){return (g.genre||"").toLowerCase().indexOf(s)!==-1;})) return false;
     if (q.length > 1) return norm(g.name).indexOf(q) !== -1 || norm(g.search||"").indexOf(q) !== -1;
@@ -553,7 +568,7 @@ function renderList() {
     html += "<div class=\"list-item" + sel + "\" onclick=\"selectGame(" + g.id + ")\">"
           + "<div class=\"item-cover\">" + coverImg + "</div>"
           + "<div class=\"item-info\">"
-            + "<div class=\"item-name\">" + g.name + "</div>"
+            + "<div class=\"item-name\">" + g.name + (g.media==='démat'||g.media==='game pass'?' 👻':'') + "</div>"
             + "<div class=\"item-sub\"><span class=\"console-dot cd-" + g.console + "\"></span><span>" + g.console + "</span>" + numBadge + (g.media ? "<span>&middot; " + g.media + "</span>" : "") + "</div>"
           + "</div>" + instDot + "</div>";
   });
