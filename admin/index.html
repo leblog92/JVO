@@ -402,7 +402,7 @@ const _db  = getFirestore(_app);
 
 
 var GAMES = [];
-var activeConsole = "ALL";
+var activeConsoles = new Set(["ALL"]);
 var selectedId    = null;
 var isNew         = false;
 
