@@ -123,12 +123,25 @@ input.list-search:focus{border-color:var(--accent);}
 </head>
 <body>
 
+<div id="login-overlay" style="display:none;position:fixed;inset:0;z-index:999;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;">
+  <h2 style="font-size:20px;font-weight:700;">JVO &#8212; Admin</h2>
+  <p style="color:var(--muted);font-size:14px;">Connexion requise pour acc&#233;der &#224; l&#8217;administration.</p>
+  <button class="btn btn-primary" onclick="doSignIn()" style="font-size:15px;padding:12px 24px;">
+    &#128274; Se connecter avec Google
+  </button>
+</div>
+
 <header>
   <div>
     <h1>JVO &#8212; Admin</h1>
     <div class="subtitle" id="hdr-count"></div>
   </div>
   <div class="hdr-right">
+    <div id="auth-zone" style="display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted);">
+      <span id="auth-user"></span>
+      <button class="btn btn-ghost" id="btn-signin"  onclick="doSignIn()"  style="display:none">&#128274; Connexion Google</button>
+      <button class="btn btn-ghost" id="btn-signout" onclick="doSignOut()" style="display:none;font-size:11px;">D&#233;connexion</button>
+    </div>
     <button class="btn btn-blue" onclick="openPrintModal()">
       <svg viewBox="0 0 24 24"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
       Imprimer
@@ -182,7 +195,7 @@ input.list-search:focus{border-color:var(--accent);}
   </div>
 </div>
 
-<div class="layout" id="layout">
+<div class="layout" id="layout" style="display:none">
   <div class="list-pane">
     <div class="list-toolbar">
       <div class="search-wrap">
@@ -235,7 +248,7 @@ input.list-search:focus{border-color:var(--accent);}
             <div class="field-row">
               <div class="field">
                 <label>Console *</label>
-                <select id="f-console" onchange="updateCoverPreview()"><option>PS5</option><option>PS4</option><option>Switch</option><option>XBOX</option></select>
+                <select id="f-console" onchange="updateCoverPreview()"><option>PS5</option><option>PS4</option><option>Switch</option><option>Switch 2</option><option>XBOX Series</option><option>XBOX One</option></select>
               </div>
               <div class="field">
                 <label>PEGI *</label>
@@ -390,6 +403,9 @@ input.list-search:focus{border-color:var(--accent);}
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
 import { getFirestore, collection, getDocs, doc, setDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
+import { getAuth, signInWithPopup, signOut, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-auth.js";
+const _auth     = getAuth(_app);
+const _provider = new GoogleAuthProvider();
 const _app = initializeApp({
     apiKey: "AIzaSyCBYrYzO_6ozCycfh9Goy0oP1vQe3ZPKLo",
     authDomain: "cjvo-3cc43.firebaseapp.com",
@@ -889,6 +905,38 @@ document.addEventListener('click', function(e) {
 window.toggleGenrePanelAdmin = toggleGenrePanelAdmin;
 window.applyGenreAdmin = applyGenreAdmin;
 window.clearGenresAdmin = clearGenresAdmin;
+
+// ── Auth ──
+function doSignIn() {
+  signInWithPopup(_auth, _provider).catch(function(e){ toast("Erreur connexion : " + e.message, "err"); });
+}
+function doSignOut() {
+  signOut(_auth).then(function(){ toast("D\u00e9connect\u00e9", "ok"); });
+}
+onAuthStateChanged(_auth, function(user) {
+  var overlay  = document.getElementById("login-overlay");
+  var btnIn    = document.getElementById("btn-signin");
+  var btnOut   = document.getElementById("btn-signout");
+  var authUser = document.getElementById("auth-user");
+  var layout   = document.getElementById("layout");
+  var hdrBtns  = document.querySelectorAll(".hdr-right .btn:not(#btn-signin):not(#btn-signout)");
+  if (user) {
+    overlay.style.display  = "none";
+    btnIn.style.display    = "none";
+    btnOut.style.display   = "";
+    authUser.textContent   = user.email;
+    if (layout) layout.style.display = "";
+  } else {
+    overlay.style.display  = "flex";
+    btnIn.style.display    = "";
+    btnOut.style.display   = "none";
+    authUser.textContent   = "";
+    if (layout) layout.style.display = "none";
+  }
+});
+window.doSignIn  = doSignIn;
+window.doSignOut = doSignOut;
+
 </script>
 </body>
 </html>
