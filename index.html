@@ -373,6 +373,17 @@
   @media (max-width: 380px) {
     .genre-panel { left: auto; right: 0; }
   }
+
+  .badge-media {
+    position: absolute; bottom: 6px; left: 6px;
+    font-size: 9px; font-weight: 700; letter-spacing: .04em;
+    padding: 2px 6px; border-radius: 4px;
+    text-transform: uppercase; backdrop-filter: blur(4px);
+  }
+  .badge-demat    { background: rgba(99,102,241,.85); color: #fff; }
+  .badge-gamepass { background: rgba(16,124,16,.85);  color: #fff; }
+  .card-demat    { border-color: rgba(99,102,241,.4); }
+  .card-gamepass { border-color: rgba(16,124,16,.4);  }
 </style>
 </head>
 <body>
@@ -564,11 +575,18 @@ function render() {
       ? `<img src="${coverSrc}" alt="${g.name}" loading="lazy" onerror="this.parentNode.innerHTML='<div class=no-cover>—</div>'">`
       : '';
     const installed = g.installed ? `<div class="badge-installed" title="Installé">&#10003;</div>` : '';
-    return `<div class="card" onclick="openPanel(${g.id})">
+    const _mediaClass = g.media==='démat' ? 'card-demat' : g.media==='game pass' ? 'card-gamepass' : '';
+    const _mediaBadge = g.media==='démat'
+      ? '<span class="badge-media badge-demat">Démat</span>'
+      : g.media==='game pass'
+        ? '<span class="badge-media badge-gamepass">Game Pass</span>'
+        : '';
+    return `<div class="card ${_mediaClass}" onclick="openPanel(${g.id})">
       <div class="card-cover">
         ${coverHtml}
         <span class="card-badge badge-${g.console}">${g.console}${g.num_id && g.num_id!=='👻' ? ' · '+g.num_id : ''}</span>
         ${installed}
+        ${_mediaBadge}
       </div>
       <div class="card-info">
         <div class="card-name">${g.name}${g.media==='démat'||g.media==='game pass'?' 👻':''}</div>
@@ -647,7 +665,9 @@ function openPanel(id) {
   // Chips
   const chips = [];
   if (g.pegi) chips.push(`PEGI ${g.pegi}`);
-  if (g.media) chips.push(g.media);
+  if (g.media === 'démat') chips.push('🟣 Démat');
+  else if (g.media === 'game pass') chips.push('🟢 Game Pass');
+  else if (g.media) chips.push(g.media);
   if (g.num_id && g.num_id !== '👻') chips.push('N°' + g.num_id);
   if (g.installed) chips.push('✓ installé');
   document.getElementById('panel-chips').innerHTML = chips.map(c => `<span class="chip">${c}</span>`).join('');
