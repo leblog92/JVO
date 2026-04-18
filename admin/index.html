@@ -404,8 +404,6 @@ input.list-search:focus{border-color:var(--accent);}
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
 import { getFirestore, collection, getDocs, doc, setDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
 import { getAuth, signInWithPopup, signOut, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-auth.js";
-const _auth     = getAuth(_app);
-const _provider = new GoogleAuthProvider();
 const _app = initializeApp({
     apiKey: "AIzaSyCBYrYzO_6ozCycfh9Goy0oP1vQe3ZPKLo",
     authDomain: "cjvo-3cc43.firebaseapp.com",
@@ -414,8 +412,9 @@ const _app = initializeApp({
     messagingSenderId: "413262853770",
     appId: "1:413262853770:web:359ef5e3450da754b89f73"
 });
-const _db  = getFirestore(_app);
-
+const _db       = getFirestore(_app);
+const _auth     = getAuth(_app);
+const _provider = new GoogleAuthProvider();
 
 var GAMES = [];
 var activeConsoles = new Set(["ALL"]);
