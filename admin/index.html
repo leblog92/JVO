@@ -916,7 +916,7 @@ function doSignOut() {
   signOut(_auth).then(function(){ toast("D\u00e9connect\u00e9", "ok"); });
 }
 onAuthStateChanged(_auth, function(user) {
-  var ALLOWED_EMAILS = [\'VOTRE_EMAIL@gmail.com\', \'twistman92@gmail.com\'];
+  var ALLOWED_EMAILS = ['leblog92@gmail.com', 'twistman92@gmail.com'];
   var allowed = !user || ALLOWED_EMAILS.indexOf(user.email) !== -1;
   var overlay  = document.getElementById("login-overlay");
   var btnIn    = document.getElementById("btn-signin");
