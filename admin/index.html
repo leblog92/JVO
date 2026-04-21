@@ -123,12 +123,15 @@ input.list-search:focus{border-color:var(--accent);}
 </head>
 <body>
 
-<div id="login-overlay" style="display:none;position:fixed;inset:0;z-index:999;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;">
+<div id="login-overlay" style="position:fixed;inset:0;z-index:999;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;">
   <h2 style="font-size:20px;font-weight:700;">JVO &#8212; Admin</h2>
-  <p style="color:var(--muted);font-size:14px;">Connexion requise pour acc&#233;der &#224; l&#8217;administration.</p>
-  <button class="btn btn-primary" onclick="doSignIn()" style="font-size:15px;padding:12px 24px;">
-    &#128274; Se connecter avec Google
-  </button>
+  <p style="color:var(--muted);font-size:14px;">Mot de passe requis.</p>
+  <div style="display:flex;gap:8px;">
+    <input type="password" id="pwd-input" placeholder="Mot de passe" onkeydown="if(event.key==='Enter')checkPwd()"
+      style="padding:10px 14px;font-size:14px;border:1px solid var(--border);border-radius:8px;outline:none;width:220px;">
+    <button class="btn btn-primary" onclick="checkPwd()" style="font-size:14px;padding:10px 18px;">OK</button>
+  </div>
+  <p id="pwd-err" style="color:var(--danger);font-size:13px;display:none;">Mot de passe incorrect.</p>
 </div>
 
 <header>
@@ -137,12 +140,7 @@ input.list-search:focus{border-color:var(--accent);}
     <div class="subtitle" id="hdr-count"></div>
   </div>
   <div class="hdr-right">
-    <div id="auth-zone" style="display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted);">
-      <span id="auth-user"></span>
-      <button class="btn btn-ghost" id="btn-signin"  onclick="doSignIn()"  style="display:none">&#128274; Connexion Google</button>
-      <button class="btn btn-ghost" id="btn-signout" onclick="doSignOut()" style="display:none;font-size:11px;">D&#233;connexion</button>
-    </div>
-    <button class="btn btn-blue" onclick="openPrintModal()">
+        <button class="btn btn-blue" onclick="openPrintModal()">
       <svg viewBox="0 0 24 24"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
       Imprimer
     </button>
@@ -403,7 +401,6 @@ input.list-search:focus{border-color:var(--accent);}
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
 import { getFirestore, collection, getDocs, doc, setDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
-import { getAuth, signInWithPopup, signInWithRedirect, getRedirectResult, signOut, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-auth.js";
 const _app = initializeApp({
     apiKey: "AIzaSyCBYrYzO_6ozCycfh9Goy0oP1vQe3ZPKLo",
     authDomain: "cjvo-3cc43.firebaseapp.com",
@@ -413,8 +410,6 @@ const _app = initializeApp({
     appId: "1:413262853770:web:359ef5e3450da754b89f73"
 });
 const _db       = getFirestore(_app);
-const _auth     = getAuth(_app);
-const _provider = new GoogleAuthProvider();
 
 var GAMES = [];
 var activeConsoles = new Set(["ALL"]);
@@ -905,44 +900,31 @@ window.toggleGenrePanelAdmin = toggleGenrePanelAdmin;
 window.applyGenreAdmin = applyGenreAdmin;
 window.clearGenresAdmin = clearGenresAdmin;
 
-// ── Auth ──
-// Récupérer le résultat après redirect
-getRedirectResult(_auth).catch(function(e){ console.warn("redirect:", e.message); });
 
-function doSignIn() {
-  signInWithRedirect(_auth, _provider).catch(function(e){ toast("Erreur connexion : " + e.message, "err"); });
-}
-function doSignOut() {
-  signOut(_auth).then(function(){ toast("D\u00e9connect\u00e9", "ok"); });
-}
-onAuthStateChanged(_auth, function(user) {
-  var ALLOWED_EMAILS = ['leblog92@gmail.com', 'twistman92@gmail.com'];
-  var allowed = !user || ALLOWED_EMAILS.indexOf(user.email) !== -1;
-  var overlay  = document.getElementById("login-overlay");
-  var btnIn    = document.getElementById("btn-signin");
-  var btnOut   = document.getElementById("btn-signout");
-  var authUser = document.getElementById("auth-user");
-  var layout   = document.getElementById("layout");
-  var hdrBtns  = document.querySelectorAll(".hdr-right .btn:not(#btn-signin):not(#btn-signout)");
-  if (user && allowed) {
-    overlay.style.display  = "none";
-    btnIn.style.display    = "none";
-    btnOut.style.display   = "";
-    authUser.textContent   = user.email;
-    if (layout) layout.style.display = "";
-  } else if (!allowed) {
-    overlay.innerHTML += '<p style="color:red;margin-top:10px;">Acc\u00e8s non autoris\u00e9 : ' + (user?user.email:'') + '</p>';
-    signOut(_auth);
+
+// ── Auth mot de passe ──
+async function checkPwd() {
+  var pwd = document.getElementById('pwd-input').value;
+  var buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(pwd));
+  var hash = Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+  var VALID = '58b1ccc26ecc28cb38dc95f94be2e0f80de4b0db3d43fc06140668aa1a08294f';
+  if (hash === VALID) {
+    document.getElementById('login-overlay').style.display = 'none';
+    document.getElementById('layout').style.display = '';
+    sessionStorage.setItem('jvo_auth','1');
   } else {
-    overlay.style.display  = "flex";
-    btnIn.style.display    = "";
-    btnOut.style.display   = "none";
-    authUser.textContent   = "";
-    if (layout) layout.style.display = "none";
+    document.getElementById('pwd-err').style.display = '';
+    document.getElementById('pwd-input').value = '';
+    document.getElementById('pwd-input').focus();
   }
-});
-window.doSignIn  = doSignIn;
-window.doSignOut = doSignOut;
+}
+window.checkPwd = checkPwd;
+
+// Vérifier session existante
+if (sessionStorage.getItem('jvo_auth') === '1') {
+  document.getElementById('login-overlay').style.display = 'none';
+  document.getElementById('layout').style.display = '';
+}
 
 </script>
 </body>
