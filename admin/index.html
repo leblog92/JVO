@@ -164,27 +164,27 @@ input.list-search:focus{border-color:var(--accent);}
       <span>Jeux disque &amp; cartouche uniquement &#8212; format livret A4, avec couverture</span>
     </div>
     <div class="print-option" onclick="doPrint('installed-ps')">
-      <strong>&#128444; Affiche jeux install&#233;s &#8212; PlayStation</strong>
+      <strong>&#128444; Affiche jeux install&#233;s &#8212; PlayStation (PS4+PS5)</strong>
       <span>Grille de jaquettes, format A4</span>
     </div>
     <div class="print-option" onclick="doPrint('installed-xbox')">
-      <strong>&#128444; Affiche jeux install&#233;s &#8212; XBOX</strong>
+      <strong>&#128444; Affiche jeux install&#233;s &#8212; XBOX (One+Series)</strong>
       <span>Grille de jaquettes, format A4</span>
     </div>
     <div class="print-option" onclick="doPrint('installed-switch')">
-      <strong>&#128444; Affiche jeux install&#233;s &#8212; Switch</strong>
+      <strong>&#128444; Affiche jeux install&#233;s &#8212; Switch (et Switch 2)</strong>
       <span>Grille de jaquettes, format A4</span>
     </div>
     <div class="print-option" onclick="doPrint('all-ps')">
-      <strong>&#128191; Tous les jeux disque/cartouche &#8212; PlayStation (PS4+PS5)</strong>
+      <strong>&#128191; Tous les jeux disque &#8212; PlayStation (PS4+PS5)</strong>
       <span>Grille avec titres, format A4</span>
     </div>
     <div class="print-option" onclick="doPrint('all-switch')">
-      <strong>&#128191; Tous les jeux disque/cartouche &#8212; Switch</strong>
+      <strong>&#128191; Tous les jeux cartouche &#8212; Switch</strong>
       <span>Grille avec titres, format A4</span>
     </div>
     <div class="print-option" onclick="doPrint('all-xbox')">
-      <strong>&#128191; Tous les jeux disque/cartouche &#8212; XBOX</strong>
+      <strong>&#128191; Tous les jeux disque &#8212; XBOX (One+Series)</strong>
       <span>Grille avec titres, format A4</span>
     </div>
     <div class="print-actions">
@@ -807,7 +807,7 @@ function buildPrintHTML(mode) {
     return "<!DOCTYPE html><html><head><meta charset=\"utf-8\"><title>Livret JVO</title>"+css+"</head><body>"+body+"</body></html>";
   }
 
-  var consoleFilter = mode === "installed-ps" ? ["PS5","PS4"] : mode === "installed-xbox" ? ["XBOX"] : ["Switch"];
+  var consoleFilter = mode === "installed-ps" ? ["PS5","PS4"] : mode === "installed-xbox" ? ["XBOX Series","XBOX One"] : ["Switch","Switch 2"];
   var consoleLabel  = mode === "installed-ps" ? "PlayStation" : mode === "installed-xbox" ? "XBOX" : "Switch";
   var consoleColor  = consoleColors[consoleFilter[0]] || "#333";
   var cw = mode === "installed-ps" ? 29 : mode === "installed-xbox" ? 35 : 17;
@@ -925,6 +925,20 @@ if (sessionStorage.getItem('jvo_auth') === '1') {
   document.getElementById('login-overlay').style.display = 'none';
   document.getElementById('layout').style.display = '';
 }
+
+
+function toggleInstalled(e, id) {
+  e.stopPropagation(); // ne pas ouvrir le formulaire
+  var idx = GAMES.findIndex(function(g){ return g.id === id; });
+  if (idx === -1) return;
+  GAMES[idx].installed = GAMES[idx].installed ? 0 : 1;
+  // Sauvegarder dans Firestore
+  setDoc(doc(_db, "games", String(id)), GAMES[idx])
+    .then(function(){ toast((GAMES[idx].installed ? '\u2713 Install\u00e9' : 'Retir\u00e9') + ' : ' + GAMES[idx].name, 'ok'); })
+    .catch(function(e){ toast('Erreur : ' + e.message, 'err'); });
+  renderList();
+}
+window.toggleInstalled = toggleInstalled;
 
 </script>
 </body>
