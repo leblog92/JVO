@@ -403,7 +403,7 @@ input.list-search:focus{border-color:var(--accent);}
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
 import { getFirestore, collection, getDocs, doc, setDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
-import { getAuth, signInWithPopup, signOut, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-auth.js";
+import { getAuth, signInWithPopup, signInWithRedirect, getRedirectResult, signOut, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-auth.js";
 const _app = initializeApp({
     apiKey: "AIzaSyCBYrYzO_6ozCycfh9Goy0oP1vQe3ZPKLo",
     authDomain: "cjvo-3cc43.firebaseapp.com",
@@ -906,25 +906,33 @@ window.applyGenreAdmin = applyGenreAdmin;
 window.clearGenresAdmin = clearGenresAdmin;
 
 // ── Auth ──
+// Récupérer le résultat après redirect
+getRedirectResult(_auth).catch(function(e){ console.warn("redirect:", e.message); });
+
 function doSignIn() {
-  signInWithPopup(_auth, _provider).catch(function(e){ toast("Erreur connexion : " + e.message, "err"); });
+  signInWithRedirect(_auth, _provider).catch(function(e){ toast("Erreur connexion : " + e.message, "err"); });
 }
 function doSignOut() {
   signOut(_auth).then(function(){ toast("D\u00e9connect\u00e9", "ok"); });
 }
 onAuthStateChanged(_auth, function(user) {
+  var ALLOWED_EMAILS = [\'VOTRE_EMAIL@gmail.com\', \'twistman92@gmail.com\'];
+  var allowed = !user || ALLOWED_EMAILS.indexOf(user.email) !== -1;
   var overlay  = document.getElementById("login-overlay");
   var btnIn    = document.getElementById("btn-signin");
   var btnOut   = document.getElementById("btn-signout");
   var authUser = document.getElementById("auth-user");
   var layout   = document.getElementById("layout");
   var hdrBtns  = document.querySelectorAll(".hdr-right .btn:not(#btn-signin):not(#btn-signout)");
-  if (user) {
+  if (user && allowed) {
     overlay.style.display  = "none";
     btnIn.style.display    = "none";
     btnOut.style.display   = "";
     authUser.textContent   = user.email;
     if (layout) layout.style.display = "";
+  } else if (!allowed) {
+    overlay.innerHTML += '<p style="color:red;margin-top:10px;">Acc\u00e8s non autoris\u00e9 : ' + (user?user.email:'') + '</p>';
+    signOut(_auth);
   } else {
     overlay.style.display  = "flex";
     btnIn.style.display    = "";
