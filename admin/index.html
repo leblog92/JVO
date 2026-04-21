@@ -1,3 +1,4 @@
+
 <!DOCTYPE HTML>
 <html lang="fr">
 <head>
@@ -119,6 +120,13 @@ input.list-search:focus{border-color:var(--accent);}
 .genre-panel label:hover{background:var(--bg);}
 .genre-panel input{accent-color:var(--accent);cursor:pointer;}
 .genre-clear{display:block;margin-top:6px;padding:3px 6px;font-size:11px;color:var(--muted);cursor:pointer;text-align:center;border-top:1px solid var(--border);padding-top:6px;}
+
+  .list-toggle{display:inline-flex;align-items:center;flex-shrink:0;margin-left:auto;cursor:pointer;gap:5px;}
+  .list-toggle-track{width:30px;height:17px;border-radius:99px;background:var(--border);transition:background .2s;position:relative;flex-shrink:0;}
+  .list-toggle-track.on{background:var(--ok);}
+  .list-toggle-thumb{position:absolute;top:2px;left:2px;width:13px;height:13px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.2);transition:transform .2s;}
+  .list-toggle-track.on .list-toggle-thumb{transform:translateX(13px);}
+
 </style>
 </head>
 <body>
@@ -572,7 +580,7 @@ function renderList() {
     var coverImg = src
       ? "<img src=\"" + src + "\" style=\"width:100%;height:100%;object-fit:cover\" onerror=\"this.parentNode.innerHTML=''\">"
       : "<span class=\"nc\">&mdash;</span>";
-    var instDot = g.installed ? "<div class=\"item-installed\"></div>" : "";
+    var instDot = '<span class="list-toggle" onclick="toggleInstalled(event,' + g.id + ')" '+ 'title="' + (g.installed?"Install\u00e9":"Non install\u00e9") + '">'  + '<span class="list-toggle-track' + (g.installed?" on":"") + '"><span class="list-toggle-thumb"></span></span>'  + '</span>';
     var sel = g.id === selectedId ? " selected" : "";
     var numBadge = (g.num_id && g.num_id !== "\ud83d\udc7b") ? "<span>&middot; " + g.num_id + "</span>" : "";
     html += "<div class=\"list-item" + sel + "\" onclick=\"selectGame(" + g.id + ")\">"
