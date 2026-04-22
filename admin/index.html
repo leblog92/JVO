@@ -830,8 +830,23 @@ function buildPrintHTML(mode) {
   var consoleFilter = mode === "installed-ps" ? ["PS5","PS4"] : mode === "installed-xbox" ? ["XBOX Series","XBOX One"] : ["Switch","Switch 2"];
   var consoleLabel  = mode === "installed-ps" ? "PlayStation" : mode === "installed-xbox" ? "XBOX" : "Switch";
   var consoleColor  = consoleColors[consoleFilter[0]] || "#333";
-  var cw = mode === "installed-ps" ? 29 : mode === "installed-xbox" ? 35 : 17;
-  var ch = Math.round(cw / (mode === "installed-switch" ? 0.6 : 0.8));
+  // Ratio jaquette par console
+  var ratio = mode === "installed-switch" ? 0.613 : 0.783;
+  // Taille de base maximale souhaitée
+  var cwMax = mode === "installed-ps" ? 29 : mode === "installed-xbox" ? 35 : 30;
+  var cwMin = 12;
+  // A4 utile : 210-16=194mm largeur, 297-20-14=263mm hauteur (titre+marges)
+  var pageW = 194, pageH = 263;
+  // Trouver la taille optimale : la plus grande qui fait tenir sur une page
+  var bestCw = cwMin;
+  for (var tw = cwMax; tw >= cwMin; tw--) {
+    var perRow   = Math.floor(pageW / (tw + 2));
+    var rowCount = Math.ceil(filtered.length / perRow);
+    var totalH   = rowCount * (Math.round(tw / ratio) + 2);
+    if (totalH <= pageH) { bestCw = tw; break; }
+  }
+  var cw = bestCw;
+  var ch = Math.round(cw / ratio);
   var filtered = GAMES.filter(function(g){ return consoleFilter.indexOf(g.console) !== -1 && g.installed; });
   var body = "<div class=\"poster-title\" style=\"color:"+consoleColor+"\">Jeux sur place &#8212; "+consoleLabel+"</div>"
     + "<div class=\"poster-grid\">";
