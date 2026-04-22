@@ -1,3 +1,4 @@
+
 <!DOCTYPE HTML>
 <html lang="fr">
 <head>
@@ -119,16 +120,26 @@ input.list-search:focus{border-color:var(--accent);}
 .genre-panel label:hover{background:var(--bg);}
 .genre-panel input{accent-color:var(--accent);cursor:pointer;}
 .genre-clear{display:block;margin-top:6px;padding:3px 6px;font-size:11px;color:var(--muted);cursor:pointer;text-align:center;border-top:1px solid var(--border);padding-top:6px;}
+
+  .list-toggle{display:inline-flex;align-items:center;flex-shrink:0;margin-left:auto;cursor:pointer;gap:5px;}
+  .list-toggle-track{width:30px;height:17px;border-radius:99px;background:var(--border);transition:background .2s;position:relative;flex-shrink:0;}
+  .list-toggle-track.on{background:var(--ok);}
+  .list-toggle-thumb{position:absolute;top:2px;left:2px;width:13px;height:13px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.2);transition:transform .2s;}
+  .list-toggle-track.on .list-toggle-thumb{transform:translateX(13px);}
+
 </style>
 </head>
 <body>
 
-<div id="login-overlay" style="display:none;position:fixed;inset:0;z-index:999;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;">
+<div id="login-overlay" style="position:fixed;inset:0;z-index:999;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;">
   <h2 style="font-size:20px;font-weight:700;">JVO &#8212; Admin</h2>
-  <p style="color:var(--muted);font-size:14px;">Connexion requise pour acc&#233;der &#224; l&#8217;administration.</p>
-  <button class="btn btn-primary" onclick="doSignIn()" style="font-size:15px;padding:12px 24px;">
-    &#128274; Se connecter avec Google
-  </button>
+  <p style="color:var(--muted);font-size:14px;">Mot de passe requis.</p>
+  <div style="display:flex;gap:8px;">
+    <input type="password" id="pwd-input" placeholder="Mot de passe" onkeydown="if(event.key==='Enter')checkPwd()"
+      style="padding:10px 14px;font-size:14px;border:1px solid var(--border);border-radius:8px;outline:none;width:220px;">
+    <button class="btn btn-primary" onclick="checkPwd()" style="font-size:14px;padding:10px 18px;">OK</button>
+  </div>
+  <p id="pwd-err" style="color:var(--danger);font-size:13px;display:none;">Mot de passe incorrect.</p>
 </div>
 
 <header>
@@ -137,12 +148,7 @@ input.list-search:focus{border-color:var(--accent);}
     <div class="subtitle" id="hdr-count"></div>
   </div>
   <div class="hdr-right">
-    <div id="auth-zone" style="display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted);">
-      <span id="auth-user"></span>
-      <button class="btn btn-ghost" id="btn-signin"  onclick="doSignIn()"  style="display:none">&#128274; Connexion Google</button>
-      <button class="btn btn-ghost" id="btn-signout" onclick="doSignOut()" style="display:none;font-size:11px;">D&#233;connexion</button>
-    </div>
-    <button class="btn btn-blue" onclick="openPrintModal()">
+        <button class="btn btn-blue" onclick="openPrintModal()">
       <svg viewBox="0 0 24 24"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
       Imprimer
     </button>
@@ -166,27 +172,27 @@ input.list-search:focus{border-color:var(--accent);}
       <span>Jeux disque &amp; cartouche uniquement &#8212; format livret A4, avec couverture</span>
     </div>
     <div class="print-option" onclick="doPrint('installed-ps')">
-      <strong>&#128444; Affiche jeux install&#233;s &#8212; PlayStation</strong>
+      <strong>&#128444; Affiche jeux install&#233;s &#8212; PlayStation (PS4+PS5)</strong>
       <span>Grille de jaquettes, format A4</span>
     </div>
     <div class="print-option" onclick="doPrint('installed-xbox')">
-      <strong>&#128444; Affiche jeux install&#233;s &#8212; XBOX</strong>
+      <strong>&#128444; Affiche jeux install&#233;s &#8212; XBOX (One+Series)</strong>
       <span>Grille de jaquettes, format A4</span>
     </div>
     <div class="print-option" onclick="doPrint('installed-switch')">
-      <strong>&#128444; Affiche jeux install&#233;s &#8212; Switch</strong>
+      <strong>&#128444; Affiche jeux install&#233;s &#8212; Switch (et Switch 2)</strong>
       <span>Grille de jaquettes, format A4</span>
     </div>
     <div class="print-option" onclick="doPrint('all-ps')">
-      <strong>&#128191; Tous les jeux disque/cartouche &#8212; PlayStation (PS4+PS5)</strong>
+      <strong>&#128191; Tous les jeux disque &#8212; PlayStation (PS4+PS5)</strong>
       <span>Grille avec titres, format A4</span>
     </div>
     <div class="print-option" onclick="doPrint('all-switch')">
-      <strong>&#128191; Tous les jeux disque/cartouche &#8212; Switch</strong>
+      <strong>&#128191; Tous les jeux cartouche &#8212; Switch</strong>
       <span>Grille avec titres, format A4</span>
     </div>
     <div class="print-option" onclick="doPrint('all-xbox')">
-      <strong>&#128191; Tous les jeux disque/cartouche &#8212; XBOX</strong>
+      <strong>&#128191; Tous les jeux disque &#8212; XBOX (One+Series)</strong>
       <span>Grille avec titres, format A4</span>
     </div>
     <div class="print-actions">
@@ -403,7 +409,6 @@ input.list-search:focus{border-color:var(--accent);}
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
 import { getFirestore, collection, getDocs, doc, setDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
-import { getAuth, signInWithPopup, signOut, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-auth.js";
 const _app = initializeApp({
     apiKey: "AIzaSyCBYrYzO_6ozCycfh9Goy0oP1vQe3ZPKLo",
     authDomain: "cjvo-3cc43.firebaseapp.com",
@@ -413,8 +418,6 @@ const _app = initializeApp({
     appId: "1:413262853770:web:359ef5e3450da754b89f73"
 });
 const _db       = getFirestore(_app);
-const _auth     = getAuth(_app);
-const _provider = new GoogleAuthProvider();
 
 var GAMES = [];
 var activeConsoles = new Set(["ALL"]);
@@ -577,7 +580,7 @@ function renderList() {
     var coverImg = src
       ? "<img src=\"" + src + "\" style=\"width:100%;height:100%;object-fit:cover\" onerror=\"this.parentNode.innerHTML=''\">"
       : "<span class=\"nc\">&mdash;</span>";
-    var instDot = g.installed ? "<div class=\"item-installed\"></div>" : "";
+    var instDot = '<span class="list-toggle" onclick="toggleInstalled(event,' + g.id + ')" '+ 'title="' + (g.installed?"Install\u00e9":"Non install\u00e9") + '">'  + '<span class="list-toggle-track' + (g.installed?" on":"") + '"><span class="list-toggle-thumb"></span></span>'  + '</span>';
     var sel = g.id === selectedId ? " selected" : "";
     var numBadge = (g.num_id && g.num_id !== "\ud83d\udc7b") ? "<span>&middot; " + g.num_id + "</span>" : "";
     html += "<div class=\"list-item" + sel + "\" onclick=\"selectGame(" + g.id + ")\">"
@@ -812,7 +815,7 @@ function buildPrintHTML(mode) {
     return "<!DOCTYPE html><html><head><meta charset=\"utf-8\"><title>Livret JVO</title>"+css+"</head><body>"+body+"</body></html>";
   }
 
-  var consoleFilter = mode === "installed-ps" ? ["PS5","PS4"] : mode === "installed-xbox" ? ["XBOX"] : ["Switch"];
+  var consoleFilter = mode === "installed-ps" ? ["PS5","PS4"] : mode === "installed-xbox" ? ["XBOX Series","XBOX One"] : ["Switch","Switch 2"];
   var consoleLabel  = mode === "installed-ps" ? "PlayStation" : mode === "installed-xbox" ? "XBOX" : "Switch";
   var consoleColor  = consoleColors[consoleFilter[0]] || "#333";
   var cw = mode === "installed-ps" ? 29 : mode === "installed-xbox" ? 35 : 17;
@@ -905,36 +908,45 @@ window.toggleGenrePanelAdmin = toggleGenrePanelAdmin;
 window.applyGenreAdmin = applyGenreAdmin;
 window.clearGenresAdmin = clearGenresAdmin;
 
-// ── Auth ──
-function doSignIn() {
-  signInWithPopup(_auth, _provider).catch(function(e){ toast("Erreur connexion : " + e.message, "err"); });
-}
-function doSignOut() {
-  signOut(_auth).then(function(){ toast("D\u00e9connect\u00e9", "ok"); });
-}
-onAuthStateChanged(_auth, function(user) {
-  var overlay  = document.getElementById("login-overlay");
-  var btnIn    = document.getElementById("btn-signin");
-  var btnOut   = document.getElementById("btn-signout");
-  var authUser = document.getElementById("auth-user");
-  var layout   = document.getElementById("layout");
-  var hdrBtns  = document.querySelectorAll(".hdr-right .btn:not(#btn-signin):not(#btn-signout)");
-  if (user) {
-    overlay.style.display  = "none";
-    btnIn.style.display    = "none";
-    btnOut.style.display   = "";
-    authUser.textContent   = user.email;
-    if (layout) layout.style.display = "";
+
+
+// ── Auth mot de passe ──
+async function checkPwd() {
+  var pwd = document.getElementById('pwd-input').value;
+  var buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(pwd));
+  var hash = Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+  var VALID = '58b1ccc26ecc28cb38dc95f94be2e0f80de4b0db3d43fc06140668aa1a08294f';
+  if (hash === VALID) {
+    document.getElementById('login-overlay').style.display = 'none';
+    document.getElementById('layout').style.display = '';
+    sessionStorage.setItem('jvo_auth','1');
   } else {
-    overlay.style.display  = "flex";
-    btnIn.style.display    = "";
-    btnOut.style.display   = "none";
-    authUser.textContent   = "";
-    if (layout) layout.style.display = "none";
+    document.getElementById('pwd-err').style.display = '';
+    document.getElementById('pwd-input').value = '';
+    document.getElementById('pwd-input').focus();
   }
-});
-window.doSignIn  = doSignIn;
-window.doSignOut = doSignOut;
+}
+window.checkPwd = checkPwd;
+
+// Vérifier session existante
+if (sessionStorage.getItem('jvo_auth') === '1') {
+  document.getElementById('login-overlay').style.display = 'none';
+  document.getElementById('layout').style.display = '';
+}
+
+
+function toggleInstalled(e, id) {
+  e.stopPropagation(); // ne pas ouvrir le formulaire
+  var idx = GAMES.findIndex(function(g){ return g.id === id; });
+  if (idx === -1) return;
+  GAMES[idx].installed = GAMES[idx].installed ? 0 : 1;
+  // Sauvegarder dans Firestore
+  setDoc(doc(_db, "games", String(id)), GAMES[idx])
+    .then(function(){ toast((GAMES[idx].installed ? '\u2713 Install\u00e9' : 'Retir\u00e9') + ' : ' + GAMES[idx].name, 'ok'); })
+    .catch(function(e){ toast('Erreur : ' + e.message, 'err'); });
+  renderList();
+}
+window.toggleInstalled = toggleInstalled;
 
 </script>
 </body>
