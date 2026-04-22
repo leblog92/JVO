@@ -863,101 +863,148 @@ function startScreensaver() {
 
 function runSS(ctx, canvas, imgData) {
   var W = canvas.width, H = canvas.height;
-  var cards = [];
-  var N = Math.min(imgData.length, 20);
+  var imgs = imgData.filter(function(x){ return x.img && x.img.complete && x.img.naturalWidth > 0; });
+  if (!imgs.length) return;
 
-  // Créer les cartes 3D
-  for (var i = 0; i < N; i++) {
-    var angle = (Math.PI * 2 / N) * i;
+  // ── Phase 1 : Logo JVO façon Star Wars (3s) ──────────────────────────────
+  var phase = 0;  // 0=logo, 1=crawl+cards
+  var phaseStart = Date.now();
+
+  // Préparer les cartes pour le défilé
+  var CARD_W = 110, CARD_H = 154; // ratio ~3/4
+  var cols = Math.floor(W / (CARD_W + 20));
+  var cards = [];
+  imgs.forEach(function(item, i) {
     cards.push({
-      img:    imgData[i].img,
-      angle:  angle,
-      radius: Math.min(W,H) * 0.32,
-      rotY:   Math.random() * Math.PI * 2,
-      rotX:   (Math.random() - 0.5) * 0.3,
-      scale:  0.85 + Math.random() * 0.3,
-      speed:  0.003 + Math.random() * 0.004,
-      drift:  (Math.random() - 0.5) * 0.001,
-      alpha:  0,
+      img:   item.img,
+      col:   i % cols,
+      row:   Math.floor(i / cols),
+      y:     H + Math.floor(i / cols) * (CARD_H + 16) + 60,
+      baseY: 0,
+      alpha: 0,
+      rot:   (Math.random() - 0.5) * 0.04,
+      scale: 0.92 + Math.random() * 0.16,
     });
+  });
+  var totalRows = Math.ceil(imgs.length / cols);
+  var cardAreaH = totalRows * (CARD_H + 16);
+  var scrollY = H;  // commence sous l'écran
+
+  function drawLogo(t) {
+    // Fond noir
+    ctx.fillStyle = '#000';
+    ctx.fillRect(0, 0, W, H);
+    // Étoiles
+    if (!drawLogo._stars) {
+      drawLogo._stars = [];
+      for (var i=0;i<200;i++) drawLogo._stars.push([Math.random()*W, Math.random()*H, Math.random()*1.5+0.3]);
+    }
+    ctx.fillStyle = '#fff';
+    drawLogo._stars.forEach(function(s){ ctx.beginPath(); ctx.arc(s[0],s[1],s[2],0,Math.PI*2); ctx.fill(); });
+
+    var progress = Math.min(1, t / 1.2);
+    var fadeOut  = t > 2.5 ? Math.max(0, 1 - (t - 2.5) / 0.5) : 1;
+
+    // Texte "A long time ago in a médiathèque far, far away…"
+    if (t < 1.8) {
+      ctx.save();
+      ctx.globalAlpha = Math.min(1, t / 0.6) * fadeOut;
+      ctx.fillStyle   = '#4fc3f7';
+      ctx.font        = 'italic ' + Math.round(H * 0.028) + 'px "DM Sans", sans-serif';
+      ctx.textAlign   = 'center';
+      ctx.fillText('Il y a bien longtemps, dans une m\u00e9diath\u00e8que lointaine, tr\u00e8s lointaine\u2026', W/2, H/2 - 20);
+      ctx.restore();
+    }
+
+    // JVO en grand qui pulse
+    if (t > 0.8) {
+      var jvoAlpha = Math.min(1,(t-0.8)/0.4) * (t>2?Math.max(0,1-(t-2)/0.8):1);
+      ctx.save();
+      ctx.globalAlpha = jvoAlpha;
+      var fontSize = Math.round(H * 0.22 * (0.8 + 0.2 * Math.sin(t*3)));
+      ctx.font      = '900 ' + fontSize + 'px "DM Sans", sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillStyle = '#FFE81F';  // jaune Star Wars
+      ctx.shadowColor = '#FFE81F'; ctx.shadowBlur = 40;
+      ctx.fillText('JVO', W/2, H/2 + fontSize*0.35);
+      ctx.shadowBlur = 0;
+      ctx.restore();
+    }
   }
 
-  var orbit = 0;
-  var startTime = Date.now();
-
-  function draw() {
-    if (!_ssActive) return;
-    _ssAnim = requestAnimationFrame(draw);
-    var t = (Date.now() - startTime) / 1000;
-    orbit += 0.004;
-
-    // Fond
-    ctx.fillStyle = '#0a0a0f';
+  function drawCrawl(t) {
+    // Fond étoilé
+    ctx.fillStyle = '#000';
     ctx.fillRect(0, 0, W, H);
+    ctx.fillStyle = 'rgba(255,255,255,0.8)';
+    if (drawLogo._stars) drawLogo._stars.forEach(function(s){
+      ctx.beginPath(); ctx.arc(s[0],s[1],s[2],0,Math.PI*2); ctx.fill();
+    });
 
-    // Lueur centrale
-    var grd = ctx.createRadialGradient(W/2,H/2,0,W/2,H/2,H*0.4);
-    grd.addColorStop(0,'rgba(60,40,120,0.25)');
-    grd.addColorStop(1,'rgba(0,0,0,0)');
-    ctx.fillStyle = grd;
-    ctx.fillRect(0,0,W,H);
+    // Vitesse de défilement
+    var speed = 60;  // px/s
+    scrollY = H - t * speed;
 
-    // Trier par profondeur (z)
-    var sorted = cards.map(function(c,i){
-      var a = c.angle + orbit;
-      var z = Math.cos(a);
-      var x = W/2 + Math.cos(a) * c.radius;
-      var y = H/2 + Math.sin(a) * c.radius * 0.38;
-      return {c:c, x:x, y:y, z:z};
-    }).sort(function(a,b){ return a.z - b.z; });
+    // Perspective transform pour les cartes
+    ctx.save();
+    var vanishY = H * 0.08;  // point de fuite
+    var spread  = 1.4;
 
-    sorted.forEach(function(item) {
-      var c = item.c, x = item.x, y = item.y, z = item.z;
-      c.alpha = Math.min(1, c.alpha + 0.02);
-      c.angle += c.speed;
-      c.rotY  += c.drift;
+    imgs.forEach(function(item, i) {
+      var col     = i % cols;
+      var row     = Math.floor(i / cols);
+      var spacing = CARD_W + 20;
+      var xBase   = (W - cols * spacing) / 2 + col * spacing + CARD_W/2;
+      var yBase   = scrollY + row * (CARD_H + 16) + CARD_H/2;
 
-      var depth  = (z + 1) / 2;        // 0..1
-      var scale  = (0.5 + depth * 0.9) * c.scale;
-      var W_card = 90 * scale;
-      var H_card = W_card * 1.4;
-      var alpha  = (0.3 + depth * 0.7) * c.alpha;
+      if (yBase < -CARD_H || yBase > H + CARD_H) return;
+
+      // Perspective : plus haut = plus petit et plus centré
+      var progress = Math.max(0, Math.min(1, (yBase - vanishY) / (H - vanishY)));
+      var scale    = 0.15 + progress * 0.85;
+      var x        = W/2 + (xBase - W/2) * progress * spread;
+      var y        = vanishY + (yBase - vanishY) * progress * 0.72;
+      var alpha    = Math.min(1, progress * 2.5);
+      if (alpha < 0.01) return;
+
+      var cw = CARD_W * scale, ch = CARD_H * scale;
 
       ctx.save();
       ctx.globalAlpha = alpha;
       ctx.translate(x, y);
-
-      // Ombre
-      ctx.shadowColor = 'rgba(0,0,0,0.8)';
-      ctx.shadowBlur  = 20 * scale;
-
-      // Perspective skew (simule rotation Y)
-      var skew = Math.sin(c.rotY) * 0.15;
-      ctx.transform(1, 0, skew, 1, 0, 0);
-
-      // Image
-      if (c.img && c.img.complete && c.img.naturalWidth > 0) {
-        ctx.drawImage(c.img, -W_card/2, -H_card/2, W_card, H_card);
-      } else {
-        ctx.fillStyle = '#222';
-        ctx.fillRect(-W_card/2, -H_card/2, W_card, H_card);
-      }
-
-      // Reflet
-      ctx.globalAlpha = alpha * 0.25;
-      ctx.scale(1, -1);
-      ctx.drawImage(c.img || document.createElement('canvas'),
-        -W_card/2, H_card/2, W_card, H_card/3);
-      var refGrd = ctx.createLinearGradient(0, H_card/2, 0, H_card*0.85);
-      refGrd.addColorStop(0,'rgba(10,10,15,0)');
-      refGrd.addColorStop(1,'rgba(10,10,15,1)');
-      ctx.fillStyle = refGrd;
-      ctx.fillRect(-W_card/2, H_card/2, W_card, H_card/3);
-
+      // Légère inclinaison perspective
+      ctx.transform(1, -0.08 * (1-progress), 0, 1, 0, 0);
+      ctx.drawImage(item.img, -cw/2, -ch/2, cw, ch);
+      // Reflet bas
+      ctx.globalAlpha = alpha * 0.18;
+      ctx.scale(1,-1);
+      ctx.drawImage(item.img, -cw/2, ch/2, cw, ch*0.3);
       ctx.restore();
     });
+    ctx.restore();
+
+    // Lueur jaune au sommet (point de fuite)
+    var grd = ctx.createRadialGradient(W/2, vanishY, 0, W/2, vanishY, H*0.3);
+    grd.addColorStop(0,'rgba(255,232,31,0.12)');
+    grd.addColorStop(1,'rgba(0,0,0,0)');
+    ctx.fillStyle = grd;
+    ctx.fillRect(0, 0, W, H);
   }
 
+  function draw() {
+    if (!_ssActive) return;
+    _ssAnim = requestAnimationFrame(draw);
+    var elapsed = (Date.now() - phaseStart) / 1000;
+
+    if (phase === 0) {
+      drawLogo(elapsed);
+      if (elapsed > 3) { phase = 1; phaseStart = Date.now(); }
+    } else {
+      drawCrawl(elapsed);
+      // Recommencer quand tout est passé
+      if (scrollY + cardAreaH + CARD_H < 0) { phaseStart = Date.now(); scrollY = H; }
+    }
+  }
   draw();
 }
 

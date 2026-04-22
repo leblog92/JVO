@@ -285,6 +285,7 @@ input.list-search:focus{border-color:var(--accent);}
             <label>Taille (Go)</label>
             <input type="number" id="f-size" placeholder="ex: 59" min="0" step="0.1">
           </div>
+          <div class="field"><label>Metascore</label><input type="number" id="f-meta" placeholder="0-100" min="0" max="100"></div>
         </div>
 
         <div class="field">
@@ -617,6 +618,7 @@ function fillForm(g) {
   document.getElementById("f-pmin").value      = g.players_min || 1;
   document.getElementById("f-pmax").value      = g.players_max || 1;
   document.getElementById("f-size").value      = g.size_go     || "";
+  document.getElementById("f-meta").value      = (g.metascore != null) ? g.metascore : "";
   document.getElementById("f-desc").value      = g.desc        || "";
   document.getElementById("f-url").value       = g.store_url   || "";
   document.getElementById("f-trailer").value   = g.url_trailer || "";
@@ -675,6 +677,9 @@ function saveGame() {
     players_min:      parseInt(document.getElementById("f-pmin").value)||1,
     players_max:      parseInt(document.getElementById("f-pmax").value)||1,
     size_go:          parseFloat(document.getElementById("f-size").value)||null,
+    metascore:        document.getElementById("f-meta").value !== "" ? parseInt(document.getElementById("f-meta").value) : null,
+    metascore:        document.getElementById("f-meta").value !== "" ? parseInt(document.getElementById("f-meta").value) : null,
+    metascore:        parseInt(document.getElementById("f-meta").value)||null,
     metascore:        parseInt(document.getElementById("f-meta").value)||null,
     genre:            getCBValues("genre"),
     qualities:        getCBValues("quality"),
@@ -777,22 +782,17 @@ function buildPrintHTML(mode) {
     var consoles   = mode === "all-ps" ? ["PS5","PS4"] : mode === "all-switch" ? ["Switch"] : ["XBOX"];
     var label      = mode === "all-ps" ? "PlayStation" : mode === "all-switch" ? "Switch" : "XBOX";
     var col        = consoles.map(function(c){ return consoleColors[c]; })[0] || "#333";
-    var baseCwA = mode === "all-ps" ? 29 : mode === "all-switch" ? 17 : 22;
-    var ratioA  = mode === "all-switch" ? 0.613 : 0.783;
-    var mprA    = Math.floor((210-16)/(baseCwA+2));
-    var rowsA   = Math.ceil(filtered.length/mprA);
-    var maxRA   = Math.floor((257)/(baseCwA/ratioA+2));
-    if (rowsA > maxRA) {
-      for (var tw2=baseCwA;tw2>=12;tw2--) {
-        var pr2=Math.floor((210-16)/(tw2+2));
-        if (Math.ceil(filtered.length/pr2)*(tw2/ratioA+2)<=257){baseCwA=tw2;break;}
-      }
-    }
-    var cw = baseCwA;
-    var ch = Math.round(cw / ratioA);
-    var filtered   = GAMES.filter(function(g){
+    var filtered = GAMES.filter(function(g){
       return consoles.indexOf(g.console) !== -1 && (g.media === "disque" || g.media === "cartouche");
     }).sort(function(a,b){ return a.name.localeCompare(b.name,"fr"); });
+    var ratioA = mode === "all-switch" ? 0.613 : 0.783;
+    var cwMaxA = mode === "all-ps" ? 29 : mode === "all-switch" ? 30 : 22;
+    var cwMinA = 12, pageWA = 194, pageHA = 263, bestA = cwMinA;
+    for (var tw2 = cwMaxA; tw2 >= cwMinA; tw2--) {
+      var pr2 = Math.floor(pageWA / (tw2 + 2));
+      if (Math.ceil(filtered.length / pr2) * (Math.round(tw2 / ratioA) + 2) <= pageHA) { bestA = tw2; break; }
+    }
+    var cw = bestA, ch = Math.round(cw / ratioA);
     var body = "<div class=\"poster-title\" style=\"color:"+col+"\">JEUX " + label.toUpperCase() + "</div>"
       + "<div class=\"poster-grid\">";
     filtered.forEach(function(g) {
@@ -830,24 +830,18 @@ function buildPrintHTML(mode) {
   var consoleFilter = mode === "installed-ps" ? ["PS5","PS4"] : mode === "installed-xbox" ? ["XBOX Series","XBOX One"] : ["Switch","Switch 2"];
   var consoleLabel  = mode === "installed-ps" ? "PlayStation" : mode === "installed-xbox" ? "XBOX" : "Switch";
   var consoleColor  = consoleColors[consoleFilter[0]] || "#333";
+  // Filtrer d'abord
+  var filtered = GAMES.filter(function(g){ return consoleFilter.indexOf(g.console) !== -1 && g.installed; });
   // Ratio jaquette par console
   var ratio = mode === "installed-switch" ? 0.613 : 0.783;
-  // Taille de base maximale souhaitée
+  // Taille optimale : la plus grande qui tient sur A4
   var cwMax = mode === "installed-ps" ? 29 : mode === "installed-xbox" ? 35 : 30;
-  var cwMin = 12;
-  // A4 utile : 210-16=194mm largeur, 297-20-14=263mm hauteur (titre+marges)
-  var pageW = 194, pageH = 263;
-  // Trouver la taille optimale : la plus grande qui fait tenir sur une page
-  var bestCw = cwMin;
+  var cwMin = 12, pageW = 194, pageH = 263, bestCw = cwMin;
   for (var tw = cwMax; tw >= cwMin; tw--) {
-    var perRow   = Math.floor(pageW / (tw + 2));
-    var rowCount = Math.ceil(filtered.length / perRow);
-    var totalH   = rowCount * (Math.round(tw / ratio) + 2);
-    if (totalH <= pageH) { bestCw = tw; break; }
+    var perRow = Math.floor(pageW / (tw + 2));
+    if (Math.ceil(filtered.length / perRow) * (Math.round(tw / ratio) + 2) <= pageH) { bestCw = tw; break; }
   }
-  var cw = bestCw;
-  var ch = Math.round(cw / ratio);
-  var filtered = GAMES.filter(function(g){ return consoleFilter.indexOf(g.console) !== -1 && g.installed; });
+  var cw = bestCw, ch = Math.round(cw / ratio);
   var body = "<div class=\"poster-title\" style=\"color:"+consoleColor+"\">Jeux sur place &#8212; "+consoleLabel+"</div>"
     + "<div class=\"poster-grid\">";
   filtered.forEach(function(g) {
