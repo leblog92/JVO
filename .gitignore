@@ -1,6 +1,8 @@
+admin/hash.txt
 firebase_key.json
 rawg_key.txt
-admin/hash.txt
 igdb_key.txt
 enrich_all.bat
 enrich_all.py
+enrich_metascore.bat
+enrich_metascore.py
