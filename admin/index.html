@@ -1,4 +1,3 @@
-
 <!DOCTYPE HTML>
 <html lang="fr">
 <head>
@@ -633,7 +632,7 @@ function newGame() {
   isNew = true; selectedId = null;
   var maxId = Math.max.apply(null, [0].concat(GAMES.map(function(g){ return g.id; })));
   var draft = {id:maxId+1,console:"PS5",name:"",search:"",num_id:"",pegi:7,media:"",cover:"",
-    desc:"",genre:"",qualities:"",players_min:1,players_max:1,size_go:null,installed:0,
+    desc:"",genre:"",qualities:"",players_min:1,players_max:1,size_go:null,metascore:null,installed:0,
     store_url:"",url_trailer:"",url_bnf:"",url_mediatheque:"",release_date:""};
   GAMES.push(draft);
   selectedId = draft.id;
@@ -675,6 +674,7 @@ function saveGame() {
     players_min:      parseInt(document.getElementById("f-pmin").value)||1,
     players_max:      parseInt(document.getElementById("f-pmax").value)||1,
     size_go:          parseFloat(document.getElementById("f-size").value)||null,
+    metascore:        parseInt(document.getElementById("f-meta").value)||null,
     genre:            getCBValues("genre"),
     qualities:        getCBValues("quality"),
     desc:             document.getElementById("f-desc").value.trim(),
