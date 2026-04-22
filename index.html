@@ -384,6 +384,18 @@
   .badge-gamepass { background: rgba(16,124,16,.85);  color: #fff; }
   .card-demat    { border-color: rgba(99,102,241,.4); }
   .card-gamepass { border-color: rgba(16,124,16,.4);  }
+
+  .meta-badge {
+    display:inline-flex; align-items:center; justify-content:center;
+    width:36px; height:36px; border-radius:6px;
+    font-family:'DM Mono',monospace; font-size:14px; font-weight:700;
+    flex-shrink:0;
+  }
+  .meta-green  { background:#6c3; color:#fff; }
+  .meta-yellow { background:#fc3; color:#333; }
+  .meta-red    { background:#f44; color:#fff; }
+  .meta-none   { background:var(--border); color:var(--muted); font-size:10px; }
+
 </style>
 </head>
 <body>
@@ -657,6 +669,20 @@ function openPanel(id) {
   }
 
   document.getElementById('panel-name').textContent = g.name;
+
+  // Metascore badge
+  const existingMeta = document.getElementById('meta-badge');
+  if (existingMeta) existingMeta.remove();
+  if (g.metascore) {
+    const mc = g.metascore;
+    const cls = mc >= 75 ? 'meta-green' : mc >= 50 ? 'meta-yellow' : 'meta-red';
+    const badge = document.createElement('div');
+    badge.id = 'meta-badge';
+    badge.className = 'meta-badge ' + cls;
+    badge.title = 'Metascore';
+    badge.textContent = mc;
+    document.getElementById('panel-name').after(badge);
+  }
 
   const tag = document.getElementById('panel-console-tag');
   tag.textContent = g.console;
