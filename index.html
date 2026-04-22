@@ -396,6 +396,27 @@
   .meta-red    { background:#f44; color:#fff; }
   .meta-none   { background:var(--border); color:var(--muted); font-size:10px; }
 
+
+  #screensaver {
+    display:none; position:fixed; inset:0; z-index:500;
+    background:#0a0a0f; cursor:none;
+  }
+  #screensaver canvas { width:100%; height:100%; display:block; }
+  #ss-hint {
+    position:absolute; bottom:24px; left:50%; transform:translateX(-50%);
+    color:rgba(255,255,255,.3); font-size:12px; letter-spacing:.1em;
+    font-family:'DM Mono',monospace; pointer-events:none;
+    animation: fadeHint 3s ease-in-out infinite alternate;
+  }
+  @keyframes fadeHint { from{opacity:.15} to{opacity:.5} }
+  #ss-btn {
+    position:fixed; bottom:20px; right:70px; z-index:200;
+    background:transparent; border:1px solid var(--border);
+    border-radius:8px; padding:6px 10px; cursor:pointer;
+    font-size:11px; color:var(--muted); transition:all .2s;
+  }
+  #ss-btn:hover { border-color:var(--accent); color:var(--text); }
+
 </style>
 </head>
 <body>
@@ -424,6 +445,7 @@
     <option value="id">Ordre catalogue</option>
     <option value="alpha">A → Z</option>
     <option value="pegi">PEGI</option>
+    <option value="console_meta">Console + Metascore</option>
     <option value="size">Taille</option>
     <option value="date">Date de sortie</option>
   </select>
@@ -448,6 +470,14 @@
 </main>
 
 <!-- Detail overlay -->
+
+<!-- Screensaver -->
+<div id="screensaver">
+  <canvas id="ss-canvas"></canvas>
+  <div id="ss-hint">BOUGER LA SOURIS OU APPUYER SUR UNE TOUCHE POUR QUITTER</div>
+</div>
+<button id="ss-btn" onclick="startScreensaver()" title="Screensaver jeux installés">&#9654; Vitrine</button>
+
 <div id="overlay">
   <div id="panel">
     <div class="panel-layout">
@@ -567,6 +597,7 @@ function render() {
   else if (sortMode === 'pegi') list.sort((a,b) => a.pegi - b.pegi || a.id - b.id);
   else if (sortMode === 'size') list.sort((a,b) => (b.size_go||0) - (a.size_go||0));
   else if (sortMode === 'date') list.sort((a,b) => (b.release_date||'').localeCompare(a.release_date||''));
+  else if (sortMode === 'console_meta') { var cg={'PS5':0,'PS4':0,'Switch':1,'Switch 2':1,'XBOX Series':2,'XBOX One':2}; list.sort((a,b)=>(cg[a.console]??9)-(cg[b.console]??9)||(b.metascore||0)-(a.metascore||0)||a.name.localeCompare(b.name,'fr')); }
   else list.sort(catalogueSort);
 
   const grid = document.getElementById('grid');
@@ -703,7 +734,9 @@ function openPanel(id) {
 
   // Rows
   const rows = [];
-  if (g.release_date) rows.push(['Date de sortie', g.release_date]);
+  if (g.release_date) rows.push(['Date de sortie', g.release_date ? (function(d){
+    var p=d.split('-'); return p.length===3?p[2]+'/'+p[1]+'/'+p[0]:d;
+  })(g.release_date) : '']);
   if (g.genre)        rows.push(['Genre', g.genre]);
   if (g.players_min)  rows.push(['Joueurs', g.players_min === g.players_max ? g.players_min+' joueur'+(g.players_min>1?'s':'') : g.players_min+' → '+g.players_max+' joueurs']);
   if (g.qualities)    rows.push(['Qualités', g.qualities]);
@@ -794,6 +827,154 @@ document.addEventListener('click', function(e) {
 window.toggleGenrePanel = toggleGenrePanel;
 window.applyGenre = applyGenre;
 window.clearGenres = clearGenres;
+
+// ── Screensaver 3D ────────────────────────────────────────────────────────────
+var _ssActive = false;
+var _ssAnim   = null;
+
+function startScreensaver() {
+  var installed = GAMES.filter(function(g){ return g.installed && g.cover; });
+  if (installed.length === 0) { toast('Aucun jeu install\u00e9 avec jaquette', 'err'); return; }
+  _ssActive = true;
+  var ss = document.getElementById('screensaver');
+  ss.style.display = 'block';
+
+  var canvas = document.getElementById('ss-canvas');
+  canvas.width  = window.innerWidth;
+  canvas.height = window.innerHeight;
+  var ctx = canvas.getContext('2d');
+
+  // Charger les images
+  var imgs = [], loaded = 0;
+  installed.forEach(function(g) {
+    var img = new Image();
+    img.crossOrigin = 'anonymous';
+    img.onload = function() {
+      loaded++;
+      if (loaded === installed.length) runSS(ctx, canvas, imgs);
+    };
+    img.onerror = function() { loaded++; if(loaded===installed.length) runSS(ctx,canvas,imgs); };
+    img.src = 'covers/' + g.cover + '.png';
+    imgs.push({ img:img, loaded:false, g:g });
+  });
+  // Timeout fallback
+  setTimeout(function(){ if(loaded<installed.length) runSS(ctx,canvas,imgs.filter(function(x){return x.img.complete;})); }, 3000);
+}
+
+function runSS(ctx, canvas, imgData) {
+  var W = canvas.width, H = canvas.height;
+  var cards = [];
+  var N = Math.min(imgData.length, 20);
+
+  // Créer les cartes 3D
+  for (var i = 0; i < N; i++) {
+    var angle = (Math.PI * 2 / N) * i;
+    cards.push({
+      img:    imgData[i].img,
+      angle:  angle,
+      radius: Math.min(W,H) * 0.32,
+      rotY:   Math.random() * Math.PI * 2,
+      rotX:   (Math.random() - 0.5) * 0.3,
+      scale:  0.85 + Math.random() * 0.3,
+      speed:  0.003 + Math.random() * 0.004,
+      drift:  (Math.random() - 0.5) * 0.001,
+      alpha:  0,
+    });
+  }
+
+  var orbit = 0;
+  var startTime = Date.now();
+
+  function draw() {
+    if (!_ssActive) return;
+    _ssAnim = requestAnimationFrame(draw);
+    var t = (Date.now() - startTime) / 1000;
+    orbit += 0.004;
+
+    // Fond
+    ctx.fillStyle = '#0a0a0f';
+    ctx.fillRect(0, 0, W, H);
+
+    // Lueur centrale
+    var grd = ctx.createRadialGradient(W/2,H/2,0,W/2,H/2,H*0.4);
+    grd.addColorStop(0,'rgba(60,40,120,0.25)');
+    grd.addColorStop(1,'rgba(0,0,0,0)');
+    ctx.fillStyle = grd;
+    ctx.fillRect(0,0,W,H);
+
+    // Trier par profondeur (z)
+    var sorted = cards.map(function(c,i){
+      var a = c.angle + orbit;
+      var z = Math.cos(a);
+      var x = W/2 + Math.cos(a) * c.radius;
+      var y = H/2 + Math.sin(a) * c.radius * 0.38;
+      return {c:c, x:x, y:y, z:z};
+    }).sort(function(a,b){ return a.z - b.z; });
+
+    sorted.forEach(function(item) {
+      var c = item.c, x = item.x, y = item.y, z = item.z;
+      c.alpha = Math.min(1, c.alpha + 0.02);
+      c.angle += c.speed;
+      c.rotY  += c.drift;
+
+      var depth  = (z + 1) / 2;        // 0..1
+      var scale  = (0.5 + depth * 0.9) * c.scale;
+      var W_card = 90 * scale;
+      var H_card = W_card * 1.4;
+      var alpha  = (0.3 + depth * 0.7) * c.alpha;
+
+      ctx.save();
+      ctx.globalAlpha = alpha;
+      ctx.translate(x, y);
+
+      // Ombre
+      ctx.shadowColor = 'rgba(0,0,0,0.8)';
+      ctx.shadowBlur  = 20 * scale;
+
+      // Perspective skew (simule rotation Y)
+      var skew = Math.sin(c.rotY) * 0.15;
+      ctx.transform(1, 0, skew, 1, 0, 0);
+
+      // Image
+      if (c.img && c.img.complete && c.img.naturalWidth > 0) {
+        ctx.drawImage(c.img, -W_card/2, -H_card/2, W_card, H_card);
+      } else {
+        ctx.fillStyle = '#222';
+        ctx.fillRect(-W_card/2, -H_card/2, W_card, H_card);
+      }
+
+      // Reflet
+      ctx.globalAlpha = alpha * 0.25;
+      ctx.scale(1, -1);
+      ctx.drawImage(c.img || document.createElement('canvas'),
+        -W_card/2, H_card/2, W_card, H_card/3);
+      var refGrd = ctx.createLinearGradient(0, H_card/2, 0, H_card*0.85);
+      refGrd.addColorStop(0,'rgba(10,10,15,0)');
+      refGrd.addColorStop(1,'rgba(10,10,15,1)');
+      ctx.fillStyle = refGrd;
+      ctx.fillRect(-W_card/2, H_card/2, W_card, H_card/3);
+
+      ctx.restore();
+    });
+  }
+
+  draw();
+}
+
+function stopScreensaver() {
+  _ssActive = false;
+  if (_ssAnim) cancelAnimationFrame(_ssAnim);
+  document.getElementById('screensaver').style.display = 'none';
+}
+
+// Quitter sur mouvement souris ou touche clavier
+document.getElementById('screensaver').addEventListener('mousemove', stopScreensaver);
+document.getElementById('screensaver').addEventListener('touchstart', stopScreensaver);
+document.addEventListener('keydown', function(e) { if (_ssActive) stopScreensaver(); });
+
+window.startScreensaver = startScreensaver;
+window.stopScreensaver  = stopScreensaver;
+
 </script>
 </body>
 </html>

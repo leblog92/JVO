@@ -174,12 +174,12 @@ input.list-search:focus{border-color:var(--accent);}
       <strong>&#128444; Affiche jeux install&#233;s &#8212; PlayStation (PS4+PS5)</strong>
       <span>Grille de jaquettes, format A4</span>
     </div>
-    <div class="print-option" onclick="doPrint('installed-xbox')">
-      <strong>&#128444; Affiche jeux install&#233;s &#8212; XBOX (One+Series)</strong>
-      <span>Grille de jaquettes, format A4</span>
-    </div>
     <div class="print-option" onclick="doPrint('installed-switch')">
       <strong>&#128444; Affiche jeux install&#233;s &#8212; Switch (et Switch 2)</strong>
+      <span>Grille de jaquettes, format A4</span>
+    </div>
+    <div class="print-option" onclick="doPrint('installed-xbox')">
+      <strong>&#128444; Affiche jeux install&#233;s &#8212; XBOX (One+Series)</strong>
       <span>Grille de jaquettes, format A4</span>
     </div>
     <div class="print-option" onclick="doPrint('all-ps')">
@@ -198,6 +198,7 @@ input.list-search:focus{border-color:var(--accent);}
       <button class="btn btn-ghost" onclick="closePrintModal()">Annuler</button>
     </div>
   </div>
+</div>
 </div>
 
 <div class="layout" id="layout" style="display:none">
@@ -762,11 +763,11 @@ function buildPrintHTML(mode) {
     + "p{font-size:9pt;line-height:1.5;}"
     + ".meta{font-size:8pt;color:#555;margin-top:2mm;}"
     + ".pnum{text-align:center;font-size:8pt;color:#888;margin-top:4mm;}"
-    + ".poster-grid{display:flex;flex-wrap:wrap;padding:8mm;}"
-    + ".poster-item{position:relative;margin:1mm;text-align:center;}"
+    + ".poster-grid{display:flex;flex-wrap:wrap;justify-content:center;padding:4mm 8mm;gap:2mm;}"
+    + ".poster-item{position:relative;text-align:center;}"
     + ".poster-item img{display:block;border-radius:1mm;}"
     + ".poster-badge{position:absolute;bottom:2mm;right:2mm;background:#fff;border-radius:50%;font-size:7pt;font-weight:bold;padding:1pt 3pt;}"
-    + ".poster-title{font-size:16pt;font-weight:bold;text-align:center;text-transform:uppercase;letter-spacing:.05em;padding:6mm 8mm 4mm;}"
+    + ".poster-title{font-size:16pt;font-weight:bold;text-align:center;text-transform:uppercase;letter-spacing:.05em;padding:4mm 8mm 2mm;}"
     + "</style>";
 
 
@@ -776,8 +777,19 @@ function buildPrintHTML(mode) {
     var consoles   = mode === "all-ps" ? ["PS5","PS4"] : mode === "all-switch" ? ["Switch"] : ["XBOX"];
     var label      = mode === "all-ps" ? "PlayStation" : mode === "all-switch" ? "Switch" : "XBOX";
     var col        = consoles.map(function(c){ return consoleColors[c]; })[0] || "#333";
-    var cw         = mode === "all-ps" ? 29 : mode === "all-switch" ? 17 : 22;
-    var ch         = Math.round(cw / (mode === "all-switch" ? 0.613 : 0.783));
+    var baseCwA = mode === "all-ps" ? 29 : mode === "all-switch" ? 17 : 22;
+    var ratioA  = mode === "all-switch" ? 0.613 : 0.783;
+    var mprA    = Math.floor((210-16)/(baseCwA+2));
+    var rowsA   = Math.ceil(filtered.length/mprA);
+    var maxRA   = Math.floor((257)/(baseCwA/ratioA+2));
+    if (rowsA > maxRA) {
+      for (var tw2=baseCwA;tw2>=12;tw2--) {
+        var pr2=Math.floor((210-16)/(tw2+2));
+        if (Math.ceil(filtered.length/pr2)*(tw2/ratioA+2)<=257){baseCwA=tw2;break;}
+      }
+    }
+    var cw = baseCwA;
+    var ch = Math.round(cw / ratioA);
     var filtered   = GAMES.filter(function(g){
       return consoles.indexOf(g.console) !== -1 && (g.media === "disque" || g.media === "cartouche");
     }).sort(function(a,b){ return a.name.localeCompare(b.name,"fr"); });
