@@ -8,3 +8,5 @@ enrich_metascore.bat
 enrich_metascore.py
 enrich_fr.bat
 enrich_fr.py
+cleanup_players.bat
+cleanup_players.py

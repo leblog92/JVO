@@ -445,7 +445,7 @@
     <option value="id">Ordre catalogue</option>
     <option value="alpha">A → Z</option>
     <option value="pegi">PEGI</option>
-    <option value="console_meta">Console + Metascore</option>
+    <option value="meta">Metascore</option>
     <option value="size">Taille</option>
     <option value="date">Date de sortie</option>
   </select>
@@ -458,6 +458,12 @@
         </div>
       </div>
   
+  <select id="filter-players" onchange="render()" style="padding:5px 26px 5px 10px;font-family:'DM Sans',sans-serif;font-size:13px;background:var(--surface);border:1px solid var(--border);border-radius:99px;appearance:none;background-image:url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23888'/%3E%3C/svg%3E&quot;);background-repeat:no-repeat;background-position:right 8px center;cursor:pointer;outline:none;">
+    <option value="">Tous joueurs</option>
+    <option value="1">Solo (1j)</option>
+    <option value="2">2 joueurs+</option>
+    <option value="4">4 joueurs+</option>
+  </select>
   <label style="display:inline-flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;white-space:nowrap;margin-left:auto;"><input type="checkbox" id="filter-installed" onchange="render()" style="cursor:pointer;accent-color:var(--ok);width:15px;height:15px;"> Install&#233;s</label>
 </div>
 
@@ -597,7 +603,7 @@ function render() {
   else if (sortMode === 'pegi') list.sort((a,b) => a.pegi - b.pegi || a.id - b.id);
   else if (sortMode === 'size') list.sort((a,b) => (b.size_go||0) - (a.size_go||0));
   else if (sortMode === 'date') list.sort((a,b) => (b.release_date||'').localeCompare(a.release_date||''));
-  else if (sortMode === 'console_meta') { var cg={'PS5':0,'PS4':0,'Switch':1,'Switch 2':1,'XBOX Series':2,'XBOX One':2}; list.sort((a,b)=>(cg[a.console]??9)-(cg[b.console]??9)||(b.metascore||0)-(a.metascore||0)||a.name.localeCompare(b.name,'fr')); }
+  else if (sortMode === 'meta') { list.sort((a,b) => (b.metascore||0) - (a.metascore||0) || a.name.localeCompare(b.name,'fr')); }
   else list.sort(catalogueSort);
 
   const grid = document.getElementById('grid');
@@ -738,7 +744,7 @@ function openPanel(id) {
     var p=d.split('-'); return p.length===3?p[2]+'/'+p[1]+'/'+p[0]:d;
   })(g.release_date) : '']);
   if (g.genre)        rows.push(['Genre', g.genre]);
-  if (g.players_min)  rows.push(['Joueurs', g.players_min === g.players_max ? g.players_min+' joueur'+(g.players_min>1?'s':'') : g.players_min+' → '+g.players_max+' joueurs']);
+  const _pm = g.players_max || g.players_min || 0; if (_pm) rows.push(['Joueurs', g.players_min === _pm ? _pm+' joueur'+(_pm>1?'s':'') : (g.players_min||1)+' → '+_pm+' joueurs']);
   if (g.qualities)    rows.push(['Qualités', g.qualities]);
   if (g.size_go)      rows.push(['Taille', g.size_go + ' Go']);
   if (g.media)        rows.push(['Média', g.media]);
@@ -866,144 +872,74 @@ function runSS(ctx, canvas, imgData) {
   var imgs = imgData.filter(function(x){ return x.img && x.img.complete && x.img.naturalWidth > 0; });
   if (!imgs.length) return;
 
-  // ── Phase 1 : Logo JVO façon Star Wars (3s) ──────────────────────────────
-  var phase = 0;  // 0=logo, 1=crawl+cards
-  var phaseStart = Date.now();
-
-  // Préparer les cartes pour le défilé
-  var CARD_W = 110, CARD_H = 154; // ratio ~3/4
-  var cols = Math.floor(W / (CARD_W + 20));
-  var cards = [];
-  imgs.forEach(function(item, i) {
-    cards.push({
-      img:   item.img,
-      col:   i % cols,
-      row:   Math.floor(i / cols),
-      y:     H + Math.floor(i / cols) * (CARD_H + 16) + 60,
-      baseY: 0,
-      alpha: 0,
-      rot:   (Math.random() - 0.5) * 0.04,
-      scale: 0.92 + Math.random() * 0.16,
-    });
-  });
-  var totalRows = Math.ceil(imgs.length / cols);
-  var cardAreaH = totalRows * (CARD_H + 16);
-  var scrollY = H;  // commence sous l'écran
-
-  function drawLogo(t) {
-    // Fond noir
-    ctx.fillStyle = '#000';
-    ctx.fillRect(0, 0, W, H);
-    // Étoiles
-    if (!drawLogo._stars) {
-      drawLogo._stars = [];
-      for (var i=0;i<200;i++) drawLogo._stars.push([Math.random()*W, Math.random()*H, Math.random()*1.5+0.3]);
-    }
-    ctx.fillStyle = '#fff';
-    drawLogo._stars.forEach(function(s){ ctx.beginPath(); ctx.arc(s[0],s[1],s[2],0,Math.PI*2); ctx.fill(); });
-
-    var progress = Math.min(1, t / 1.2);
-    var fadeOut  = t > 2.5 ? Math.max(0, 1 - (t - 2.5) / 0.5) : 1;
-
-    // Texte "A long time ago in a médiathèque far, far away…"
-    if (t < 1.8) {
-      ctx.save();
-      ctx.globalAlpha = Math.min(1, t / 0.6) * fadeOut;
-      ctx.fillStyle   = '#4fc3f7';
-      ctx.font        = 'italic ' + Math.round(H * 0.028) + 'px "DM Sans", sans-serif';
-      ctx.textAlign   = 'center';
-      ctx.fillText('Il y a bien longtemps, dans une m\u00e9diath\u00e8que lointaine, tr\u00e8s lointaine\u2026', W/2, H/2 - 20);
-      ctx.restore();
-    }
-
-    // JVO en grand qui pulse
-    if (t > 0.8) {
-      var jvoAlpha = Math.min(1,(t-0.8)/0.4) * (t>2?Math.max(0,1-(t-2)/0.8):1);
-      ctx.save();
-      ctx.globalAlpha = jvoAlpha;
-      var fontSize = Math.round(H * 0.22 * (0.8 + 0.2 * Math.sin(t*3)));
-      ctx.font      = '900 ' + fontSize + 'px "DM Sans", sans-serif';
-      ctx.textAlign = 'center';
-      ctx.fillStyle = '#FFE81F';  // jaune Star Wars
-      ctx.shadowColor = '#FFE81F'; ctx.shadowBlur = 40;
-      ctx.fillText('JVO', W/2, H/2 + fontSize*0.35);
-      ctx.shadowBlur = 0;
-      ctx.restore();
-    }
+  // Mélange aléatoire
+  for (var i = imgs.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var tmp = imgs[i]; imgs[i] = imgs[j]; imgs[j] = tmp;
   }
 
-  function drawCrawl(t) {
-    // Fond étoilé
-    ctx.fillStyle = '#000';
-    ctx.fillRect(0, 0, W, H);
-    ctx.fillStyle = 'rgba(255,255,255,0.8)';
-    if (drawLogo._stars) drawLogo._stars.forEach(function(s){
-      ctx.beginPath(); ctx.arc(s[0],s[1],s[2],0,Math.PI*2); ctx.fill();
+  var ROWS    = 3;
+  var GAP     = 16;
+  var CARD_H  = Math.floor((H - GAP * (ROWS + 1)) / ROWS);
+  var CARD_W  = Math.round(CARD_H * 0.72);
+  var SPEED   = 28 + Math.random() * 14; // px/s, lent à moyen
+
+  // Construire les lignes — chacune a sa propre liste et vitesse
+  var rows = [];
+  var perRow = Math.ceil(imgs.length / ROWS);
+  for (var r = 0; r < ROWS; r++) {
+    var rowImgs = [];
+    for (var k = 0; k < perRow + 2; k++) {
+      rowImgs.push(imgs[(r * perRow + k) % imgs.length]);
+    }
+    var totalW = rowImgs.length * (CARD_W + GAP);
+    rows.push({
+      imgs:   rowImgs,
+      x:      r % 2 === 0 ? 0 : -totalW * 0.5, // décalage alterné
+      speed:  (r % 2 === 0 ? 1 : -1) * (SPEED * (0.8 + r * 0.15)),
+      totalW: totalW,
+      y:      GAP + r * (CARD_H + GAP),
     });
-
-    // Vitesse de défilement
-    var speed = 60;  // px/s
-    scrollY = H - t * speed;
-
-    // Perspective transform pour les cartes
-    ctx.save();
-    var vanishY = H * 0.08;  // point de fuite
-    var spread  = 1.4;
-
-    imgs.forEach(function(item, i) {
-      var col     = i % cols;
-      var row     = Math.floor(i / cols);
-      var spacing = CARD_W + 20;
-      var xBase   = (W - cols * spacing) / 2 + col * spacing + CARD_W/2;
-      var yBase   = scrollY + row * (CARD_H + 16) + CARD_H/2;
-
-      if (yBase < -CARD_H || yBase > H + CARD_H) return;
-
-      // Perspective : plus haut = plus petit et plus centré
-      var progress = Math.max(0, Math.min(1, (yBase - vanishY) / (H - vanishY)));
-      var scale    = 0.15 + progress * 0.85;
-      var x        = W/2 + (xBase - W/2) * progress * spread;
-      var y        = vanishY + (yBase - vanishY) * progress * 0.72;
-      var alpha    = Math.min(1, progress * 2.5);
-      if (alpha < 0.01) return;
-
-      var cw = CARD_W * scale, ch = CARD_H * scale;
-
-      ctx.save();
-      ctx.globalAlpha = alpha;
-      ctx.translate(x, y);
-      // Légère inclinaison perspective
-      ctx.transform(1, -0.08 * (1-progress), 0, 1, 0, 0);
-      ctx.drawImage(item.img, -cw/2, -ch/2, cw, ch);
-      // Reflet bas
-      ctx.globalAlpha = alpha * 0.18;
-      ctx.scale(1,-1);
-      ctx.drawImage(item.img, -cw/2, ch/2, cw, ch*0.3);
-      ctx.restore();
-    });
-    ctx.restore();
-
-    // Lueur jaune au sommet (point de fuite)
-    var grd = ctx.createRadialGradient(W/2, vanishY, 0, W/2, vanishY, H*0.3);
-    grd.addColorStop(0,'rgba(255,232,31,0.12)');
-    grd.addColorStop(1,'rgba(0,0,0,0)');
-    ctx.fillStyle = grd;
-    ctx.fillRect(0, 0, W, H);
   }
+
+  var last = Date.now();
 
   function draw() {
     if (!_ssActive) return;
     _ssAnim = requestAnimationFrame(draw);
-    var elapsed = (Date.now() - phaseStart) / 1000;
+    var now = Date.now();
+    var dt  = (now - last) / 1000;
+    last    = now;
 
-    if (phase === 0) {
-      drawLogo(elapsed);
-      if (elapsed > 3) { phase = 1; phaseStart = Date.now(); }
-    } else {
-      drawCrawl(elapsed);
-      // Recommencer quand tout est passé
-      if (scrollY + cardAreaH + CARD_H < 0) { phaseStart = Date.now(); scrollY = H; }
-    }
+    ctx.fillStyle = '#000';
+    ctx.fillRect(0, 0, W, H);
+
+    rows.forEach(function(row) {
+      row.x += row.speed * dt;
+      // Boucle infinie
+      if (row.speed > 0 && row.x > row.totalW) row.x -= row.totalW;
+      if (row.speed < 0 && row.x < -row.totalW) row.x += row.totalW;
+
+      // Dessiner 2 fois pour la boucle
+      for (var rep = 0; rep < 3; rep++) {
+        var offsetX = row.x + rep * row.totalW;
+        row.imgs.forEach(function(item, i) {
+          var x = offsetX + i * (CARD_W + GAP);
+          if (x > W + CARD_W || x < -CARD_W * 2) return;
+          if (!item || !item.img || !item.img.complete) return;
+          ctx.globalAlpha = 1;
+          ctx.drawImage(item.img, x, row.y, CARD_W, CARD_H);
+        });
+      }
+    });
+
+    // Vignette noire sur les bords
+    var vL = ctx.createLinearGradient(0,0,W*0.12,0);
+    vL.addColorStop(0,'rgba(0,0,0,1)'); vL.addColorStop(1,'rgba(0,0,0,0)');
+    ctx.fillStyle = vL; ctx.globalAlpha = 1; ctx.fillRect(0,0,W*0.12,H);
+    var vR = ctx.createLinearGradient(W,0,W*0.88,0);
+    vR.addColorStop(0,'rgba(0,0,0,1)'); vR.addColorStop(1,'rgba(0,0,0,0)');
+    ctx.fillStyle = vR; ctx.fillRect(W*0.88,0,W*0.12,H);
   }
   draw();
 }
@@ -1015,7 +951,11 @@ function stopScreensaver() {
 }
 
 // Quitter sur mouvement souris ou touche clavier
-document.getElementById('screensaver').addEventListener('mousemove', stopScreensaver);
+var _ssMoveTimer = null;
+document.getElementById('screensaver').addEventListener('mousemove', function() {
+  clearTimeout(_ssMoveTimer);
+  _ssMoveTimer = setTimeout(stopScreensaver, 500);
+});
 document.getElementById('screensaver').addEventListener('touchstart', stopScreensaver);
 document.addEventListener('keydown', function(e) { if (_ssActive) stopScreensaver(); });
 
