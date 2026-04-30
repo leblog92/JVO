@@ -396,6 +396,27 @@
   .meta-red    { background:#f44; color:#fff; }
   .meta-none   { background:var(--border); color:var(--muted); font-size:10px; }
 
+
+  #screensaver {
+    display:none; position:fixed; inset:0; z-index:500;
+    background:#0a0a0f; cursor:none;
+  }
+  #screensaver canvas { width:100%; height:100%; display:block; }
+  #ss-hint {
+    position:absolute; bottom:24px; left:50%; transform:translateX(-50%);
+    color:rgba(255,255,255,.3); font-size:12px; letter-spacing:.1em;
+    font-family:'DM Mono',monospace; pointer-events:none;
+    animation: fadeHint 3s ease-in-out infinite alternate;
+  }
+  @keyframes fadeHint { from{opacity:.15} to{opacity:.5} }
+  #ss-btn {
+    position:fixed; bottom:20px; right:70px; z-index:200;
+    background:transparent; border:1px solid var(--border);
+    border-radius:8px; padding:6px 10px; cursor:pointer;
+    font-size:11px; color:var(--muted); transition:all .2s;
+  }
+  #ss-btn:hover { border-color:var(--accent); color:var(--text); }
+
 </style>
 </head>
 <body>
@@ -424,6 +445,7 @@
     <option value="id">Ordre catalogue</option>
     <option value="alpha">A → Z</option>
     <option value="pegi">PEGI</option>
+    <option value="meta">Metascore</option>
     <option value="size">Taille</option>
     <option value="date">Date de sortie</option>
   </select>
@@ -436,6 +458,12 @@
         </div>
       </div>
   
+  <select id="filter-players" onchange="render()" style="padding:5px 26px 5px 10px;font-family:'DM Sans',sans-serif;font-size:13px;background:var(--surface);border:1px solid var(--border);border-radius:99px;appearance:none;background-image:url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23888'/%3E%3C/svg%3E&quot;);background-repeat:no-repeat;background-position:right 8px center;cursor:pointer;outline:none;">
+    <option value="">Tous joueurs</option>
+    <option value="1">Solo (1j)</option>
+    <option value="2">2 joueurs+</option>
+    <option value="4">4 joueurs+</option>
+  </select>
   <label style="display:inline-flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;white-space:nowrap;margin-left:auto;"><input type="checkbox" id="filter-installed" onchange="render()" style="cursor:pointer;accent-color:var(--ok);width:15px;height:15px;"> Install&#233;s</label>
 </div>
 
@@ -448,6 +476,14 @@
 </main>
 
 <!-- Detail overlay -->
+
+<!-- Screensaver -->
+<div id="screensaver">
+  <canvas id="ss-canvas"></canvas>
+  <div id="ss-hint">BOUGER LA SOURIS OU APPUYER SUR UNE TOUCHE POUR QUITTER</div>
+</div>
+<button id="ss-btn" onclick="startScreensaver()" title="Screensaver jeux installés">&#9654; Vitrine</button>
+
 <div id="overlay">
   <div id="panel">
     <div class="panel-layout">
@@ -567,6 +603,7 @@ function render() {
   else if (sortMode === 'pegi') list.sort((a,b) => a.pegi - b.pegi || a.id - b.id);
   else if (sortMode === 'size') list.sort((a,b) => (b.size_go||0) - (a.size_go||0));
   else if (sortMode === 'date') list.sort((a,b) => (b.release_date||'').localeCompare(a.release_date||''));
+  else if (sortMode === 'meta') { list.sort((a,b) => (b.metascore||0) - (a.metascore||0) || a.name.localeCompare(b.name,'fr')); }
   else list.sort(catalogueSort);
 
   const grid = document.getElementById('grid');
@@ -703,9 +740,11 @@ function openPanel(id) {
 
   // Rows
   const rows = [];
-  if (g.release_date) rows.push(['Date de sortie', g.release_date]);
+  if (g.release_date) rows.push(['Date de sortie', g.release_date ? (function(d){
+    var p=d.split('-'); return p.length===3?p[2]+'/'+p[1]+'/'+p[0]:d;
+  })(g.release_date) : '']);
   if (g.genre)        rows.push(['Genre', g.genre]);
-  if (g.players_min)  rows.push(['Joueurs', g.players_min === g.players_max ? g.players_min+' joueur'+(g.players_min>1?'s':'') : g.players_min+' → '+g.players_max+' joueurs']);
+  const _pm = g.players_max || g.players_min || 0; if (_pm) rows.push(['Joueurs', g.players_min === _pm ? _pm+' joueur'+(_pm>1?'s':'') : (g.players_min||1)+' → '+_pm+' joueurs']);
   if (g.qualities)    rows.push(['Qualités', g.qualities]);
   if (g.size_go)      rows.push(['Taille', g.size_go + ' Go']);
   if (g.media)        rows.push(['Média', g.media]);
@@ -794,6 +833,135 @@ document.addEventListener('click', function(e) {
 window.toggleGenrePanel = toggleGenrePanel;
 window.applyGenre = applyGenre;
 window.clearGenres = clearGenres;
+
+// ── Screensaver 3D ────────────────────────────────────────────────────────────
+var _ssActive = false;
+var _ssAnim   = null;
+
+function startScreensaver() {
+  var installed = GAMES.filter(function(g){ return g.installed && g.cover; });
+  if (installed.length === 0) { toast('Aucun jeu install\u00e9 avec jaquette', 'err'); return; }
+  _ssActive = true;
+  var ss = document.getElementById('screensaver');
+  ss.style.display = 'block';
+
+  var canvas = document.getElementById('ss-canvas');
+  canvas.width  = window.innerWidth;
+  canvas.height = window.innerHeight;
+  var ctx = canvas.getContext('2d');
+
+  // Charger les images
+  var imgs = [], loaded = 0;
+  installed.forEach(function(g) {
+    var img = new Image();
+    img.crossOrigin = 'anonymous';
+    img.onload = function() {
+      loaded++;
+      if (loaded === installed.length) runSS(ctx, canvas, imgs);
+    };
+    img.onerror = function() { loaded++; if(loaded===installed.length) runSS(ctx,canvas,imgs); };
+    img.src = 'covers/' + g.cover + '.png';
+    imgs.push({ img:img, loaded:false, g:g });
+  });
+  // Timeout fallback
+  setTimeout(function(){ if(loaded<installed.length) runSS(ctx,canvas,imgs.filter(function(x){return x.img.complete;})); }, 3000);
+}
+
+function runSS(ctx, canvas, imgData) {
+  var W = canvas.width, H = canvas.height;
+  var imgs = imgData.filter(function(x){ return x.img && x.img.complete && x.img.naturalWidth > 0; });
+  if (!imgs.length) return;
+
+  // Mélange aléatoire
+  for (var i = imgs.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var tmp = imgs[i]; imgs[i] = imgs[j]; imgs[j] = tmp;
+  }
+
+  var ROWS    = 3;
+  var GAP     = 16;
+  var CARD_H  = Math.floor((H - GAP * (ROWS + 1)) / ROWS);
+  var CARD_W  = Math.round(CARD_H * 0.72);
+  var SPEED   = 28 + Math.random() * 14; // px/s, lent à moyen
+
+  // Construire les lignes — chacune a sa propre liste et vitesse
+  var rows = [];
+  var perRow = Math.ceil(imgs.length / ROWS);
+  for (var r = 0; r < ROWS; r++) {
+    var rowImgs = [];
+    for (var k = 0; k < perRow + 2; k++) {
+      rowImgs.push(imgs[(r * perRow + k) % imgs.length]);
+    }
+    var totalW = rowImgs.length * (CARD_W + GAP);
+    rows.push({
+      imgs:   rowImgs,
+      x:      r % 2 === 0 ? 0 : -totalW * 0.5, // décalage alterné
+      speed:  (r % 2 === 0 ? 1 : -1) * (SPEED * (0.8 + r * 0.15)),
+      totalW: totalW,
+      y:      GAP + r * (CARD_H + GAP),
+    });
+  }
+
+  var last = Date.now();
+
+  function draw() {
+    if (!_ssActive) return;
+    _ssAnim = requestAnimationFrame(draw);
+    var now = Date.now();
+    var dt  = (now - last) / 1000;
+    last    = now;
+
+    ctx.fillStyle = '#000';
+    ctx.fillRect(0, 0, W, H);
+
+    rows.forEach(function(row) {
+      row.x += row.speed * dt;
+      // Boucle infinie
+      if (row.speed > 0 && row.x > row.totalW) row.x -= row.totalW;
+      if (row.speed < 0 && row.x < -row.totalW) row.x += row.totalW;
+
+      // Dessiner 2 fois pour la boucle
+      for (var rep = 0; rep < 3; rep++) {
+        var offsetX = row.x + rep * row.totalW;
+        row.imgs.forEach(function(item, i) {
+          var x = offsetX + i * (CARD_W + GAP);
+          if (x > W + CARD_W || x < -CARD_W * 2) return;
+          if (!item || !item.img || !item.img.complete) return;
+          ctx.globalAlpha = 1;
+          ctx.drawImage(item.img, x, row.y, CARD_W, CARD_H);
+        });
+      }
+    });
+
+    // Vignette noire sur les bords
+    var vL = ctx.createLinearGradient(0,0,W*0.12,0);
+    vL.addColorStop(0,'rgba(0,0,0,1)'); vL.addColorStop(1,'rgba(0,0,0,0)');
+    ctx.fillStyle = vL; ctx.globalAlpha = 1; ctx.fillRect(0,0,W*0.12,H);
+    var vR = ctx.createLinearGradient(W,0,W*0.88,0);
+    vR.addColorStop(0,'rgba(0,0,0,1)'); vR.addColorStop(1,'rgba(0,0,0,0)');
+    ctx.fillStyle = vR; ctx.fillRect(W*0.88,0,W*0.12,H);
+  }
+  draw();
+}
+
+function stopScreensaver() {
+  _ssActive = false;
+  if (_ssAnim) cancelAnimationFrame(_ssAnim);
+  document.getElementById('screensaver').style.display = 'none';
+}
+
+// Quitter sur mouvement souris ou touche clavier
+var _ssMoveTimer = null;
+document.getElementById('screensaver').addEventListener('mousemove', function() {
+  clearTimeout(_ssMoveTimer);
+  _ssMoveTimer = setTimeout(stopScreensaver, 500);
+});
+document.getElementById('screensaver').addEventListener('touchstart', stopScreensaver);
+document.addEventListener('keydown', function(e) { if (_ssActive) stopScreensaver(); });
+
+window.startScreensaver = startScreensaver;
+window.stopScreensaver  = stopScreensaver;
+
 </script>
 </body>
 </html>

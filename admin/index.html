@@ -174,12 +174,12 @@ input.list-search:focus{border-color:var(--accent);}
       <strong>&#128444; Affiche jeux install&#233;s &#8212; PlayStation (PS4+PS5)</strong>
       <span>Grille de jaquettes, format A4</span>
     </div>
-    <div class="print-option" onclick="doPrint('installed-xbox')">
-      <strong>&#128444; Affiche jeux install&#233;s &#8212; XBOX (One+Series)</strong>
-      <span>Grille de jaquettes, format A4</span>
-    </div>
     <div class="print-option" onclick="doPrint('installed-switch')">
       <strong>&#128444; Affiche jeux install&#233;s &#8212; Switch (et Switch 2)</strong>
+      <span>Grille de jaquettes, format A4</span>
+    </div>
+    <div class="print-option" onclick="doPrint('installed-xbox')">
+      <strong>&#128444; Affiche jeux install&#233;s &#8212; XBOX (One+Series)</strong>
       <span>Grille de jaquettes, format A4</span>
     </div>
     <div class="print-option" onclick="doPrint('all-ps')">
@@ -198,6 +198,7 @@ input.list-search:focus{border-color:var(--accent);}
       <button class="btn btn-ghost" onclick="closePrintModal()">Annuler</button>
     </div>
   </div>
+</div>
 </div>
 
 <div class="layout" id="layout" style="display:none">
@@ -284,6 +285,7 @@ input.list-search:focus{border-color:var(--accent);}
             <label>Taille (Go)</label>
             <input type="number" id="f-size" placeholder="ex: 59" min="0" step="0.1">
           </div>
+          <div class="field"><label>Metascore</label><input type="number" id="f-meta" placeholder="0-100" min="0" max="100"></div>
         </div>
 
         <div class="field">
@@ -616,6 +618,7 @@ function fillForm(g) {
   document.getElementById("f-pmin").value      = g.players_min || 1;
   document.getElementById("f-pmax").value      = g.players_max || 1;
   document.getElementById("f-size").value      = g.size_go     || "";
+  document.getElementById("f-meta").value      = (g.metascore != null) ? g.metascore : "";
   document.getElementById("f-desc").value      = g.desc        || "";
   document.getElementById("f-url").value       = g.store_url   || "";
   document.getElementById("f-trailer").value   = g.url_trailer || "";
@@ -674,6 +677,9 @@ function saveGame() {
     players_min:      parseInt(document.getElementById("f-pmin").value)||1,
     players_max:      parseInt(document.getElementById("f-pmax").value)||1,
     size_go:          parseFloat(document.getElementById("f-size").value)||null,
+    metascore:        document.getElementById("f-meta").value !== "" ? parseInt(document.getElementById("f-meta").value) : null,
+    metascore:        document.getElementById("f-meta").value !== "" ? parseInt(document.getElementById("f-meta").value) : null,
+    metascore:        parseInt(document.getElementById("f-meta").value)||null,
     metascore:        parseInt(document.getElementById("f-meta").value)||null,
     genre:            getCBValues("genre"),
     qualities:        getCBValues("quality"),
@@ -762,11 +768,11 @@ function buildPrintHTML(mode) {
     + "p{font-size:9pt;line-height:1.5;}"
     + ".meta{font-size:8pt;color:#555;margin-top:2mm;}"
     + ".pnum{text-align:center;font-size:8pt;color:#888;margin-top:4mm;}"
-    + ".poster-grid{display:flex;flex-wrap:wrap;padding:8mm;}"
-    + ".poster-item{position:relative;margin:1mm;text-align:center;}"
+    + ".poster-grid{display:flex;flex-wrap:wrap;justify-content:center;padding:4mm 8mm;gap:2mm;}"
+    + ".poster-item{position:relative;text-align:center;}"
     + ".poster-item img{display:block;border-radius:1mm;}"
     + ".poster-badge{position:absolute;bottom:2mm;right:2mm;background:#fff;border-radius:50%;font-size:7pt;font-weight:bold;padding:1pt 3pt;}"
-    + ".poster-title{font-size:16pt;font-weight:bold;text-align:center;text-transform:uppercase;letter-spacing:.05em;padding:6mm 8mm 4mm;}"
+    + ".poster-title{font-size:16pt;font-weight:bold;text-align:center;text-transform:uppercase;letter-spacing:.05em;padding:4mm 8mm 2mm;}"
     + "</style>";
 
 
@@ -776,11 +782,17 @@ function buildPrintHTML(mode) {
     var consoles   = mode === "all-ps" ? ["PS5","PS4"] : mode === "all-switch" ? ["Switch"] : ["XBOX"];
     var label      = mode === "all-ps" ? "PlayStation" : mode === "all-switch" ? "Switch" : "XBOX";
     var col        = consoles.map(function(c){ return consoleColors[c]; })[0] || "#333";
-    var cw         = mode === "all-ps" ? 29 : mode === "all-switch" ? 17 : 22;
-    var ch         = Math.round(cw / (mode === "all-switch" ? 0.613 : 0.783));
-    var filtered   = GAMES.filter(function(g){
+    var filtered = GAMES.filter(function(g){
       return consoles.indexOf(g.console) !== -1 && (g.media === "disque" || g.media === "cartouche");
     }).sort(function(a,b){ return a.name.localeCompare(b.name,"fr"); });
+    var ratioA = mode === "all-switch" ? 0.613 : 0.783;
+    var cwMaxA = mode === "all-ps" ? 29 : mode === "all-switch" ? 30 : 22;
+    var cwMinA = 12, pageWA = 194, pageHA = 263, bestA = cwMinA;
+    for (var tw2 = cwMaxA; tw2 >= cwMinA; tw2--) {
+      var pr2 = Math.floor(pageWA / (tw2 + 2));
+      if (Math.ceil(filtered.length / pr2) * (Math.round(tw2 / ratioA) + 2) <= pageHA) { bestA = tw2; break; }
+    }
+    var cw = bestA, ch = Math.round(cw / ratioA);
     var body = "<div class=\"poster-title\" style=\"color:"+col+"\">JEUX " + label.toUpperCase() + "</div>"
       + "<div class=\"poster-grid\">";
     filtered.forEach(function(g) {
@@ -818,9 +830,18 @@ function buildPrintHTML(mode) {
   var consoleFilter = mode === "installed-ps" ? ["PS5","PS4"] : mode === "installed-xbox" ? ["XBOX Series","XBOX One"] : ["Switch","Switch 2"];
   var consoleLabel  = mode === "installed-ps" ? "PlayStation" : mode === "installed-xbox" ? "XBOX" : "Switch";
   var consoleColor  = consoleColors[consoleFilter[0]] || "#333";
-  var cw = mode === "installed-ps" ? 29 : mode === "installed-xbox" ? 35 : 17;
-  var ch = Math.round(cw / (mode === "installed-switch" ? 0.6 : 0.8));
+  // Filtrer d'abord
   var filtered = GAMES.filter(function(g){ return consoleFilter.indexOf(g.console) !== -1 && g.installed; });
+  // Ratio jaquette par console
+  var ratio = mode === "installed-switch" ? 0.613 : 0.783;
+  // Taille optimale : la plus grande qui tient sur A4
+  var cwMax = mode === "installed-ps" ? 29 : mode === "installed-xbox" ? 35 : 30;
+  var cwMin = 12, pageW = 194, pageH = 263, bestCw = cwMin;
+  for (var tw = cwMax; tw >= cwMin; tw--) {
+    var perRow = Math.floor(pageW / (tw + 2));
+    if (Math.ceil(filtered.length / perRow) * (Math.round(tw / ratio) + 2) <= pageH) { bestCw = tw; break; }
+  }
+  var cw = bestCw, ch = Math.round(cw / ratio);
   var body = "<div class=\"poster-title\" style=\"color:"+consoleColor+"\">Jeux sur place &#8212; "+consoleLabel+"</div>"
     + "<div class=\"poster-grid\">";
   filtered.forEach(function(g) {
