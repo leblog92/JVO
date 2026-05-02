@@ -4,6 +4,11 @@
 <meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>JVO — Jeux Vidéo</title>
+<link rel="manifest" href="/JVO/manifest.json">
+<meta name="theme-color" content="#1a1917">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="JVO">
 <link rel="icon" type="image/png" href="ICO.png"/>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,500;0,700;1,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -1022,6 +1027,16 @@ async function logStat() {
 window.startScreensaver = startScreensaver;
 window.logStat = logStat;
 window.stopScreensaver  = stopScreensaver;
+
+
+// ── Service Worker (PWA offline) ──
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('/JVO/sw.js')
+      .then(function(reg) { console.log('SW registered'); })
+      .catch(function(e) { console.warn('SW failed:', e); });
+  });
+}
 
 </script>
 </body>

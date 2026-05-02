@@ -161,7 +161,11 @@ input.list-search:focus{border-color:var(--accent);}
     </button>
     <button class="btn btn-primary" onclick="exportJSON()">
       <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-      Exporter JSON
+      JSON
+    </button>
+    <button class="btn btn-ghost" onclick="exportCSV()">
+      <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      CSV
     </button>
   </div>
 </header>
@@ -959,7 +963,7 @@ async function checkPwd() {
   var buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(pwd));
   var hash = Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
   // Hash SHA-256 de votre mot de passe — générez-le sur https://emn178.github.io/online-tools/sha256.html
-  var VALID = '58b1ccc26ecc28cb38dc95f94be2e0f80de4b0db3d43fc06140668aa1a08294f';
+  var VALID = 'REMPLACER_PAR_HASH_SHA256';
   if (hash === VALID) {
     document.getElementById('login-overlay').style.display = 'none';
     document.getElementById('layout').style.display = '';
@@ -1022,6 +1026,30 @@ async function loadStats() {
 }
 window.loadStats = loadStats;
 
+
+
+function exportCSV() {
+  var cols = ['id','name','console','media','num_id','pegi','genre','players_min','players_max',
+              'release_date','desc','qualities','size_go','metascore','installed','store_url',
+              'url_trailer','url_bnf','url_mediatheque','cover'];
+  var esc = function(v) {
+    if (v == null) return '';
+    v = String(v).replace(/"/g, '""');
+    return v.includes(',') || v.includes('"') || v.includes('\n') ? '"'+v+'"' : v;
+  };
+  var rows = [cols.join(',')];
+  GAMES.forEach(function(g) {
+    rows.push(cols.map(function(c){ return esc(g[c]); }).join(','));
+  });
+  var bom = '\uFEFF'; // BOM UTF-8 pour Excel
+  var blob = new Blob([bom + rows.join('\n')], {type:'text/csv;charset=utf-8'});
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'jvo_games.csv';
+  a.click();
+  toast('CSV t\u00e9l\u00e9charg\u00e9 !', 'ok');
+}
+window.exportCSV = exportCSV;
 
 </script>
 </body>
