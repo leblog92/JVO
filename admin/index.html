@@ -147,7 +147,11 @@ input.list-search:focus{border-color:var(--accent);}
     <div class="subtitle" id="hdr-count"></div>
   </div>
   <div class="hdr-right">
-        <button class="btn btn-blue" onclick="openPrintModal()">
+        <label style="display:inline-flex;align-items:center;gap:6px;font-size:12px;cursor:pointer;" title="Installés cochés par défaut sur le site">
+      <input type="checkbox" id="pref-installed-default" onchange="savePref()" style="cursor:pointer;accent-color:var(--ok);">
+      Installés par défaut
+    </label>
+    <button class="btn btn-blue" onclick="openPrintModal()">
       <svg viewBox="0 0 24 24"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
       Imprimer
     </button>
@@ -168,7 +172,11 @@ input.list-search:focus{border-color:var(--accent);}
     <h3>&#128424; Impression</h3>
     <div class="print-option" onclick="doPrint('booklet')">
       <strong>&#128218; Livret de tous les jeux</strong>
-      <span>Jeux disque &amp; cartouche uniquement &#8212; format livret A4, avec couverture</span>
+      <span>Jeux disque &amp; cartouche &#8212; ordre console &#8212; pages multiples de 4</span>
+    </div>
+    <div class="print-option" onclick="doPrint('booklet-installed')">
+      <strong>&#128218; Livret des jeux install&#233;s</strong>
+      <span>Tous les jeux install&#233;s &#8212; ordre console &#8212; pages multiples de 4</span>
     </div>
     <div class="print-option" onclick="doPrint('installed-ps')">
       <strong>&#128444; Affiche jeux install&#233;s &#8212; PlayStation (PS4+PS5)</strong>
@@ -532,6 +540,7 @@ function updateCoverPreview() {
     GAMES.sort((a,b) => a.id - b.id);
     renderList();
     document.getElementById("hdr-count").textContent = GAMES.length + " jeux";
+  loadStats();
   } catch(e) {
     var msg = e.code === 'permission-denied'
       ? "Permissions Firestore insuffisantes — ouvrez les règles dans la console Firebase"
@@ -781,7 +790,7 @@ function buildPrintHTML(mode) {
   if (allPhysicalMode) {
     var consoles   = mode === "all-ps" ? ["PS5","PS4"] : mode === "all-switch" ? ["Switch"] : ["XBOX"];
     var label      = mode === "all-ps" ? "PlayStation" : mode === "all-switch" ? "Switch" : "XBOX";
-    var col        = consoles.map(function(c){ return consoleColors[c]; })[0] || "#333";
+    var col        = mode==="all-xbox" ? "#107c10" : mode==="all-switch" ? "#e4000f" : mode==="all-ps" ? "#003791" : consoles.map(function(c){ return consoleColors[c]; })[0] || "#333";
     var filtered = GAMES.filter(function(g){
       return consoles.indexOf(g.console) !== -1 && (g.media === "disque" || g.media === "cartouche");
     }).sort(function(a,b){ return a.name.localeCompare(b.name,"fr"); });
@@ -806,30 +815,43 @@ function buildPrintHTML(mode) {
     return "<!DOCTYPE html><html><head><meta charset=\"utf-8\"><title>Jeux "+label+"</title>"+css+"</head><body>"+body+"</body></html>";
   }
 
-  if (mode === "booklet") {
-    var physical = GAMES.filter(function(g){ return g.media === "disque" || g.media === "cartouche"; });
-    var body = "<div class=\"cover-page\"><img src=\"../print/cover.png\" onerror=\"this.style.display='none'\"/></div>";
+  if (mode === "booklet" || mode === "booklet-installed") {
+    var physical = mode === "booklet-installed"
+      ? GAMES.filter(function(g){ return g.installed; })
+      : GAMES.filter(function(g){ return g.media === "disque" || g.media === "cartouche"; });
+    physical.sort(function(a,b){
+      var cg={"PS5":0,"PS4":0,"Switch":1,"Switch 2":1,"XBOX Series":2,"XBOX One":2};
+      return (cg[a.console]!=null?cg[a.console]:9)-(cg[b.console]!=null?cg[b.console]:9)||(parseInt(a.num_id)||9999)-(parseInt(b.num_id)||9999);
+    });
+    var contentPages = Math.ceil(physical.length / 4);
+    var totalPages = 1 + contentPages;
+    var remainder = totalPages % 4;
+    var blankCount = remainder === 0 ? 0 : 4 - remainder;
+    var body = "<div class=\"cover-page pagebreak\"><img src=\"print/cover.png\" onerror=\"this.style.display=\'none\'\"/></div>";
+    var pnb = 1;
     for (var i = 0; i < physical.length; i += 4) {
       body += "<div class=\"page pagebreak\">";
       for (var j = 0; j < 4 && i+j < physical.length; j++) {
         var g = physical[i+j];
         var col = consoleColors[g.console] || "#333";
+        var pm = g.players_max||g.players_min||0;
+        var pStr = pm ? ("&#127918; "+(g.players_min||1)+(pm>(g.players_min||1)?" &#8594; "+pm:"")+  " joueur(s)<br>") : "";
         body += "<div class=\"article\">"
-          + (g.cover ? "<img class=\"jaquette\" src=\"../covers/"+g.cover+".png\" onerror=\"this.style.display='none'\">" : "<div class=\"jaquette\" style=\"background:#eee\"></div>")
-          + "<div class=\"content\">"
-            + "<h3 style=\"color:"+col+"\">"+g.name+" <small style=\"color:#888;font-size:9pt;\">("+g.console+")</small></h3>"
-            + "<p>"+(g.desc||"")+"</p>"
-            + "<p class=\"meta\">"+(g.genre?"&#128193; "+g.genre+"<br>":"")+(g.players_min?"&#127918; "+g.players_min+(g.players_max>g.players_min?" &#8594; "+g.players_max:"")+" joueur(s)<br>":"")+(g.qualities?"&#127941; "+g.qualities:"")+"</p>"
+          + (g.cover ? "<img class=\"jaquette\" src=\"covers/"+g.cover+".png\" onerror=\"this.style.display=\'none\'\">" : "<div class=\"jaquette\" style=\"background:#eee\"></div>")
+          + "<div class=\"content\"><h3 style=\"color:"+col+"\">"+g.name+" <small style=\"color:#888;font-size:9pt;\">("+g.console+")</small></h3>"
+          + "<p>"+(g.desc||"")+"</p>"
+          + "<p class=\"meta\">"+(g.genre?"&#128193; "+g.genre+"<br>":"")+pStr+(g.qualities?"&#127941; "+g.qualities:"")+"</p>"
           + "</div></div>";
       }
-      body += "<div class=\"pnum\">"+(Math.floor(i/4)+1)+"</div></div>";
+      body += "<div class=\"pnum\">"+pnb+"</div></div>"; pnb++;
     }
+    for (var b=0; b<blankCount; b++) body += "<div class=\"page pagebreak\"></div>";
     return "<!DOCTYPE html><html><head><meta charset=\"utf-8\"><title>Livret JVO</title>"+css+"</head><body>"+body+"</body></html>";
   }
 
   var consoleFilter = mode === "installed-ps" ? ["PS5","PS4"] : mode === "installed-xbox" ? ["XBOX Series","XBOX One"] : ["Switch","Switch 2"];
   var consoleLabel  = mode === "installed-ps" ? "PlayStation" : mode === "installed-xbox" ? "XBOX" : "Switch";
-  var consoleColor  = consoleColors[consoleFilter[0]] || "#333";
+  var consoleColor  = mode==="installed-xbox"||mode==="all-xbox" ? "#107c10" : consoleColors[consoleFilter[0]] || "#333";
   // Filtrer d'abord
   var filtered = GAMES.filter(function(g){ return consoleFilter.indexOf(g.console) !== -1 && g.installed; });
   // Ratio jaquette par console
@@ -936,6 +958,7 @@ async function checkPwd() {
   var pwd = document.getElementById('pwd-input').value;
   var buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(pwd));
   var hash = Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+  // Hash SHA-256 de votre mot de passe — générez-le sur https://emn178.github.io/online-tools/sha256.html
   var VALID = '58b1ccc26ecc28cb38dc95f94be2e0f80de4b0db3d43fc06140668aa1a08294f';
   if (hash === VALID) {
     document.getElementById('login-overlay').style.display = 'none';
@@ -968,6 +991,37 @@ function toggleInstalled(e, id) {
   renderList();
 }
 window.toggleInstalled = toggleInstalled;
+
+
+function savePref() {
+  var v = document.getElementById('pref-installed-default').checked ? '1' : '0';
+  localStorage.setItem('jvo_installed_default', v);
+  toast('Préférence enregistrée', 'ok');
+}
+// Charger la préférence
+(function() {
+  var cb = document.getElementById('pref-installed-default');
+  if (cb) cb.checked = localStorage.getItem('jvo_installed_default') === '1';
+})();
+window.savePref = savePref;
+
+// Charger et afficher les stats
+async function loadStats() {
+  try {
+    var snap = await getDocs(collection(_db, 'stats'));
+    snap.forEach(function(d) {
+      if (d.id === 'visits') {
+        var data = d.data();
+        var today = new Date().toISOString().slice(0,10);
+        var todayV = (data.byDate||{})[today] || 0;
+        document.getElementById('hdr-count').textContent =
+          GAMES.length + ' jeux  |  ' + data.total + ' visites (aujourd\'hui : ' + todayV + ')';
+      }
+    });
+  } catch(e) {}
+}
+window.loadStats = loadStats;
+
 
 </script>
 </body>
